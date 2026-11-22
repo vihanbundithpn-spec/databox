@@ -442,7 +442,7 @@
                     <span>ກັບຄືນໜ້າຫຼັກ</span>
                 </button>
 
-                <button onclick="requireAuth(() => openAddNewsModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                <button onclick="requireAuth(() => openNewsFormModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
                     <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
                     <span>ເພີ່ມຂ່າວສານ</span>
                 </button>
@@ -515,7 +515,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.0 (Cloud Sync Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.1 (Cloud Sync Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -523,7 +523,7 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.4.0-cloud</span>
+                        <span class="font-bold text-navy-900">v2.4.1-cloud</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ສະຖານະຖານຂໍ້ມູນ:</span>
@@ -704,26 +704,28 @@
     </div>
 
     <!-- =====================================================================
-         MODAL 3: ADD NEWS MODAL
+         MODAL 3: ADD / EDIT NEWS MODAL (ເພີ່ມ ແລະ ແກ້ໄຂຂ່າວສານ)
          ===================================================================== -->
-    <div id="addNewsModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
+    <div id="newsFormModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/65 backdrop-blur-xs">
         <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl border border-slate-100 overflow-hidden">
             <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-4 text-white flex items-center justify-between">
                 <div class="flex items-center gap-2.5">
                     <div class="bg-white/15 p-2 rounded-xl">
-                        <i class="ph-bold ph-newspaper text-lg text-emerald-300"></i>
+                        <i id="newsFormModalIcon" class="ph-bold ph-newspaper text-lg text-emerald-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm sm:text-base">ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່</h3>
+                        <h3 id="newsFormModalTitle" class="font-bold text-sm sm:text-base">ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່</h3>
                         <p id="newsModalSubtitle" class="text-[11px] text-teal-200">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</p>
                     </div>
                 </div>
-                <button onclick="closeAddNewsModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button onclick="closeNewsFormModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
 
-            <form id="addNewsForm" class="p-5 space-y-3.5">
+            <form id="newsForm" class="p-5 space-y-3.5">
+                <input type="hidden" id="editingNewsIdInput" value="">
+
                 <div>
                     <label for="newsCategoryInput" class="block text-xs font-bold text-slate-700 mb-1">ໝວດໝູ່ແຈ້ງການ</label>
                     <select id="newsCategoryInput" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
@@ -741,18 +743,60 @@
 
                 <div>
                     <label for="newsContentInput" class="block text-xs font-bold text-slate-700 mb-1">ເນື້ອໃນລາຍລະອຽດ</label>
-                    <textarea id="newsContentInput" rows="3" required placeholder="ປ້ອນລາຍລະອຽດແຈ້ງການ..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
+                    <textarea id="newsContentInput" rows="4" required placeholder="ປ້ອນລາຍລະອຽດແຈ້ງການ..." class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
                 </div>
 
                 <div class="flex items-center gap-2 pt-1">
-                    <button type="button" onclick="closeAddNewsModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                    <button type="button" onclick="closeNewsFormModal()" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
                         ຍົກເລີກ
                     </button>
-                    <button type="submit" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
-                        ແຈ້ງການ
+                    <button type="submit" id="newsFormSubmitBtn" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
+                        ບັນທຶກແຈ້ງການ
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 3B: DELETE NEWS CONFIRMATION MODAL (ຢືນຢັນການລຶບຂ່າວສານ)
+         ===================================================================== -->
+    <div id="deleteNewsConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/70 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-rose-800 to-rose-600 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-bold ph-trash text-lg text-rose-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ຢືນຢັນການລຶບຂ່າວສານ</h3>
+                        <p class="text-[11px] text-rose-100">ການດຳເນີນການນີ້ບໍ່ສາມາດກູ້ຄືນໄດ້</p>
+                    </div>
+                </div>
+                <button onclick="closeDeleteNewsConfirmModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຂ່າວສານ / ແຈ້ງການຫົວຂໍ້ນີ້ອອກຈາກລະບົບ?
+                </p>
+
+                <div class="bg-rose-50 border border-rose-200 rounded-2xl p-3">
+                    <p id="deleteNewsTargetTitle" class="text-xs font-bold text-rose-900 line-clamp-2"></p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="button" onclick="closeDeleteNewsConfirmModal()" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="button" onclick="confirmDeleteNews()" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-trash"></i>
+                        <span>ຢືນຢັນລຶບ</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -988,6 +1032,15 @@
             saveToStorage(STORAGE_KEYS.LAST_UPDATED, todayStr);
             const tsEl = document.getElementById('lastUpdatedTimestamp');
             if (tsEl) tsEl.textContent = todayStr;
+        }
+
+        function escapeHTML(str) {
+            return String(str || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         const initialPostgradDatabase = {
@@ -1519,6 +1572,7 @@
         let pendingRequiredFacultyId = null;
         let modalTempDegrees = [];
         let shiftTempDegrees = [];
+        let pendingDeleteNewsId = null;
 
         function updateCloudStatusUI(status, detailText = '') {
             const badge = document.getElementById('cloudSyncBadge');
@@ -1613,6 +1667,9 @@
                 updateAuthUI();
                 if (!document.getElementById('orgChartView').classList.contains('hidden')) {
                     renderOrgChart();
+                }
+                if (!document.getElementById('newsView').classList.contains('hidden')) {
+                    renderNewsFeed();
                 }
                 showToast('ອອກຈາກລະບົບແລ້ວ (ໂໝດເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ)');
             } else {
@@ -1828,7 +1885,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.4.0
+                        v2.4.1
                     </span>
                 </button>
             `;
@@ -2212,6 +2269,9 @@
             modal.classList.remove('flex');
         }
 
+        // =========================================================================
+        // NEWS & ANNOUNCEMENTS (ເພີ່ມ, ແກ້ໄຂ ແລະ ລຶບ ຂໍ້ມູນຂ່າວສານ)
+        // =========================================================================
         function openNewsView() {
             document.getElementById('newsDeptSubtitle').textContent = `${getStore().deptName} ມວສ`;
             renderNewsFeed();
@@ -2221,30 +2281,148 @@
         function renderNewsFeed() {
             const container = document.getElementById('newsFeedContainer');
             const currentNews = getStore().newsData;
-            container.innerHTML = currentNews.map(item => `
-                <article class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200/80 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">${item.category}</span>
-                        <span class="text-[11px] text-slate-400 flex items-center gap-1"><i class="ph ph-clock"></i> ${item.date}</span>
+
+            if (!currentNews || currentNews.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-8 text-center border border-slate-200/80 space-y-2">
+                        <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
+                            <i class="ph-fill ph-newspaper-clipping text-2xl"></i>
+                        </div>
+                        <p class="text-xs font-bold text-slate-600">ຍັງບໍ່ມີຂໍ້ມູນຂ່າວສານ ຫຼື ແຈ້ງການ</p>
+                        <p class="text-[11px] text-slate-400">ກົດປຸ່ມ "ເພີ່ມຂ່າວສານ" ດ້ານເທິງເພື່ອສ້າງແຈ້ງການໃໝ່</p>
                     </div>
-                    <h3 class="font-bold text-sm text-navy-900 leading-snug">${item.title}</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed">${item.content}</p>
+                `;
+                return;
+            }
+
+            container.innerHTML = currentNews.map(item => `
+                <article class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200/80 space-y-2.5 transition-all hover:border-teal-300">
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="text-[11px] font-bold text-teal-700 bg-teal-50 border border-teal-200 px-2.5 py-0.5 rounded-full">
+                            ${escapeHTML(item.category)}
+                        </span>
+                        <span class="text-[11px] text-slate-400 flex items-center gap-1 shrink-0">
+                            <i class="ph ph-clock"></i> ${escapeHTML(item.date)}
+                        </span>
+                    </div>
+
+                    <h3 class="font-bold text-sm text-navy-900 leading-snug">${escapeHTML(item.title)}</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">${escapeHTML(item.content)}</p>
+
+                    <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
+                        <button type="button" onclick="requireAuth(() => openNewsFormModal(${item.id}), 'admin')" 
+                            class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-colors cursor-pointer">
+                            <i class="ph-bold ph-pencil-simple"></i>
+                            <span>ແກ້ໄຂ</span>
+                        </button>
+                        <button type="button" onclick="requireAuth(() => openDeleteNewsConfirmModal(${item.id}), 'admin')" 
+                            class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors cursor-pointer">
+                            <i class="ph-bold ph-trash"></i>
+                            <span>ລຶບ</span>
+                        </button>
+                    </div>
                 </article>
             `).join('');
         }
 
-        function openAddNewsModal() {
-            document.getElementById('newsModalSubtitle').textContent = getStore().deptName;
-            document.getElementById('addNewsForm').reset();
-            const modal = document.getElementById('addNewsModal');
+        function openNewsFormModal(newsId = null) {
+            const store = getStore();
+            const form = document.getElementById('newsForm');
+            form.reset();
+
+            const idInput = document.getElementById('editingNewsIdInput');
+            const titleEl = document.getElementById('newsFormModalTitle');
+            const subtitleEl = document.getElementById('newsModalSubtitle');
+            const submitBtn = document.getElementById('newsFormSubmitBtn');
+            const iconEl = document.getElementById('newsFormModalIcon');
+            const categorySelect = document.getElementById('newsCategoryInput');
+
+            subtitleEl.textContent = store.deptName;
+
+            if (newsId !== null) {
+                const existingItem = store.newsData.find(n => Number(n.id) === Number(newsId));
+                if (!existingItem) {
+                    showToast('ບໍ່ພົບຂໍ້ມູນຂ່າວສານທີ່ຕ້ອງການແກ້ໄຂ', true);
+                    return;
+                }
+                idInput.value = String(existingItem.id);
+                titleEl.textContent = 'ແກ້ໄຂຂ່າວສານ / ແຈ້ງການ';
+                iconEl.className = 'ph-bold ph-pencil-simple text-lg text-amber-300';
+                submitBtn.textContent = 'ບັນທຶກການແກ້ໄຂ';
+
+                // ຖ້າໝວດໝູ່ເກົ່າບໍ່ມີໃນ option ໃຫ້ເພີ່ມເຂົ້າໄປຊົ່ວຄາວເພື່ອສະແດງຄ່າເດີມໃຫ້ຖືກຕ້ອງ
+                const hasOption = Array.from(categorySelect.options).some(opt => opt.value === existingItem.category);
+                if (!hasOption && existingItem.category) {
+                    const tempOpt = document.createElement('option');
+                    tempOpt.value = existingItem.category;
+                    tempOpt.textContent = existingItem.category;
+                    categorySelect.appendChild(tempOpt);
+                }
+                categorySelect.value = existingItem.category;
+                document.getElementById('newsTitleInput').value = existingItem.title;
+                document.getElementById('newsContentInput').value = existingItem.content;
+            } else {
+                idInput.value = '';
+                titleEl.textContent = 'ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່';
+                iconEl.className = 'ph-bold ph-newspaper text-lg text-emerald-300';
+                submitBtn.textContent = 'ແຈ້ງການ';
+            }
+
+            const modal = document.getElementById('newsFormModal');
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
 
-        function closeAddNewsModal() {
-            const modal = document.getElementById('addNewsModal');
+        function closeNewsFormModal() {
+            const modal = document.getElementById('newsFormModal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
+        }
+
+        function openDeleteNewsConfirmModal(newsId) {
+            const store = getStore();
+            const targetItem = store.newsData.find(n => Number(n.id) === Number(newsId));
+            if (!targetItem) {
+                showToast('ບໍ່ພົບຂໍ້ມູນຂ່າວສານທີ່ຕ້ອງການລຶບ', true);
+                return;
+            }
+            pendingDeleteNewsId = targetItem.id;
+            document.getElementById('deleteNewsTargetTitle').textContent = targetItem.title;
+
+            const modal = document.getElementById('deleteNewsConfirmModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeDeleteNewsConfirmModal() {
+            pendingDeleteNewsId = null;
+            const modal = document.getElementById('deleteNewsConfirmModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        async function confirmDeleteNews() {
+            if (!currentUser || currentUser.role !== 'admin') {
+                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດລຶບຂ່າວສານໄດ້', true);
+                closeDeleteNewsConfirmModal();
+                return;
+            }
+            if (pendingDeleteNewsId === null) return;
+
+            const store = getStore();
+            store.newsData = store.newsData.filter(n => Number(n.id) !== Number(pendingDeleteNewsId));
+
+            saveToStorage(store.newsKey, store.newsData);
+            updateLastModifiedDate();
+            renderNewsFeed();
+            renderHomeView();
+            closeDeleteNewsConfirmModal();
+
+            if (typeof window.pushDataToCloudGlobal === 'function') {
+                await window.pushDataToCloudGlobal();
+            } else {
+                showToast('ລຶບຂໍ້ມູນຂ່າວສານສຳເລັດ!');
+            }
         }
 
         const editModal = document.getElementById('editModal');
@@ -2553,8 +2731,11 @@
             document.getElementById('orgEditModal').addEventListener('click', (e) => {
                 if (e.target.id === 'orgEditModal') closeOrgEditModal();
             });
-            document.getElementById('addNewsModal').addEventListener('click', (e) => {
-                if (e.target.id === 'addNewsModal') closeAddNewsModal();
+            document.getElementById('newsFormModal').addEventListener('click', (e) => {
+                if (e.target.id === 'newsFormModal') closeNewsFormModal();
+            });
+            document.getElementById('deleteNewsConfirmModal').addEventListener('click', (e) => {
+                if (e.target.id === 'deleteNewsConfirmModal') closeDeleteNewsConfirmModal();
             });
             document.getElementById('loginModal').addEventListener('click', (e) => {
                 if (e.target.id === 'loginModal') closeLoginModal();
@@ -2572,6 +2753,9 @@
                     closeLoginModal();
                     if (!document.getElementById('orgChartView').classList.contains('hidden')) {
                         renderOrgChart();
+                    }
+                    if (!document.getElementById('newsView').classList.contains('hidden')) {
+                        renderNewsFeed();
                     }
                     showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
 
@@ -2678,34 +2862,49 @@
                 }
             });
 
-            document.getElementById('addNewsForm').addEventListener('submit', async (e) => {
+            // ບັນທຶກການເພີ່ມ ຫຼື ແກ້ໄຂຂໍ້ມູນຂ່າວສານ
+            document.getElementById('newsForm').addEventListener('submit', async (e) => {
                 e.preventDefault();
                 if (!currentUser || currentUser.role !== 'admin') return;
                 const store = getStore();
+                const editingId = document.getElementById('editingNewsIdInput').value.trim();
                 const category = document.getElementById('newsCategoryInput').value;
                 const title = document.getElementById('newsTitleInput').value.trim();
                 const content = document.getElementById('newsContentInput').value.trim();
 
                 if (!title || !content) return;
 
-                store.newsData.unshift({
-                    id: Date.now(),
-                    category,
-                    date: getCurrentLaoDate(),
-                    title,
-                    content
-                });
+                if (editingId !== '') {
+                    const targetIndex = store.newsData.findIndex(n => Number(n.id) === Number(editingId));
+                    if (targetIndex !== -1) {
+                        store.newsData[targetIndex] = {
+                            ...store.newsData[targetIndex],
+                            category,
+                            title,
+                            content,
+                            date: `${getCurrentLaoDate()} (ແກ້ໄຂ)`
+                        };
+                    }
+                } else {
+                    store.newsData.unshift({
+                        id: Date.now(),
+                        category,
+                        date: getCurrentLaoDate(),
+                        title,
+                        content
+                    });
+                }
 
                 saveToStorage(store.newsKey, store.newsData);
                 updateLastModifiedDate();
                 renderNewsFeed();
                 renderHomeView();
-                closeAddNewsModal();
+                closeNewsFormModal();
 
                 if (typeof window.pushDataToCloudGlobal === 'function') {
                     await window.pushDataToCloudGlobal();
                 } else {
-                    showToast('ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
+                    showToast(editingId !== '' ? 'ແກ້ໄຂຂໍ້ມູນຂ່າວສານສຳເລັດ!' : 'ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
                 }
             });
         });
@@ -2719,9 +2918,6 @@
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // =========================================================================
-        // ຕັ້ງຄ່າ Firebase Config ຂອງ Project "databox-190f8" ຮຽບຮ້ອຍແລ້ວ
-        // =========================================================================
         const YOUR_GITHUB_FIREBASE_CONFIG = {
             apiKey: "AIzaSyBivBI2haH7PaIzbbRp5u0xtT73R7AsXho",
             authDomain: "databox-190f8.firebaseapp.com",
@@ -2771,7 +2967,6 @@
                 docRef = doc(db, ...docPath);
                 isCloudReady = true;
 
-                // ຟັງການປ່ຽນແປງຂໍ້ມູນຈາກ Cloud ແບບ Real-time (ທຸກຄົນຈະເຫັນຂໍ້ມູນຫຼ້າສຸດທັນທີ)
                 onSnapshot(docRef, (snapshot) => {
                     updateCloudStatusUI('connected');
                     if (snapshot.exists()) {
@@ -2807,14 +3002,12 @@
                             if (tsEl) tsEl.textContent = cloudData.lastUpdated;
                         }
 
-                        // ອັບເດດໜ້າຈໍໃຫ້ທຸກຄົນເຫັນຂໍ້ມູນໃໝ່ທັນທີ
                         renderPortalView();
                         if (!document.getElementById('homeView').classList.contains('hidden')) renderHomeView();
                         if (!document.getElementById('facultyDetailView').classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId, false);
                         if (!document.getElementById('orgChartView').classList.contains('hidden')) renderOrgChart();
                         if (!document.getElementById('newsView').classList.contains('hidden')) renderNewsFeed();
                     } else {
-                        // ຖ້າ Cloud ຍັງວ່າງເປົ່າ (ເປີດຄັ້ງທຳອິດ) ໃຫ້ສົ່ງຂໍ້ມູນເລີ່ມຕົ້ນຂຶ້ນໄປເກັບໄວ້
                         pushDataToCloud(true);
                     }
                 }, (error) => {
@@ -2867,7 +3060,6 @@
 
         window.pushDataToCloudGlobal = pushDataToCloud;
 
-        // ເລີ່ມເຊື່ອມຕໍ່ Cloud ທັນທີທີ່ໂຫຼດໜ້າເວັບ
         initCloudSync();
     </script>
 </body>
