@@ -279,9 +279,9 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span id="heroYearLabel">ສົກຮຽນ 2025-2026</span>
                         </span>
-                        <button type="button" onclick="requireAuth(() => openQuickEditModal())" class="admin-protected-btn text-xs font-medium text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors cursor-pointer">
+                        <button type="button" onclick="requireAuth(() => openBranchEditModal())" class="admin-protected-btn text-xs font-medium text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors cursor-pointer">
                             <i class="ph-bold ph-lock-simple lock-indicator text-amber-300"></i>
-                            <span>ແກ້ໄຂ</span>
+                            <span>ແກ້ໄຂສາຂາ</span>
                         </button>
                     </div>
 
@@ -340,23 +340,30 @@
              VIEW 2: FACULTY DETAIL VIEW (ລາຍລະອຽດແຕ່ລະຄະນະວິຊາ)
              ===================================================================== -->
         <section id="facultyDetailView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
-            <div class="flex items-center justify-between gap-2 flex-wrap">
-                <div class="flex items-center gap-1.5">
-                    <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
-                        <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+            <!-- Top Navigation & Separated Action Commands -->
+            <div class="space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                    <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs px-3 py-2 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                        <i class="ph-bold ph-arrow-left text-teal-700 text-sm"></i>
                         <span>ກັບຄືນໜ້າຫຼັກ</span>
                     </button>
-                </div>
 
-                <div class="flex items-center gap-1.5 flex-wrap">
-                    <button id="shiftYearFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2.5 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
+                    <button id="shiftYearFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
                         <i class="ph-bold ph-calendar-check text-amber-700 text-sm"></i>
                         <span>ປ່ຽນປີຮຽນ</span>
                     </button>
+                </div>
 
-                    <button id="editCurrentFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
-                        <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
-                        <span>ເພີ່ມນັກສຶກສາໃໝ່,ແກ້ໄຂ</span>
+                <!-- Separated Commands: 1) ເພີ່ມນັກສຶກສາໃໝ່ (Opens Full Student Bio Form)  2) ເພີ່ມ ແລະ ແກ້ໄຂສາຂາ (Branches Only) -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button id="addNewStudentFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-blue-900 to-teal-700 hover:from-blue-800 hover:to-teal-600 active:scale-95 text-white font-bold text-xs px-3 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                        <i class="ph-bold ph-user-plus text-emerald-300 text-base"></i>
+                        <span>ເພີ່ມນັກສຶກສາໃໝ່</span>
+                    </button>
+
+                    <button id="editBranchFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center justify-center gap-1.5 bg-white hover:bg-teal-50 active:scale-95 text-teal-900 font-bold text-xs px-3 py-2.5 rounded-xl border-2 border-teal-600/30 hover:border-teal-600 shadow-2xs transition-all cursor-pointer">
+                        <i class="ph-bold ph-folders text-teal-700 text-base"></i>
+                        <span>ເພີ່ມ ແລະ ແກ້ໄຂສາຂາ</span>
                     </button>
                 </div>
             </div>
@@ -448,9 +455,11 @@
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ກັບຄືນລາຍຊື່ສາຂາ</span>
                 </button>
-                <span id="stuProfileFacultyBadge" class="text-[11px] font-bold text-teal-800 bg-teal-100/80 px-2.5 py-1 rounded-lg truncate max-w-[200px]">
-                    ຄະນະວິຊາ
-                </span>
+
+                <button id="editSingleStudentBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3.5 py-2.5 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer">
+                    <i class="ph-bold ph-pencil-simple text-amber-700 text-sm"></i>
+                    <span>ແກ້ໄຂປະຫວັດນັກສຶກສາ</span>
+                </button>
             </div>
 
             <div class="rounded-3xl bg-gradient-to-br from-navy-900 via-blue-900 to-teal-800 text-white p-5 shadow-md">
@@ -473,9 +482,14 @@
             </div>
 
             <div class="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
-                <div class="px-4 py-3.5 bg-blue-900 text-white flex items-center gap-2">
-                    <i class="ph-fill ph-identification-card text-lg text-emerald-300"></i>
-                    <h3 class="text-xs sm:text-sm font-bold">ຂໍ້ມູນປະຫວັດລະອຽດຂອງນັກສຶກສາ</h3>
+                <div class="px-4 py-3.5 bg-blue-900 text-white flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <i class="ph-fill ph-identification-card text-lg text-emerald-300"></i>
+                        <h3 class="text-xs sm:text-sm font-bold">ຂໍ້ມູນປະຫວັດລະອຽດຂອງນັກສຶກສາ</h3>
+                    </div>
+                    <span id="stuProfileFacultyBadge" class="text-[10px] font-bold text-teal-900 bg-emerald-200 px-2 py-0.5 rounded-md truncate max-w-[140px]">
+                        ຄະນະວິຊາ
+                    </span>
                 </div>
 
                 <div id="studentProfileFieldsList" class="divide-y divide-slate-100 text-xs sm:text-sm">
@@ -591,7 +605,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.2 (Cloud Sync Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.5.0 (Cloud Sync Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -599,7 +613,7 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.4.2-cloud</span>
+                        <span class="font-bold text-navy-900">v2.5.0-cloud</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ສະຖານະຖານຂໍ້ມູນ:</span>
@@ -627,18 +641,18 @@
     </div>
 
     <!-- =====================================================================
-         MODAL 1: LIVE DATA EDIT MODAL
+         MODAL 1: BRANCH / PROGRAM MANAGEMENT MODAL (ເພີ່ມ ແລະ ແກ້ໄຂສາຂາເທົ່ານັ້ນ)
          ===================================================================== -->
     <div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-navy-950/65 backdrop-blur-xs overflow-y-auto">
         <div class="bg-white rounded-3xl w-full max-w-[540px] max-h-[90vh] shadow-2xl border border-slate-100 overflow-hidden flex flex-col my-auto">
             <div class="bg-gradient-to-r from-navy-900 to-teal-800 px-5 py-3.5 text-white flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-2.5">
                     <div class="bg-white/15 p-2 rounded-xl">
-                        <i class="ph-bold ph-pencil-simple text-lg text-emerald-300"></i>
+                        <i class="ph-bold ph-folders text-lg text-emerald-300"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-sm sm:text-base">ແກ້ໄຂສະຖິຕິ & ສາຂາວິຊາ</h3>
-                        <p id="editModalCategoryLabel" class="text-[11px] text-teal-200">ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ</p>
+                        <h3 class="font-bold text-sm sm:text-base">ເພີ່ມ ແລະ ແກ້ໄຂສາຂາວິຊາ</h3>
+                        <p id="editModalCategoryLabel" class="text-[11px] text-teal-200">ຈັດການສາຂາ ແລະ ຫຼັກສູດໃນຄະນະ</p>
                     </div>
                 </div>
                 <button type="button" onclick="closeEditModal()" aria-label="ປິດໜ້າຕ່າງ" class="p-2 rounded-full bg-white/10 hover:bg-white/25 transition-colors cursor-pointer shrink-0">
@@ -673,19 +687,19 @@
 
                     <div class="space-y-2">
                         <div class="flex items-center justify-between">
-                            <p class="text-xs font-bold text-slate-700">ລາຍການສາຂາ & ລາຍຊື່ນັກສຶກສາ (ຄິດໄລ່ສະຖິຕິອັດຕະໂນມັດ):</p>
-                            <span class="text-[10px] text-teal-700 font-semibold">ກົງກັບລາຍຊື່ 100%</span>
+                            <p class="text-xs font-bold text-slate-700">ລາຍການຫຼັກສູດ ແລະ ສາຂາວິຊາ:</p>
+                            <span class="text-[10px] text-teal-700 font-semibold">ສະເພາະການຈັດການສາຂາ</span>
                         </div>
-                        <div id="modalDegreeInputsContainer" class="space-y-3">
-                            <!-- Dynamically generated rows + Student List Manager + Add New Program Button -->
+                        <div id="modalDegreeInputsContainer" class="space-y-2.5">
+                            <!-- Dynamically generated branch rows ONLY -->
                         </div>
                     </div>
                 </div>
 
                 <div class="px-4 sm:px-5 py-3.5 bg-slate-50 border-t border-slate-200 space-y-2.5 shrink-0">
                     <div class="bg-teal-50 border border-teal-200 rounded-2xl px-3 py-2 flex items-center justify-between">
-                        <span class="text-xs font-semibold text-teal-900">ລວມນັກສຶກສາໃນຄະນະນີ້:</span>
-                        <span id="modalFacultyTotalPreview" class="text-sm sm:text-base font-extrabold text-teal-700">0 ຄົນ</span>
+                        <span class="text-xs font-semibold text-teal-900">ຈຳນວນສາຂາ ແລະ ນັກສຶກສາລວມ:</span>
+                        <span id="modalFacultyTotalPreview" class="text-xs sm:text-sm font-extrabold text-teal-700">0 ສາຂາ (0 ຄົນ)</span>
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap">
@@ -696,11 +710,225 @@
                             ປິດ / ຍົກເລີກ
                         </button>
                         <button type="submit" class="flex-1 min-w-[160px] bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow-md transition-all cursor-pointer">
-                            ປິດໜ້ານີ້ ແລະ ບັນທຶກ
+                            ບັນທຶກຂໍ້ມູນສາຂາ
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 1A: UNIFIED STUDENT BIO FORM MODAL (ຟອມປະຫວັດລະອຽດນັກສຶກສາຈຸດດຽວ)
+         ===================================================================== -->
+    <div id="studentBioModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-navy-950/75 backdrop-blur-xs overflow-y-auto">
+        <div class="bg-white rounded-3xl w-full max-w-[540px] max-h-[92vh] shadow-2xl border border-slate-100 overflow-hidden flex flex-col my-auto">
+            <div class="bg-gradient-to-r from-navy-900 via-blue-900 to-teal-800 px-5 py-3.5 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i id="studentBioModalIcon" class="ph-bold ph-user-plus text-lg text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 id="studentBioModalTitle" class="font-bold text-sm sm:text-base">ເພີ່ມນັກສຶກສາໃໝ່ (ຟອມປະຫວັດລະອຽດ)</h3>
+                        <p id="studentBioModalSubtitle" class="text-[11px] text-teal-200">ປ້ອນຂໍ້ມູນປະຫວັດລະອຽດຂອງນັກສຶກສາໃຫ້ຄົບຖ້ວນ</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeStudentBioModal()" aria-label="ປິດໜ້າຕ່າງ" class="p-2 rounded-full bg-white/10 hover:bg-white/25 transition-colors cursor-pointer shrink-0">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <form id="studentBioForm" class="flex-1 min-h-0 flex flex-col overflow-hidden">
+                <div class="p-4 sm:p-5 space-y-3 overflow-y-auto flex-1 min-h-0 text-xs">
+                    <!-- ສ່ວນທີ 1: ຂໍ້ມູນຫຼັກສູດ, ສາຂາ ແລະ ປີຮຽນ -->
+                    <div class="bg-teal-50/70 border border-teal-200/90 rounded-2xl p-3 space-y-2.5">
+                        <p class="text-[11px] font-extrabold text-teal-900 flex items-center gap-1.5">
+                            <i class="ph-fill ph-graduation-cap text-teal-700 text-sm"></i>
+                            <span>ຂໍ້ມູນການຮຽນ ແລະ ສາຂາວິຊາ</span>
+                        </p>
+
+                        <div>
+                            <label for="stuBioBranchSelect" class="block text-[11px] font-bold text-slate-700 mb-1">ຫຼັກສູດ ແລະ ສາຂາວິຊາ *</label>
+                            <select id="stuBioBranchSelect" onchange="handleStudentBioBranchChange()" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="stuBioYearSelect" class="block text-[11px] font-bold text-slate-700 mb-1">ຊັ້ນປີຮຽນ *</label>
+                                <select id="stuBioYearSelect" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <!-- Populated dynamically based on branch max years -->
+                                </select>
+                            </div>
+                            <div>
+                                <label for="stuBioGenderSelect" class="block text-[11px] font-bold text-slate-700 mb-1">ເພດ *</label>
+                                <select id="stuBioGenderSelect" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <option value="female">ຍິງ (Female)</option>
+                                    <option value="male">ຊາຍ (Male)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ສ່ວນທີ 2: ລະຫັດນັກສຶກສາ & ຊື່-ນາມສະກຸນ -->
+                    <div class="bg-slate-50 border border-slate-200/90 rounded-2xl p-3 space-y-2.5">
+                        <p class="text-[11px] font-extrabold text-navy-900 flex items-center gap-1.5">
+                            <i class="ph-fill ph-identification-card text-blue-800 text-sm"></i>
+                            <span>ຂໍ້ມູນສ່ວນຕົວພື້ນຖານ (12 ລາຍການ)</span>
+                        </p>
+
+                        <!-- 1. ລະຫັດນັກສຶກສາ -->
+                        <div>
+                            <label for="stuBioCodeSuffixInput" class="block text-[11px] font-bold text-slate-700 mb-1">1. ລະຫັດນັກສຶກສາ *</label>
+                            <div class="flex items-center gap-1.5">
+                                <span id="stuBioCodePrefixBadge" class="px-2.5 py-2 bg-slate-200 text-navy-900 border border-slate-300 rounded-xl text-xs font-extrabold select-none shrink-0">
+                                    1041
+                                </span>
+                                <input type="text" id="stuBioCodeSuffixInput" inputmode="numeric" required placeholder="ປ້ອນຕົວເລກຕໍ່ທ້າຍ (10 ໂຕ)"
+                                    oninput="handleStudentBioSuffixPreview()"
+                                    class="flex-1 min-w-0 px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <span id="stuBioFullCodePreview" class="text-[11px] font-extrabold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-1.5 rounded-lg shrink-0">
+                                    1041...
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- 2. ຊື່ ແລະ ນາມສະກຸນ -->
+                        <div>
+                            <label for="stuBioNameInput" class="block text-[11px] font-bold text-slate-700 mb-1">2. ຊື່ ແລະ ນາມສະກຸນ *</label>
+                            <input type="text" id="stuBioNameInput" required placeholder="ເຊັ່ນ: ນ. ວັນນາ ສີຫາລາດ ຫຼື ທ. ບຸນທະວີ ແກ້ວວົງສາ"
+                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        </div>
+
+                        <!-- 3. ວັນ,ເດືອນ,ປີເກີດ & 4. ຊົນເຜົ່າ & 5. ສາດສະໜາ -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label for="stuBioDobInput" class="block text-[11px] font-bold text-slate-700 mb-1">3. ວັນ,ເດືອນ,ປີເກີດ</label>
+                                <input type="text" id="stuBioDobInput" placeholder="ວວ/ດດ/ປປປປ"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioEthnicityInput" class="block text-[11px] font-bold text-slate-700 mb-1">4. ຊົນເຜົ່າ</label>
+                                <input type="text" id="stuBioEthnicityInput" placeholder="ເຊັ່ນ: ລາວລຸ່ມ"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioReligionInput" class="block text-[11px] font-bold text-slate-700 mb-1">5. ສາດສະໜາ</label>
+                                <input type="text" id="stuBioReligionInput" placeholder="ເຊັ່ນ: ພຸດ"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                        </div>
+
+                        <!-- 6. ບ້ານເກີດ & 7. ເມືອງເກີດ & 8. ແຂວງເກີດ -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label for="stuBioVillageInput" class="block text-[11px] font-bold text-slate-700 mb-1">6. ບ້ານເກີດ</label>
+                                <input type="text" id="stuBioVillageInput" placeholder="ບ້ານ..."
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioDistrictInput" class="block text-[11px] font-bold text-slate-700 mb-1">7. ເມືອງເກີດ</label>
+                                <input type="text" id="stuBioDistrictInput" placeholder="ເມືອງ..."
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioProvinceInput" class="block text-[11px] font-bold text-slate-700 mb-1">8. ແຂວງເກີດ</label>
+                                <input type="text" id="stuBioProvinceInput" placeholder="ແຂວງ..."
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                        </div>
+
+                        <!-- 9. ມາຈາກກົມກອງ & 10. ປະເພດນັກສຶກສາ -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="stuBioOrgInput" class="block text-[11px] font-bold text-slate-700 mb-1">9. ມາຈາກກົມກອງ</label>
+                                <input type="text" id="stuBioOrgInput" placeholder="ເຊັ່ນ: ໂຮງໝໍມະໂຫສົດ"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioTypeSelect" class="block text-[11px] font-bold text-slate-700 mb-1">10. ປະເພດນັກສຶກສາ</label>
+                                <select id="stuBioTypeSelect" class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <option value="ພະນັກງານ">ພະນັກງານ</option>
+                                    <option value="ພະນັກງານ 95%">ພະນັກງານ 95%</option>
+                                    <option value="ພະນັກງານເອກະຊົນ">ພະນັກງານເອກະຊົນ</option>
+                                    <option value="ອາສາສະໝັກ,ສັນຍາຈ້າງ">ອາສາສະໝັກ,ສັນຍາຈ້າງ</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- 11. ທຶນສະໜັບສະໜູນການຮຽນ & 12. ເບີໂທ -->
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label for="stuBioScholarshipInput" class="block text-[11px] font-bold text-slate-700 mb-1">11. ທຶນສະໜັບສະໜູນ</label>
+                                <input type="text" id="stuBioScholarshipInput" placeholder="ເຊັ່ນ: ທຶນລັດຖະບານ"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                            <div>
+                                <label for="stuBioPhoneInput" class="block text-[11px] font-bold text-slate-700 mb-1">12. ເບີໂທຕິດຕໍ່</label>
+                                <input type="text" id="stuBioPhoneInput" placeholder="020 XXXX XXXX"
+                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="px-4 sm:px-5 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-2 shrink-0">
+                    <button type="button" id="deleteSingleStudentBtn" onclick="openDeleteStudentConfirmModal()" class="hidden px-3 py-2.5 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors cursor-pointer flex items-center gap-1">
+                        <i class="ph-bold ph-trash"></i>
+                        <span>ລຶບ</span>
+                    </button>
+                    <button type="button" onclick="closeStudentBioModal()" class="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-300 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="submit" id="studentBioSubmitBtn" class="flex-1 bg-gradient-to-r from-blue-900 to-teal-700 hover:from-blue-800 hover:to-teal-600 text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-check-circle text-emerald-300"></i>
+                        <span>ບັນທຶກຂໍ້ມູນນັກສຶກສາ</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         MODAL 1C: DELETE STUDENT CONFIRMATION MODAL (ຢືນຢັນການລຶບນັກສຶກສາ)
+         ===================================================================== -->
+    <div id="deleteStudentConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-navy-950/75 backdrop-blur-xs">
+        <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="bg-gradient-to-r from-rose-800 to-rose-600 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-bold ph-user-minus text-lg text-rose-100"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ຢືນຢັນການລຶບລາຍຊື່ນັກສຶກສາ</h3>
+                        <p class="text-[11px] text-rose-100">ສະຖິຕິຈະອັບເດດອັດຕະໂນມັດ</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeDeleteStudentConfirmModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4">
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    ທ່ານແນ່ໃຈບໍ່ວ່າຕ້ອງການລຶບຂໍ້ມູນປະຫວັດນັກສຶກສາຄົນນີ້ອອກຈາກລະບົບ?
+                </p>
+
+                <div class="bg-rose-50 border border-rose-200 rounded-2xl p-3">
+                    <p id="deleteStudentTargetName" class="text-xs font-bold text-rose-900"></p>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="button" onclick="closeDeleteStudentConfirmModal()" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
+                    <button type="button" onclick="confirmDeleteStudent()" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-trash"></i>
+                        <span>ຢືນຢັນລຶບ</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1154,6 +1382,8 @@
         let activeFacultyId = null;
         let activeStudyYearFilter = 'all';
         let currentDisplayedStudentsMap = {};
+        let currentSelectedStudentContext = null; // Stores { facultyId, degIdx, studentId }
+        let editingStudentBioState = null; // Stores { mode: 'add'|'edit', facultyId, originalDegIdx, studentId }
 
         function createSampleStudentRecord(seedText, index, yearNum, gender, level, program, facultyId = 'med') {
             let hash = 0;
@@ -1209,16 +1439,16 @@
                 name: String((stu && stu.name) || (safeGender === 'female' ? 'ນ. ນັກສຶກສາ ໃໝ່' : 'ທ. ນັກສຶກສາ ໃໝ່')).trim(),
                 gender: safeGender,
                 year: safeYear,
-                dob: String((stu && stu.dob) || '01/01/1998').trim(),
-                ethnicity: String((stu && stu.ethnicity) || 'ລາວລຸ່ມ').trim(),
-                religion: String((stu && stu.religion) || 'ພຸດ').trim(),
-                birthVillage: String((stu && stu.birthVillage) || 'ບ້ານ ໂພນໄຊ').trim(),
-                birthDistrict: String((stu && stu.birthDistrict) || 'ເມືອງ ໄຊເສດຖາ').trim(),
-                birthProvince: String((stu && stu.birthProvince) || 'ນະຄອນຫຼວງວຽງຈັນ').trim(),
-                organization: String((stu && stu.organization) || 'ມວສຊ').trim(),
+                dob: String((stu && stu.dob) || '').trim(),
+                ethnicity: String((stu && stu.ethnicity) || '').trim(),
+                religion: String((stu && stu.religion) || '').trim(),
+                birthVillage: String((stu && stu.birthVillage) || '').trim(),
+                birthDistrict: String((stu && stu.birthDistrict) || '').trim(),
+                birthProvince: String((stu && stu.birthProvince) || '').trim(),
+                organization: String((stu && stu.organization) || '').trim(),
                 studentType: String((stu && stu.studentType) || 'ພະນັກງານ').trim(),
-                scholarship: String((stu && stu.scholarship) || 'ທຶນລັດຖະບານ').trim(),
-                phone: String((stu && stu.phone) || '020 5555 0000').trim()
+                scholarship: String((stu && stu.scholarship) || '').trim(),
+                phone: String((stu && stu.phone) || '').trim()
             };
         }
 
@@ -1339,6 +1569,8 @@
                 const lookupKey = `${branchIndex}_${i}`;
                 currentDisplayedStudentsMap[lookupKey] = {
                     ...stu,
+                    facultyId,
+                    degIdx: branchIndex,
                     level: normDeg.level,
                     program: normDeg.program,
                     yearText: formatStudyYearLabel(stu.year, normDeg.level, normDeg.program),
@@ -2160,7 +2392,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.4.2
+                        v2.5.0
                     </span>
                 </button>
             `;
@@ -2192,6 +2424,20 @@
             const facIdForCode = faculty ? faculty.id : 'med';
             const displayCode = formatStudentFullCode(stu.code, facIdForCode);
 
+            currentSelectedStudentContext = {
+                facultyId: facIdForCode,
+                degIdx: stu.degIdx,
+                studentId: stu.id
+            };
+
+            const editSingleBtn = document.getElementById('editSingleStudentBtn');
+            if (editSingleBtn) {
+                editSingleBtn.onclick = () => requireAuth(
+                    () => openStudentBioModal('edit', facIdForCode, stu.degIdx, stu.id),
+                    facIdForCode
+                );
+            }
+
             setText('stuProfileFacultyBadge', faculty ? faculty.shortName : store.shortTitle);
             setText('stuProfileProgramBadge', `${stu.level} • ${stu.program}`);
             setText('stuProfileHeroName', stu.name);
@@ -2200,16 +2446,16 @@
             const bioRows = [
                 { label: "ລະຫັດນັກສຶກສາ", value: displayCode, highlight: true },
                 { label: "ຊື່ ແລະ ນາມສະກຸນ", value: stu.name, bold: true },
-                { label: "ວັນ,ເດືອນ,ປີເກີດ", value: stu.dob },
-                { label: "ຊົນເຜົ່າ", value: stu.ethnicity },
-                { label: "ສາດສະໜາ", value: stu.religion },
-                { label: "ບ້ານເກີດ", value: stu.birthVillage },
-                { label: "ເມືອງເກີດ", value: stu.birthDistrict },
-                { label: "ແຂວງເກີດ", value: stu.birthProvince },
-                { label: "ມາຈາກກົມກອງ", value: stu.organization },
-                { label: "ປະເພດນັກສຶກສາ", value: stu.studentType },
-                { label: "ທຶນສະໜັບສະໜູນການຮຽນ", value: stu.scholarship },
-                { label: "ເບີໂທ", value: stu.phone }
+                { label: "ວັນ,ເດືອນ,ປີເກີດ", value: stu.dob || '-' },
+                { label: "ຊົນເຜົ່າ", value: stu.ethnicity || '-' },
+                { label: "ສາດສະໜາ", value: stu.religion || '-' },
+                { label: "ບ້ານເກີດ", value: stu.birthVillage || '-' },
+                { label: "ເມືອງເກີດ", value: stu.birthDistrict || '-' },
+                { label: "ແຂວງເກີດ", value: stu.birthProvince || '-' },
+                { label: "ມາຈາກກົມກອງ", value: stu.organization || '-' },
+                { label: "ປະເພດນັກສຶກສາ", value: stu.studentType || '-' },
+                { label: "ທຶນສະໜັບສະໜູນການຮຽນ", value: stu.scholarship || '-' },
+                { label: "ເບີໂທ", value: stu.phone || '-' }
             ];
 
             const fieldsContainer = document.getElementById('studentProfileFieldsList');
@@ -2234,7 +2480,7 @@
 
         function backToFacultyDetailFromStudent() {
             if (activeFacultyId) {
-                switchView('facultyDetailView');
+                openFacultyDetail(activeFacultyId, false);
             } else {
                 navigateToHome();
             }
@@ -2285,10 +2531,14 @@
                 filterPillsEl.innerHTML = pillsHTML;
             }
 
+            // Connect separated buttons
             const shiftBtn = document.getElementById('shiftYearFacultyBtn');
-            const editFacBtn = document.getElementById('editCurrentFacultyBtn');
+            const addNewStuBtn = document.getElementById('addNewStudentFacultyBtn');
+            const editBranchBtn = document.getElementById('editBranchFacultyBtn');
+
             if (shiftBtn) shiftBtn.onclick = () => requireAuth(() => openShiftYearModal(faculty.id), faculty.id);
-            if (editFacBtn) editFacBtn.onclick = () => requireAuth(() => openQuickEditModal(faculty.id), faculty.id);
+            if (addNewStuBtn) addNewStuBtn.onclick = () => requireAuth(() => openStudentBioModal('add', faculty.id, 0, null), faculty.id);
+            if (editBranchBtn) editBranchBtn.onclick = () => requireAuth(() => openBranchEditModal(faculty.id), faculty.id);
 
             const tbody = document.getElementById('degreeTableBody');
             currentDisplayedStudentsMap = {};
@@ -2359,7 +2609,7 @@
                                             </span>
                                         </div>
                                         <span class="text-[11px] text-slate-400 group-hover:text-blue-700 flex items-center gap-0.5 shrink-0">
-                                            <span>ເບິ່ງປະຫວັດ</span>
+                                            <span>ເບິ່ງ/ແກ້ໄຂປະຫວັດ</span>
                                             <i class="ph-bold ph-caret-right"></i>
                                         </span>
                                     </div>
@@ -2400,6 +2650,249 @@
             }
         }
 
+        // =====================================================================
+        // UNIFIED STUDENT BIO MODAL FUNCTIONS (ເພີ່ມນັກສຶກສາໃໝ່ & ແກ້ໄຂປະຫວັດຈຸດດຽວ)
+        // =====================================================================
+        function openStudentBioModal(mode = 'add', facultyId = activeFacultyId, degIdx = 0, studentId = null) {
+            if (!currentUser) return;
+            const targetFacId = facultyId || activeFacultyId || (currentUser.role === 'faculty' ? currentUser.facultyId : 'med');
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === targetFacId);
+            if (!faculty || !Array.isArray(faculty.degrees) || faculty.degrees.length === 0) {
+                showToast('ກະລຸນາເພີ່ມສາຂາວິຊາກ່ອນຈຶ່ງສາມາດເພີ່ມນັກສຶກສາໄດ້!', true);
+                return;
+            }
+
+            faculty.degrees = faculty.degrees.map(d => normalizeDegreeEntry(d, faculty.id));
+            const safeDegIdx = Math.min(Math.max(parseInt(degIdx, 10) || 0, 0), faculty.degrees.length - 1);
+
+            editingStudentBioState = {
+                mode,
+                facultyId: faculty.id,
+                originalDegIdx: safeDegIdx,
+                studentId
+            };
+
+            const branchSelect = document.getElementById('stuBioBranchSelect');
+            if (branchSelect) {
+                branchSelect.innerHTML = faculty.degrees.map((d, idx) =>
+                    `<option value="${idx}">${idx + 1}. [${escapeHTML(d.level)}] ${escapeHTML(d.program)}</option>`
+                ).join('');
+                branchSelect.value = String(safeDegIdx);
+            }
+
+            const fixedPrefix = getStudentCodeFixedPrefix(faculty.id);
+            const maxSuffixLen = getStudentCodeSuffixMaxLen(faculty.id);
+            setText('stuBioCodePrefixBadge', fixedPrefix);
+
+            const suffixInput = document.getElementById('stuBioCodeSuffixInput');
+            if (suffixInput) {
+                suffixInput.maxLength = maxSuffixLen;
+                suffixInput.placeholder = `ປ້ອນຕົວເລກຕໍ່ (${maxSuffixLen} ໂຕ)`;
+            }
+
+            const deleteBtn = document.getElementById('deleteSingleStudentBtn');
+            const iconEl = document.getElementById('studentBioModalIcon');
+
+            if (mode === 'edit' && studentId) {
+                const targetDeg = faculty.degrees[safeDegIdx];
+                const existingStu = targetDeg && Array.isArray(targetDeg.students)
+                    ? targetDeg.students.find(s => s.id === studentId)
+                    : null;
+
+                if (!existingStu) {
+                    showToast('ບໍ່ພົບຂໍ້ມູນນັກສຶກສາທີ່ຕ້ອງການແກ້ໄຂ', true);
+                    return;
+                }
+
+                setText('studentBioModalTitle', 'ແກ້ໄຂຂໍ້ມູນປະຫວັດລະອຽດຂອງນັກສຶກສາ');
+                setText('studentBioModalSubtitle', `${faculty.shortName} • ${existingStu.name}`);
+                setText('studentBioSubmitBtn', 'ບັນທຶກການແກ້ໄຂປະຫວັດ');
+                if (iconEl) iconEl.className = 'ph-bold ph-pencil-simple text-lg text-amber-300';
+                if (deleteBtn) deleteBtn.classList.remove('hidden');
+
+                populateStudentBioYearSelect(safeDegIdx, existingStu.year);
+
+                const genderSel = document.getElementById('stuBioGenderSelect');
+                if (genderSel) genderSel.value = existingStu.gender === 'male' ? 'male' : 'female';
+
+                if (suffixInput) suffixInput.value = extractStudentCodeSuffix(existingStu.code, faculty.id);
+                handleStudentBioSuffixPreview();
+
+                document.getElementById('stuBioNameInput').value = existingStu.name || '';
+                document.getElementById('stuBioDobInput').value = existingStu.dob || '';
+                document.getElementById('stuBioEthnicityInput').value = existingStu.ethnicity || '';
+                document.getElementById('stuBioReligionInput').value = existingStu.religion || '';
+                document.getElementById('stuBioVillageInput').value = existingStu.birthVillage || '';
+                document.getElementById('stuBioDistrictInput').value = existingStu.birthDistrict || '';
+                document.getElementById('stuBioProvinceInput').value = existingStu.birthProvince || '';
+                document.getElementById('stuBioOrgInput').value = existingStu.organization || '';
+
+                const typeSel = document.getElementById('stuBioTypeSelect');
+                if (typeSel) {
+                    const hasOpt = Array.from(typeSel.options).some(o => o.value === existingStu.studentType);
+                    if (!hasOpt && existingStu.studentType) {
+                        const opt = document.createElement('option');
+                        opt.value = existingStu.studentType;
+                        opt.textContent = existingStu.studentType;
+                        typeSel.appendChild(opt);
+                    }
+                    typeSel.value = existingStu.studentType || 'ພະນັກງານ';
+                }
+
+                document.getElementById('stuBioScholarshipInput').value = existingStu.scholarship || '';
+                document.getElementById('stuBioPhoneInput').value = existingStu.phone || '';
+            } else {
+                setText('studentBioModalTitle', 'ເພີ່ມນັກສຶກສາໃໝ່ (ຟອມປະຫວັດລະອຽດ)');
+                setText('studentBioModalSubtitle', `${faculty.shortName} • ປ້ອນຂໍ້ມູນປະຫວັດ 12 ລາຍການ`);
+                setText('studentBioSubmitBtn', 'ບັນທຶກນັກສຶກສາໃໝ່');
+                if (iconEl) iconEl.className = 'ph-bold ph-user-plus text-lg text-emerald-300';
+                if (deleteBtn) deleteBtn.classList.add('hidden');
+
+                const defaultYr = activeStudyYearFilter !== 'all' ? parseInt(activeStudyYearFilter, 10) : 1;
+                populateStudentBioYearSelect(safeDegIdx, defaultYr);
+
+                const genderSel = document.getElementById('stuBioGenderSelect');
+                if (genderSel) genderSel.value = 'female';
+
+                const randomSuffix = String(Math.floor(Math.random() * 8999999999) + 1000000000).slice(0, maxSuffixLen);
+                if (suffixInput) suffixInput.value = randomSuffix;
+                handleStudentBioSuffixPreview();
+
+                document.getElementById('stuBioNameInput').value = '';
+                document.getElementById('stuBioDobInput').value = '';
+                document.getElementById('stuBioEthnicityInput').value = 'ລາວລຸ່ມ';
+                document.getElementById('stuBioReligionInput').value = 'ພຸດ';
+                document.getElementById('stuBioVillageInput').value = '';
+                document.getElementById('stuBioDistrictInput').value = '';
+                document.getElementById('stuBioProvinceInput').value = '';
+                document.getElementById('stuBioOrgInput').value = '';
+                document.getElementById('stuBioTypeSelect').value = 'ພະນັກງານ';
+                document.getElementById('stuBioScholarshipInput').value = 'ທຶນລັດຖະບານ';
+                document.getElementById('stuBioPhoneInput').value = '';
+            }
+
+            const modal = document.getElementById('studentBioModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            setTimeout(() => {
+                const nameInp = document.getElementById('stuBioNameInput');
+                if (nameInp && mode === 'add') nameInp.focus();
+            }, 80);
+        }
+
+        function closeStudentBioModal() {
+            const modal = document.getElementById('studentBioModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function populateStudentBioYearSelect(degIdx, preselectYear = 1) {
+            if (!editingStudentBioState) return;
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === editingStudentBioState.facultyId);
+            if (!faculty || !faculty.degrees[degIdx]) return;
+
+            const deg = faculty.degrees[degIdx];
+            const maxY = getMaxStudyYears(deg.level, deg.program);
+            const safeYear = Math.min(Math.max(parseInt(preselectYear, 10) || 1, 1), maxY);
+
+            const yearSelect = document.getElementById('stuBioYearSelect');
+            if (yearSelect) {
+                let opts = '';
+                for (let y = 1; y <= maxY; y++) {
+                    opts += `<option value="${y}" ${y === safeYear ? 'selected' : ''}>ປີທີ ${y} / ${maxY} ປີ</option>`;
+                }
+                yearSelect.innerHTML = opts;
+            }
+        }
+
+        function handleStudentBioBranchChange() {
+            const branchSel = document.getElementById('stuBioBranchSelect');
+            const yearSel = document.getElementById('stuBioYearSelect');
+            if (!branchSel) return;
+            const newDegIdx = parseInt(branchSel.value, 10) || 0;
+            const currentSelectedYr = yearSel ? (parseInt(yearSel.value, 10) || 1) : 1;
+            populateStudentBioYearSelect(newDegIdx, currentSelectedYr);
+        }
+
+        function handleStudentBioSuffixPreview() {
+            if (!editingStudentBioState) return;
+            const facId = editingStudentBioState.facultyId;
+            const suffixInp = document.getElementById('stuBioCodeSuffixInput');
+            if (!suffixInp) return;
+
+            const maxSuffixLen = getStudentCodeSuffixMaxLen(facId);
+            const cleaned = String(suffixInp.value || '').replace(/\D/g, '').slice(0, maxSuffixLen);
+            if (suffixInp.value !== cleaned) {
+                suffixInp.value = cleaned;
+            }
+            const prefix = getStudentCodeFixedPrefix(facId);
+            setText('stuBioFullCodePreview', `${prefix}${cleaned}`);
+        }
+
+        function openDeleteStudentConfirmModal() {
+            if (!editingStudentBioState || editingStudentBioState.mode !== 'edit') return;
+            const nameVal = (document.getElementById('stuBioNameInput')?.value || '').trim();
+            setText('deleteStudentTargetName', nameVal || 'ນັກສຶກສາ');
+            const modal = document.getElementById('deleteStudentConfirmModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeDeleteStudentConfirmModal() {
+            const modal = document.getElementById('deleteStudentConfirmModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        async function confirmDeleteStudent() {
+            if (!currentUser || !editingStudentBioState || editingStudentBioState.mode !== 'edit') return;
+            const { facultyId, originalDegIdx, studentId } = editingStudentBioState;
+
+            if (currentUser.role === 'faculty' && currentUser.facultyId !== facultyId) {
+                showToast('ທ່ານບໍ່ມີສິດລຶບຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
+                return;
+            }
+
+            const store = getStore();
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
+            if (!faculty || !faculty.degrees[originalDegIdx]) return;
+
+            const targetDeg = faculty.degrees[originalDegIdx];
+            targetDeg.students = (targetDeg.students || []).filter(s => s.id !== studentId);
+            targetDeg.studyYears = rebuildStudyYearsFromStudents(
+                targetDeg.students,
+                getMaxStudyYears(targetDeg.level, targetDeg.program)
+            );
+
+            saveToStorage(store.statsKey, store.appData);
+            updateLastModifiedDate();
+            renderPortalView();
+            renderHomeView();
+            closeDeleteStudentConfirmModal();
+            closeStudentBioModal();
+            openFacultyDetail(faculty.id, false);
+
+            if (typeof window.pushDataToCloudGlobal === 'function') {
+                await window.pushDataToCloudGlobal();
+            } else {
+                showToast('ລຶບຂໍ້ມູນນັກສຶກສາສຳເລັດ!');
+            }
+        }
+
+        // =====================================================================
+        // NEWS FUNCTIONS
+        // =====================================================================
         function openNewsView() {
             const store = getStore(activeCategory);
             setText('newsCategoryBadge', `ແຍກສະເພາະ: ${store.title}`);
@@ -2575,64 +3068,9 @@
             }
         }
 
-        function closeNewsFormModal() {
-            const modal = document.getElementById('newsFormModal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        }
-
-        function openDeleteNewsConfirmModal(newsId) {
-            const store = getStore();
-            const targetItem = store.newsData.find(n => Number(n.id) === Number(newsId));
-            if (!targetItem) {
-                showToast('ບໍ່ພົບຂໍ້ມູນຂ່າວສານທີ່ຕ້ອງການລຶບ', true);
-                return;
-            }
-            pendingDeleteNewsId = targetItem.id;
-            setText('deleteNewsTargetTitle', targetItem.title);
-
-            const modal = document.getElementById('deleteNewsConfirmModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-                modal.classList.add('flex');
-            }
-        }
-
-        function closeDeleteNewsConfirmModal() {
-            pendingDeleteNewsId = null;
-            const modal = document.getElementById('deleteNewsConfirmModal');
-            if (modal) {
-                modal.classList.add('hidden');
-                modal.classList.remove('flex');
-            }
-        }
-
-        async function confirmDeleteNews() {
-            if (!currentUser || currentUser.role !== 'admin') {
-                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດລຶບຂ່າວສານໄດ້', true);
-                closeDeleteNewsConfirmModal();
-                return;
-            }
-            if (pendingDeleteNewsId === null) return;
-
-            const store = getStore();
-            store.newsData = store.newsData.filter(n => Number(n.id) !== Number(pendingDeleteNewsId));
-
-            saveToStorage(store.newsKey, store.newsData);
-            updateLastModifiedDate();
-            renderNewsFeed();
-            renderHomeView();
-            closeDeleteNewsConfirmModal();
-
-            if (typeof window.pushDataToCloudGlobal === 'function') {
-                await window.pushDataToCloudGlobal();
-            } else {
-                showToast('ລຶບຂໍ້ມູນຂ່າວສານສຳເລັດ!');
-            }
-        }
-
+        // =====================================================================
+        // ORG CHART FUNCTIONS
+        // =====================================================================
         function openOrgChartView() {
             setText('orgDeptSubtitle', `${getStore().deptName} ມວສ`);
             renderOrgChart();
@@ -2753,6 +3191,9 @@
             }
         }
 
+        // =====================================================================
+        // BRANCH MANAGEMENT MODAL FUNCTIONS (ເພີ່ມ ແລະ ແກ້ໄຂສາຂາເທົ່ານັ້ນ)
+        // =====================================================================
         function getEditModalEls() {
             return {
                 editModal: document.getElementById('editModal'),
@@ -2761,7 +3202,7 @@
             };
         }
 
-        function openQuickEditModal(preselectFacultyId = null) {
+        function openBranchEditModal(preselectFacultyId = null) {
             if (!currentUser) return;
             const { editModal, modalFacultySelect } = getEditModalEls();
             if (!editModal || !modalFacultySelect) return;
@@ -2831,7 +3272,7 @@
                 showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດກຳນົດຈຳນວນປີຮຽນໄດ້!', true);
                 return;
             }
-            syncInputsToTemp();
+            syncBranchInputsToTemp();
 
             document.querySelectorAll('.admin-year-limit-input').forEach(inp => {
                 const key = inp.dataset.limitKey;
@@ -2962,9 +3403,8 @@
                 : [];
         }
 
-        function syncInputsToTemp() {
-            const { modalFacultySelect } = getEditModalEls();
-            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
+        // Sync branch level and branch name ONLY (keeps existing students intact)
+        function syncBranchInputsToTemp() {
             document.querySelectorAll('.modal-deg-item').forEach((row, idx) => {
                 if (!modalTempDegrees[idx]) return;
                 const levelInp = row.querySelector('.modal-level-input');
@@ -2975,73 +3415,22 @@
                 modalTempDegrees[idx].program = newProg;
 
                 const maxY = getMaxStudyYears(newLevel, newProg);
-                const updatedStudents = [];
-
-                row.querySelectorAll('.modal-student-row').forEach((stuRow, stuIdx) => {
-                    const existingStu = (modalTempDegrees[idx].students && modalTempDegrees[idx].students[stuIdx])
-                        ? modalTempDegrees[idx].students[stuIdx]
-                        : createSampleStudentRecord(`${newLevel}|${newProg}`, stuIdx, 1, 'female', newLevel, newProg, activeFacId);
-
-                    const nameInp = stuRow.querySelector('.stu-name-input');
-                    const genderInp = stuRow.querySelector('.stu-gender-input');
-                    const yearInp = stuRow.querySelector('.stu-year-input');
-                    const suffixInp = stuRow.querySelector('.stu-code-suffix-input');
-
-                    const safeGender = genderInp ? genderInp.value : existingStu.gender;
-                    const safeYear = yearInp ? Math.min(Math.max(parseInt(yearInp.value, 10) || 1, 1), maxY) : Math.min(existingStu.year, maxY);
-                    const fullCode = suffixInp
-                        ? formatStudentFullCode(suffixInp.value, activeFacId)
-                        : formatStudentFullCode(existingStu.code, activeFacId);
-
-                    updatedStudents.push({
-                        ...existingStu,
-                        code: fullCode,
-                        name: nameInp ? (nameInp.value.trim() || (safeGender === 'male' ? 'ທ. ນັກສຶກສາ' : 'ນ. ນັກສຶກສາ')) : existingStu.name,
-                        gender: safeGender === 'male' ? 'male' : 'female',
-                        year: safeYear
-                    });
-                });
-
-                modalTempDegrees[idx].students = updatedStudents;
-                modalTempDegrees[idx].studyYears = rebuildStudyYearsFromStudents(updatedStudents, maxY);
+                modalTempDegrees[idx].studyYears = rebuildStudyYearsFromStudents(modalTempDegrees[idx].students || [], maxY);
             });
         }
 
         function handleDegreeLevelOrNameChange(index) {
             const { modalFacultySelect } = getEditModalEls();
             const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            syncInputsToTemp();
+            syncBranchInputsToTemp();
             modalTempDegrees[index] = normalizeDegreeEntry(modalTempDegrees[index], activeFacId);
-            renderModalDegreeInputs();
-        }
-
-        function addStudentToProgram(degIndex) {
-            const { modalFacultySelect } = getEditModalEls();
-            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            syncInputsToTemp();
-            const deg = modalTempDegrees[degIndex];
-            if (!deg) return;
-            const nextIdx = deg.students.length;
-            const defaultGender = nextIdx % 2 === 0 ? 'female' : 'male';
-            const newStu = createSampleStudentRecord(`${deg.level}|${deg.program}`, nextIdx, 1, defaultGender, deg.level, deg.program, activeFacId);
-            deg.students.push(newStu);
-            deg.studyYears = rebuildStudyYearsFromStudents(deg.students, getMaxStudyYears(deg.level, deg.program));
-            renderModalDegreeInputs();
-        }
-
-        function removeStudentFromProgram(degIndex, stuIndex) {
-            syncInputsToTemp();
-            const deg = modalTempDegrees[degIndex];
-            if (!deg || !Array.isArray(deg.students)) return;
-            deg.students.splice(stuIndex, 1);
-            deg.studyYears = rebuildStudyYearsFromStudents(deg.students, getMaxStudyYears(deg.level, deg.program));
             renderModalDegreeInputs();
         }
 
         function addNewProgramRow() {
             const { modalFacultySelect } = getEditModalEls();
             const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            syncInputsToTemp();
+            syncBranchInputsToTemp();
             const defaultLevel = activeCategory === 'undergrad' ? 'ປະລິນຍາຕີ' : 'ປະລິນຍາໂທ';
             const newItem = normalizeDegreeEntry({
                 level: defaultLevel,
@@ -3064,31 +3453,17 @@
                 showToast('ຕ້ອງມີຢ່າງໜ້ອຍ 1 ສາຂາໃນຄະນະ!', true);
                 return;
             }
-            syncInputsToTemp();
+            syncBranchInputsToTemp();
             modalTempDegrees.splice(index, 1);
             renderModalDegreeInputs();
         }
 
-        function handleStudentSuffixInput(inputEl, facultyId) {
-            const maxSuffixLen = getStudentCodeSuffixMaxLen(facultyId);
-            const cleaned = String(inputEl.value || '').replace(/\D/g, '').slice(0, maxSuffixLen);
-            if (inputEl.value !== cleaned) {
-                inputEl.value = cleaned;
-            }
-            const prefix = getStudentCodeFixedPrefix(facultyId);
-            const fullPreviewEl = inputEl.closest('.modal-student-row')?.querySelector('.stu-full-code-preview');
-            if (fullPreviewEl) {
-                fullPreviewEl.textContent = `${prefix}${cleaned}`;
-            }
-        }
-
+        // Renders ONLY branch management rows (no inline student list editing here)
         function renderModalDegreeInputs() {
             const { modalFacultySelect, modalDegreeInputsContainer } = getEditModalEls();
             if (!modalDegreeInputsContainer) return;
 
             const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            const fixedPrefix = getStudentCodeFixedPrefix(activeFacId);
-            const maxSuffixLen = getStudentCodeSuffixMaxLen(activeFacId);
 
             const levelOptions = activeCategory === 'undergrad'
                 ? ['ອະນຸປະລິນຍາ', 'ປະລິນຍາຕີ', 'ຕໍ່ເນື່ອງປະລິນຍາຕີ']
@@ -3104,62 +3479,15 @@
                 const mCount = normDeg.students.filter(s => s.gender === 'male').length;
                 const tCount = normDeg.students.length;
 
-                const studentsRowsHTML = normDeg.students.length === 0
-                    ? `<p class="text-[11px] italic text-slate-400 text-center py-2 bg-white rounded-lg border border-dashed border-slate-200">ຍັງບໍ່ມີລາຍຊື່ນັກສຶກສາ (0 ຄົນ)</p>`
-                    : normDeg.students.map((stu, stuIdx) => {
-                        let stuYearOptions = '';
-                        for (let y = 1; y <= maxY; y++) {
-                            stuYearOptions += `<option value="${y}" ${Number(stu.year) === y ? 'selected' : ''}>ປີ ${y}</option>`;
-                        }
-                        const suffixVal = extractStudentCodeSuffix(stu.code, activeFacId);
-                        const fullCodeVal = formatStudentFullCode(suffixVal, activeFacId);
-
-                        return `
-                            <div class="modal-student-row bg-white border border-slate-200/90 rounded-xl p-2 space-y-1.5">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="text-[11px] font-bold text-slate-500 w-4 shrink-0">${stuIdx + 1}.</span>
-                                    <input type="text" value="${escapeHTML(stu.name)}" placeholder="ຊື່ ແລະ ນາມສະກຸນ"
-                                        class="stu-name-input flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-navy-900 focus:outline-none focus:ring-1 focus:ring-teal-500">
-                                    <button type="button" onclick="removeStudentFromProgram(${index}, ${stuIdx})" title="ລຶບລາຍຊື່ນີ້" class="text-rose-500 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer shrink-0">
-                                        <i class="ph-bold ph-x text-xs"></i>
-                                    </button>
-                                </div>
-                                <div class="pl-5 space-y-1">
-                                    <div class="flex items-center gap-1">
-                                        <span title="3 ໂຕທຳອິດ (104) ປ່ຽນບໍ່ໄດ້ + ເລກຄະນະ (${getFacultyDigitCode(activeFacId)})" class="px-2 py-1 bg-slate-200/90 text-navy-900 border border-slate-300 rounded-lg text-[11px] font-extrabold select-none shrink-0">
-                                            ${escapeHTML(fixedPrefix)}
-                                        </span>
-                                        <input type="text" inputmode="numeric" maxlength="${maxSuffixLen}" value="${escapeHTML(suffixVal)}"
-                                            oninput="handleStudentSuffixInput(this, '${escapeHTML(activeFacId)}')"
-                                            placeholder="ປ້ອນຕົວເລກຕໍ່ (${maxSuffixLen} ໂຕ)"
-                                            class="stu-code-suffix-input flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-navy-900 focus:outline-none focus:ring-1 focus:ring-teal-500">
-                                        <span class="stu-full-code-preview text-[10px] font-bold text-teal-800 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded shrink-0">
-                                            ${escapeHTML(fullCodeVal)}
-                                        </span>
-                                    </div>
-                                    <div class="grid grid-cols-2 gap-1.5">
-                                        <select onchange="handleStudentFieldLiveUpdate()" class="stu-gender-input px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-navy-900 focus:outline-none focus:ring-1 focus:ring-teal-500">
-                                            <option value="female" ${stu.gender === 'female' ? 'selected' : ''}>ຍິງ</option>
-                                            <option value="male" ${stu.gender === 'male' ? 'selected' : ''}>ຊາຍ</option>
-                                        </select>
-                                        <select class="stu-year-input px-1.5 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-1 focus:ring-teal-500">
-                                            ${stuYearOptions}
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                    }).join('');
-
                 return `
-                <div class="modal-deg-item bg-slate-50 p-3 rounded-2xl border border-slate-200/90 space-y-2.5 relative">
+                <div class="modal-deg-item bg-slate-50 p-3 rounded-2xl border border-slate-200/90 space-y-2 relative">
                     <div class="flex items-center justify-between gap-2">
                         <div class="flex items-center gap-1.5 flex-1">
                             <span class="text-xs font-extrabold text-teal-800">${index + 1}.</span>
-                            <select onchange="handleDegreeLevelOrNameChange(${index})" class="modal-level-input px-2 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <select onchange="handleDegreeLevelOrNameChange(${index})" class="modal-level-input px-2.5 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
                                 ${optionsList.map(opt => `<option value="${escapeHTML(opt)}" ${opt === normDeg.level ? 'selected' : ''}>${escapeHTML(opt)}</option>`).join('')}
                             </select>
-                            <span class="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-md">${maxY} ປີ</span>
+                            <span class="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-md">ຫຼັກສູດ ${maxY} ປີ</span>
                         </div>
                         <button type="button" onclick="removeProgramRow(${index})" title="ລຶບສາຂານີ້" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer">
                             <i class="ph-bold ph-trash text-sm"></i>
@@ -3167,25 +3495,18 @@
                     </div>
 
                     <div>
+                        <label class="block text-[10px] font-bold text-slate-500 mb-1">ຊື່ສາຂາວິຊາ:</label>
                         <input type="text" onchange="handleDegreeLevelOrNameChange(${index})" value="${escapeHTML(normDeg.program)}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ທັນຕະແພດສາດ)"
-                            class="modal-prog-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            class="modal-prog-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
                     </div>
 
-                    <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-2.5 py-1.5 text-[11px]">
-                        <span class="font-bold text-emerald-900">ສະຖິຕິຕາມລາຍຊື່:</span>
-                        <div class="flex items-center gap-2 font-extrabold">
+                    <div class="flex items-center justify-between bg-white border border-slate-200/80 rounded-xl px-2.5 py-1.5 text-[11px]">
+                        <span class="text-slate-500">ນັກສຶກສາໃນສາຂານີ້:</span>
+                        <div class="flex items-center gap-2 font-bold">
                             <span class="text-rose-600">ຍິງ: ${fCount}</span>
                             <span class="text-teal-700">ຊາຍ: ${mCount}</span>
-                            <span class="text-navy-900 bg-white px-2 py-0.5 rounded-md border border-emerald-200">ລວມ: ${tCount} ຄົນ</span>
+                            <span class="text-navy-900 bg-slate-100 px-2 py-0.5 rounded-md">ລວມ: ${tCount} ຄົນ</span>
                         </div>
-                    </div>
-
-                    <div class="space-y-1.5">
-                        ${studentsRowsHTML}
-                        <button type="button" onclick="addStudentToProgram(${index})" class="w-full py-1.5 px-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 font-bold text-[11px] flex items-center justify-center gap-1 transition-colors cursor-pointer">
-                            <i class="ph-bold ph-user-plus text-sm"></i>
-                            <span>+ ເພີ່ມລາຍຊື່ນັກສຶກສາໃນສາຂານີ້</span>
-                        </button>
                     </div>
                 </div>
             `;
@@ -3202,14 +3523,10 @@
             updateModalTotalPreview();
         }
 
-        function handleStudentFieldLiveUpdate() {
-            syncInputsToTemp();
-            renderModalDegreeInputs();
-        }
-
         function updateModalTotalPreview() {
-            const sum = document.querySelectorAll('.modal-student-row').length;
-            setText('modalFacultyTotalPreview', `${formatNum(sum)} ຄົນ`);
+            const totalBranches = modalTempDegrees.length;
+            const totalStudents = modalTempDegrees.reduce((acc, d) => acc + ((d.students && d.students.length) || 0), 0);
+            setText('modalFacultyTotalPreview', `${formatNum(totalBranches)} ສາຂາ (${formatNum(totalStudents)} ຄົນ)`);
         }
 
         function resetAllData() {
@@ -3291,6 +3608,8 @@
             }
 
             const backdropMap = [
+                { id: 'studentBioModal', closeFn: closeStudentBioModal },
+                { id: 'deleteStudentConfirmModal', closeFn: closeDeleteStudentConfirmModal },
                 { id: 'shiftYearModal', closeFn: closeShiftYearModal },
                 { id: 'orgEditModal', closeFn: closeOrgEditModal },
                 { id: 'newsFormModal', closeFn: closeNewsFormModal },
@@ -3349,6 +3668,7 @@
                 });
             }
 
+            // Submit handler for Branch Management Modal (ເພີ່ມ ແລະ ແກ້ໄຂສາຂາເທົ່ານັ້ນ)
             const editFacultyForm = document.getElementById('editFacultyForm');
             if (editFacultyForm) {
                 editFacultyForm.addEventListener('submit', async (e) => {
@@ -3361,7 +3681,7 @@
                         return;
                     }
 
-                    syncInputsToTemp();
+                    syncBranchInputsToTemp();
                     const store = getStore();
                     const faculties = getCurrentYearBlock(activeCategory).faculties || [];
                     const faculty = faculties.find(f => f.id === targetFacId);
@@ -3381,7 +3701,121 @@
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
                     } else {
-                        showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ!`);
+                        showToast(`ບັນທຶກຂໍ້ມູນສາຂາຂອງ ${faculty.shortName} ສຳເລັດ!`);
+                    }
+                });
+            }
+
+            // Submit handler for Unified Student Bio Form (ເພີ່ມນັກສຶກສາໃໝ່ & ແກ້ໄຂປະຫວັດຈຸດດຽວ)
+            const studentBioForm = document.getElementById('studentBioForm');
+            if (studentBioForm) {
+                studentBioForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser || !editingStudentBioState) return;
+                    const { mode, facultyId, originalDegIdx, studentId } = editingStudentBioState;
+
+                    if (currentUser.role === 'faculty' && currentUser.facultyId !== facultyId) {
+                        showToast('ທ່ານບໍ່ມີສິດແກ້ໄຂຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
+                        return;
+                    }
+
+                    const store = getStore();
+                    const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+                    const faculty = faculties.find(f => f.id === facultyId);
+                    if (!faculty || !Array.isArray(faculty.degrees)) return;
+
+                    const targetDegIdx = Math.min(
+                        Math.max(parseInt(document.getElementById('stuBioBranchSelect')?.value, 10) || 0, 0),
+                        faculty.degrees.length - 1
+                    );
+                    const targetDeg = faculty.degrees[targetDegIdx];
+                    if (!targetDeg) return;
+
+                    const maxY = getMaxStudyYears(targetDeg.level, targetDeg.program);
+                    const selectedYear = Math.min(
+                        Math.max(parseInt(document.getElementById('stuBioYearSelect')?.value, 10) || 1, 1),
+                        maxY
+                    );
+                    const selectedGender = document.getElementById('stuBioGenderSelect')?.value === 'male' ? 'male' : 'female';
+                    const suffixVal = document.getElementById('stuBioCodeSuffixInput')?.value || '';
+                    const fullCode = formatStudentFullCode(suffixVal, faculty.id);
+
+                    const nameVal = (document.getElementById('stuBioNameInput')?.value || '').trim();
+                    if (!nameVal) {
+                        showToast('ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນຂອງນັກສຶກສາ!', true);
+                        return;
+                    }
+
+                    const updatedStudentRecord = sanitizeStudentObject({
+                        id: (mode === 'edit' && studentId) ? studentId : `stu_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+                        code: fullCode,
+                        name: nameVal,
+                        gender: selectedGender,
+                        year: selectedYear,
+                        dob: (document.getElementById('stuBioDobInput')?.value || '').trim(),
+                        ethnicity: (document.getElementById('stuBioEthnicityInput')?.value || '').trim(),
+                        religion: (document.getElementById('stuBioReligionInput')?.value || '').trim(),
+                        birthVillage: (document.getElementById('stuBioVillageInput')?.value || '').trim(),
+                        birthDistrict: (document.getElementById('stuBioDistrictInput')?.value || '').trim(),
+                        birthProvince: (document.getElementById('stuBioProvinceInput')?.value || '').trim(),
+                        organization: (document.getElementById('stuBioOrgInput')?.value || '').trim(),
+                        studentType: (document.getElementById('stuBioTypeSelect')?.value || 'ພະນັກງານ').trim(),
+                        scholarship: (document.getElementById('stuBioScholarshipInput')?.value || '').trim(),
+                        phone: (document.getElementById('stuBioPhoneInput')?.value || '').trim()
+                    }, maxY, nameVal, faculty.id);
+
+                    if (mode === 'edit' && studentId) {
+                        if (originalDegIdx !== targetDegIdx && faculty.degrees[originalDegIdx]) {
+                            // Moved to another branch inside the same faculty
+                            const oldDeg = faculty.degrees[originalDegIdx];
+                            oldDeg.students = (oldDeg.students || []).filter(s => s.id !== studentId);
+                            oldDeg.studyYears = rebuildStudyYearsFromStudents(
+                                oldDeg.students,
+                                getMaxStudyYears(oldDeg.level, oldDeg.program)
+                            );
+                            if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
+                            targetDeg.students.push(updatedStudentRecord);
+                        } else {
+                            if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
+                            const idx = targetDeg.students.findIndex(s => s.id === studentId);
+                            if (idx !== -1) {
+                                targetDeg.students[idx] = updatedStudentRecord;
+                            } else {
+                                targetDeg.students.push(updatedStudentRecord);
+                            }
+                        }
+                    } else {
+                        if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
+                        targetDeg.students.push(updatedStudentRecord);
+                    }
+
+                    targetDeg.studyYears = rebuildStudyYearsFromStudents(targetDeg.students, maxY);
+
+                    saveToStorage(store.statsKey, store.appData);
+                    updateLastModifiedDate();
+                    renderPortalView();
+                    renderHomeView();
+                    closeStudentBioModal();
+
+                    // Refresh underlying view (either Student Profile View or Faculty Detail View)
+                    const stuProfileViewEl = document.getElementById('studentProfileView');
+                    if (mode === 'edit' && stuProfileViewEl && !stuProfileViewEl.classList.contains('hidden')) {
+                        // Recompute lookup map silently and refresh profile screen
+                        openFacultyDetail(faculty.id, false);
+                        const matchingKey = Object.keys(currentDisplayedStudentsMap).find(
+                            k => currentDisplayedStudentsMap[k].id === updatedStudentRecord.id
+                        );
+                        if (matchingKey) {
+                            openStudentProfile(matchingKey);
+                        }
+                    } else {
+                        openFacultyDetail(faculty.id, false);
+                    }
+
+                    if (typeof window.pushDataToCloudGlobal === 'function') {
+                        await window.pushDataToCloudGlobal();
+                    } else {
+                        showToast(mode === 'edit' ? 'ບັນທຶກການແກ້ໄຂປະຫວັດນັກສຶກສາສຳເລັດ!' : 'ເພີ່ມນັກສຶກສາໃໝ່ສຳເລັດ!');
                     }
                 });
             }
