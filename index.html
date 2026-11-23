@@ -27,6 +27,9 @@
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
+    <!-- SheetJS (xlsx) Library for Real Excel Export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
     <!-- Custom Tailwind Configuration -->
     <script>
         tailwind.config = {
@@ -348,10 +351,18 @@
                         <span>ກັບຄືນໜ້າຫຼັກ</span>
                     </button>
 
-                    <button id="shiftYearFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
-                        <i class="ph-bold ph-calendar-check text-amber-700 text-sm"></i>
-                        <span>ປ່ຽນປີຮຽນ</span>
-                    </button>
+                    <div class="flex items-center gap-1.5">
+                        <!-- ปุ่มส่งออก Excel แยกตามสาขา (ปี 1 ถึงปีสุดท้าย) -->
+                        <button id="exportExcelFacultyBtn" type="button" onclick="openExcelExportModal()" class="inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-bold text-xs px-3 py-2 rounded-xl shadow-xs transition-all cursor-pointer" title="ສົ່ງອອກລາຍຊື່ນັກສຶກສາລະອຽດເປັນໄຟລ໌ Excel ແຍກຕາມສາຂາ (ປີທີ 1 ຮອດປີສຸດທ້າຍ)">
+                            <i class="ph-bold ph-microsoft-excel-logo text-white text-sm"></i>
+                            <span>ສົ່ງອອກ Excel</span>
+                        </button>
+
+                        <button id="shiftYearFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
+                            <i class="ph-bold ph-calendar-check text-amber-700 text-sm"></i>
+                            <span>ປ່ຽນປີຮຽນ</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Separated Commands: 1) ເພີ່ມນັກສຶກສາໃໝ່ (Opens Full Student Bio Form)  2) ເພີ່ມ ແລະ ແກ້ໄຂສາຂາ (Branches Only) -->
@@ -411,7 +422,7 @@
 
             <!-- Clean Tabular Breakdown for Faculty Programs & Study Years -->
             <div class="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
-                <div class="px-4 py-3.5 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between">
+                <div class="px-4 py-3.5 bg-slate-50/80 border-b border-slate-200/80 flex items-center justify-between gap-2">
                     <h3 class="text-xs sm:text-sm font-bold text-navy-900 flex items-center gap-2">
                         <i class="ph-fill ph-table text-teal-600 text-lg"></i>
                         <span id="detailTableHeaderTitle">ສະຖິຕິແຍກຕາມຫຼັກສູດ, ສາຂາ ແລະ ລາຍຊື່ນັກສຶກສາ</span>
@@ -605,7 +616,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.5.0 (Cloud Sync Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.6.0 (Excel Export Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -613,7 +624,7 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.5.0-cloud</span>
+                        <span class="font-bold text-navy-900">v2.6.0-excel</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ສະຖານະຖານຂໍ້ມູນ:</span>
@@ -638,6 +649,103 @@
             </div>
         </section>
 
+    </div>
+
+    <!-- =====================================================================
+         MODAL: EXCEL EXPORT BY PROGRAM & BRANCH (ສົ່ງອອກ Excel ແຍກຕາມສາຂາ ປີ 1 ຮອດປີສຸດທ້າຍ)
+         ===================================================================== -->
+    <div id="excelExportModal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-navy-950/75 backdrop-blur-xs overflow-y-auto">
+        <div class="bg-white rounded-3xl w-full max-w-[540px] shadow-2xl border border-slate-100 overflow-hidden flex flex-col my-auto">
+            <div class="bg-gradient-to-r from-emerald-800 via-teal-800 to-navy-900 px-5 py-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <div class="bg-white/15 p-2 rounded-xl">
+                        <i class="ph-fill ph-microsoft-excel-logo text-xl text-emerald-300"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-sm sm:text-base">ສົ່ງອອກຂໍ້ມູນນັກສຶກສາລະອຽດ (Excel)</h3>
+                        <p id="excelExportModalSubtitle" class="text-[11px] text-emerald-200">ແຍກໄຟລ໌ຕາມແຕ່ລະສາຂາ (ປີທີ 1 ຈົນຮອດປີສຸດທ້າຍ)</p>
+                    </div>
+                </div>
+                <button type="button" onclick="closeExcelExportModal()" aria-label="ປິດໜ້າຕ່າງ" class="p-1.5 rounded-full bg-white/10 hover:bg-white/25 transition-colors cursor-pointer">
+                    <i class="ph-bold ph-x text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-5 space-y-4 text-xs">
+                <div class="bg-emerald-50/90 border border-emerald-200 rounded-2xl p-3 text-emerald-950 leading-relaxed flex items-start gap-2">
+                    <i class="ph-fill ph-info text-emerald-600 text-base shrink-0 mt-0.5"></i>
+                    <span>
+                        ລະບົບຈະສ້າງໄຟລ໌ <strong>Excel (.xlsx)</strong> ແຍກສະເພາະສາຂາວິຊາທີ່ທ່ານເລືອກ ໂດຍລວມເອົາຂໍ້ມູນປະຫວັດນັກສຶກສາລະອຽດ <strong>ຕັ້ງແຕ່ປີທີ 1 ຈົນຮອດປີສຸດທ້າຍ</strong> (ລຽງຕາມຊັ້ນປີ ແລະ ລະຫັດນັກສຶກສາ).
+                    </span>
+                </div>
+
+                <!-- 1. ເລືອກຄະນະວິຊາ -->
+                <div>
+                    <label for="excelExportFacultySelect" class="block text-xs font-bold text-slate-700 mb-1.5">1. ຄະນະວິຊາ</label>
+                    <select id="excelExportFacultySelect" onchange="handleExcelExportFacultyChange()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- 2. ເລືອກຫຼັກສູດ -->
+                <div>
+                    <label for="excelExportLevelSelect" class="block text-xs font-bold text-slate-700 mb-1.5">2. ເລືອກຫຼັກສູດ</label>
+                    <select id="excelExportLevelSelect" onchange="handleExcelExportLevelChange()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-blue-900 focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- 3. ເລືອກສາຂາວິຊາ -->
+                <div>
+                    <label for="excelExportBranchSelect" class="block text-xs font-bold text-slate-700 mb-1.5">3. ເລືອກສາຂາວິຊາ (ສົ່ງອອກ 1 ໄຟລ໌ ຕໍ່ 1 ສາຂາ)</label>
+                    <select id="excelExportBranchSelect" onchange="updateExcelExportPreview()" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-bold text-teal-900 focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+
+                <!-- ສະຫຼຸບຂໍ້ມູນກ່ອນດາວໂຫຼດ -->
+                <div id="excelExportPreviewBox" class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-2">
+                    <div class="flex items-center justify-between border-b border-slate-200/80 pb-2">
+                        <span class="text-slate-500 font-semibold">ຂອບເຂດຊັ້ນປີທີ່ສົ່ງອອກ:</span>
+                        <span id="excelExportYearRangeBadge" class="font-extrabold text-teal-800 bg-teal-100/80 px-2.5 py-0.5 rounded-lg">ປີທີ 1 ຮອດ ປີທີ 2</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 text-center pt-1">
+                        <div class="bg-white rounded-xl p-2 border border-slate-200/70">
+                            <span class="block text-[10px] text-slate-500">ນັກສຶກສາລວມ</span>
+                            <strong id="excelExportTotalCount" class="text-sm sm:text-base font-extrabold text-navy-900">0</strong>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 border border-slate-200/70">
+                            <span class="block text-[10px] text-rose-500">ຍິງ</span>
+                            <strong id="excelExportFemaleCount" class="text-sm sm:text-base font-extrabold text-rose-600">0</strong>
+                        </div>
+                        <div class="bg-white rounded-xl p-2 border border-slate-200/70">
+                            <span class="block text-[10px] text-teal-600">ຊາຍ</span>
+                            <strong id="excelExportMaleCount" class="text-sm sm:text-base font-extrabold text-teal-700">0</strong>
+                        </div>
+                    </div>
+                    <div id="excelExportPerYearBreakdown" class="text-[11px] text-slate-600 pt-1 flex flex-wrap gap-1.5">
+                        <!-- Per-year pill tags -->
+                    </div>
+                </div>
+
+                <!-- ປຸ່ມດາວໂຫຼດ -->
+                <div class="space-y-2 pt-1">
+                    <button type="button" onclick="executeExcelExportSingleBranch()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 active:scale-[0.99] text-white font-bold py-3 px-4 rounded-xl text-xs sm:text-sm shadow-md transition-all cursor-pointer flex items-center justify-center gap-2">
+                        <i class="ph-bold ph-download-simple text-lg"></i>
+                        <span>ດາວໂຫຼດໄຟລ໌ Excel ຂອງສາຂານີ້ (ປີ 1 ຮອດປີສຸດທ້າຍ)</span>
+                    </button>
+
+                    <button type="button" onclick="executeExcelExportAllBranchesSeparately()" class="w-full bg-white hover:bg-emerald-50 active:scale-[0.99] text-emerald-800 font-bold py-2.5 px-4 rounded-xl text-xs border-2 border-emerald-600/30 hover:border-emerald-600 transition-all cursor-pointer flex items-center justify-center gap-1.5">
+                        <i class="ph-bold ph-files text-base text-emerald-700"></i>
+                        <span>ດາວໂຫຼດແຍກໄຟລ໌ Excel ທຸກສາຂາໃນຫຼັກສູດນີ້</span>
+                    </button>
+
+                    <button type="button" onclick="closeExcelExportModal()" class="w-full py-2 px-4 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ປິດໜ້າຕ່າງ
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- =====================================================================
@@ -2530,7 +2638,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.5.0
+                        v2.6.0
                     </span>
                 </button>
             `;
@@ -2550,6 +2658,354 @@
                 }
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // =====================================================================
+        // EXCEL EXPORT MODULE (ສົ່ງອອກຂໍ້ມູນລະອຽດເປັນ Excel ແຍກຕາມສາຂາ ປີ 1 ຮອດປີສຸດທ້າຍ)
+        // =====================================================================
+        function openExcelExportModal(preselectFacultyId = activeFacultyId) {
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            if (faculties.length === 0) {
+                showToast('ບໍ່ພົບຂໍ້ມູນຄະນະວິຊາໃນສົກຮຽນນີ້!', true);
+                return;
+            }
+
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            if (!facSelect) return;
+
+            facSelect.innerHTML = faculties.map(f =>
+                `<option value="${escapeHTML(f.id)}">${escapeHTML(f.shortName)}</option>`
+            ).join('');
+
+            if (preselectFacultyId && faculties.some(f => f.id === preselectFacultyId)) {
+                facSelect.value = preselectFacultyId;
+            }
+
+            const store = getStore();
+            setText('excelExportModalSubtitle', `${store.title} • ສົກຮຽນ ${currentYear}`);
+
+            handleExcelExportFacultyChange();
+
+            const modal = document.getElementById('excelExportModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeExcelExportModal() {
+            const modal = document.getElementById('excelExportModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function handleExcelExportFacultyChange() {
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            const levelSelect = document.getElementById('excelExportLevelSelect');
+            if (!facSelect || !levelSelect) return;
+
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facSelect.value);
+            if (!faculty) return;
+
+            faculty.degrees = (faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id));
+
+            // ດຶງລາຍຊື່ "ຫຼັກສູດ" ທີ່ມີຢູ່ໃນຄະນະນີ້ (ບໍ່ຊ້ຳກັນ)
+            const uniqueLevels = [];
+            faculty.degrees.forEach(d => {
+                if (d.level && !uniqueLevels.includes(d.level)) {
+                    uniqueLevels.push(d.level);
+                }
+            });
+
+            if (uniqueLevels.length === 0) {
+                levelSelect.innerHTML = `<option value="">-- ຍັງບໍ່ມີຫຼັກສູດ --</option>`;
+            } else {
+                levelSelect.innerHTML = uniqueLevels.map(lvl => {
+                    const countBranches = faculty.degrees.filter(d => d.level === lvl).length;
+                    return `<option value="${escapeHTML(lvl)}">ຫຼັກສູດ ${escapeHTML(lvl)} (${countBranches} ສາຂາ)</option>`;
+                }).join('');
+            }
+
+            handleExcelExportLevelChange();
+        }
+
+        function handleExcelExportLevelChange() {
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            const levelSelect = document.getElementById('excelExportLevelSelect');
+            const branchSelect = document.getElementById('excelExportBranchSelect');
+            if (!facSelect || !levelSelect || !branchSelect) return;
+
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facSelect.value);
+            if (!faculty) return;
+
+            const selectedLevel = levelSelect.value;
+            const matchingBranches = faculty.degrees
+                .map((deg, idx) => ({ deg, idx }))
+                .filter(item => item.deg.level === selectedLevel);
+
+            if (matchingBranches.length === 0) {
+                branchSelect.innerHTML = `<option value="">-- ຍັງບໍ່ມີສາຂາໃນຫຼັກສູດນີ້ --</option>`;
+            } else {
+                branchSelect.innerHTML = matchingBranches.map((item, i) => {
+                    const maxY = getMaxStudyYears(item.deg.level, item.deg.program);
+                    const totalStu = (item.deg.students || []).length;
+                    return `<option value="${item.idx}">${i + 1}. ${escapeHTML(item.deg.program)} (ປີ 1 - ປີ ${maxY} • ${totalStu} ຄົນ)</option>`;
+                }).join('');
+            }
+
+            updateExcelExportPreview();
+        }
+
+        function updateExcelExportPreview() {
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            const branchSelect = document.getElementById('excelExportBranchSelect');
+            if (!facSelect || !branchSelect) return;
+
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facSelect.value);
+            const degIdx = parseInt(branchSelect.value, 10);
+
+            if (!faculty || Number.isNaN(degIdx) || !faculty.degrees[degIdx]) {
+                setText('excelExportYearRangeBadge', '-');
+                setText('excelExportTotalCount', '0');
+                setText('excelExportFemaleCount', '0');
+                setText('excelExportMaleCount', '0');
+                const breakdownEl = document.getElementById('excelExportPerYearBreakdown');
+                if (breakdownEl) breakdownEl.innerHTML = '';
+                return;
+            }
+
+            const deg = normalizeDegreeEntry(faculty.degrees[degIdx], faculty.id);
+            const maxY = getMaxStudyYears(deg.level, deg.program);
+            const allStudents = deg.students || [];
+
+            const femaleCount = allStudents.filter(s => s.gender === 'female').length;
+            const maleCount = allStudents.filter(s => s.gender === 'male').length;
+
+            setText('excelExportYearRangeBadge', `ປີທີ 1 ຈົນຮອດ ປີທີ ${maxY} (ຫຼັກສູດ ${maxY} ປີ)`);
+            setText('excelExportTotalCount', `${formatNum(allStudents.length)} ຄົນ`);
+            setText('excelExportFemaleCount', `${formatNum(femaleCount)} ຄົນ`);
+            setText('excelExportMaleCount', `${formatNum(maleCount)} ຄົນ`);
+
+            const breakdownEl = document.getElementById('excelExportPerYearBreakdown');
+            if (breakdownEl) {
+                let pills = '';
+                for (let y = 1; y <= maxY; y++) {
+                    const yrCount = allStudents.filter(s => Number(s.year) === y).length;
+                    pills += `
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white border border-slate-200 text-[10px] font-bold text-slate-700">
+                            <span>ປີ ${y}:</span>
+                            <span class="text-teal-700">${yrCount} ຄົນ</span>
+                        </span>
+                    `;
+                }
+                breakdownEl.innerHTML = pills;
+            }
+        }
+
+        function sanitizeExcelFilename(rawName) {
+            return String(rawName || 'export')
+                .replace(/[\\/:*?"<>|]/g, '_')
+                .replace(/\s+/g, '_')
+                .replace(/_+/g, '_')
+                .replace(/^_|_$/g, '');
+        }
+
+        function generateBranchExcelWorkbook(faculty, deg) {
+            const normDeg = normalizeDegreeEntry(deg, faculty.id);
+            const maxY = getMaxStudyYears(normDeg.level, normDeg.program);
+
+            // ຄັດເອົານັກສຶກສາຕັ້ງແຕ່ ປີທີ 1 ຈົນຮອດ ປີສຸດທ້າຍ (1 .. maxY) ແລະ ລຽງຕາມຊັ້ນປີ -> ລະຫັດນັກສຶກສາ
+            const sortedStudents = (normDeg.students || [])
+                .filter(stu => Number(stu.year) >= 1 && Number(stu.year) <= maxY)
+                .sort((a, b) => {
+                    const yrDiff = (Number(a.year) || 1) - (Number(b.year) || 1);
+                    if (yrDiff !== 0) return yrDiff;
+                    return String(a.code || '').localeCompare(String(b.code || ''));
+                });
+
+            const totalFemale = sortedStudents.filter(s => s.gender === 'female').length;
+            const totalMale = sortedStudents.filter(s => s.gender === 'male').length;
+
+            // ກະກຽມຂໍ້ມູນສຳລັບ Sheet ຫຼັກ (ລາຍຊື່ນັກສຶກສາລະອຽດ ປີ 1 - ປີສຸດທ້າຍ)
+            const sheetRows = [
+                ["ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)"],
+                [`ລາຍຊື່ນັກສຶກສາລະອຽດ ປະຈຳສົກຮຽນ ${currentYear}`],
+                [`ຄະນະວິຊາ: ${faculty.fullName} | ຫຼັກສູດ: ${normDeg.level} | ສາຂາວິຊາ: ${normDeg.program}`],
+                [`ຂອບເຂດຊັ້ນປີ: ປີທີ 1 ຈົນຮອດ ປີທີ ${maxY} (ປີສຸດທ້າຍ) | ລວມທັງໝົດ: ${sortedStudents.length} ຄົນ (ຍິງ: ${totalFemale} ຄົນ, ຊາຍ: ${totalMale} ຄົນ)`],
+                [], // ແຖວວ່າງ
+                [
+                    "ລຳດັບ",
+                    "ລະຫັດນັກສຶກສາ",
+                    "ຊື່ ແລະ ນາມສະກຸນ",
+                    "ເພດ",
+                    "ຊັ້ນປີຮຽນ",
+                    "ວັນ,ເດືອນ,ປີເກີດ",
+                    "ຊົນເຜົ່າ",
+                    "ສາດສະໜາ",
+                    "ບ້ານເກີດ",
+                    "ເມືອງເກີດ",
+                    "ແຂວງເກີດ",
+                    "ມາຈາກກົມກອງ",
+                    "ປະເພດນັກສຶກສາ",
+                    "ທຶນສະໜັບສະໜູນການຮຽນ",
+                    "ເບີໂທຕິດຕໍ່"
+                ]
+            ];
+
+            if (sortedStudents.length === 0) {
+                sheetRows.push(["-", "-", "ຍັງບໍ່ມີຂໍ້ມູນນັກສຶກສາໃນສາຂານີ້", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]);
+            } else {
+                sortedStudents.forEach((stu, idx) => {
+                    sheetRows.push([
+                        idx + 1,
+                        formatStudentFullCode(stu.code, faculty.id),
+                        stu.name || '',
+                        stu.gender === 'male' ? 'ຊາຍ' : 'ຍິງ',
+                        `ປີທີ ${stu.year} / ${maxY} ປີ`,
+                        stu.dob || '',
+                        stu.ethnicity || '',
+                        stu.religion || '',
+                        stu.birthVillage || '',
+                        stu.birthDistrict || '',
+                        stu.birthProvince || '',
+                        stu.organization || '',
+                        stu.studentType || '',
+                        stu.scholarship || '',
+                        stu.phone || ''
+                    ]);
+                });
+            }
+
+            // ກະກຽມ Sheet ທີ 2: ຕາຕະລາງສະຫຼຸບສະຖິຕິແຍກຕາມຊັ້ນປີ (ປີ 1 - ປີສຸດທ້າຍ)
+            const summaryRows = [
+                [`ສະຫຼຸບຈຳນວນນັກສຶກສາແຍກຕາມຊັ້ນປີ (ປີທີ 1 - ປີທີ ${maxY})`],
+                [`ຄະນະ: ${faculty.fullName} | ຫຼັກສູດ: ${normDeg.level} | ສາຂາ: ${normDeg.program} | ສົກຮຽນ ${currentYear}`],
+                [],
+                ["ຊັ້ນປີຮຽນ", "ນັກສຶກສາຍິງ (ຄົນ)", "ນັກສຶກສາຊາຍ (ຄົນ)", "ລວມທັງໝົດ (ຄົນ)"]
+            ];
+
+            for (let y = 1; y <= maxY; y++) {
+                const yrStudents = sortedStudents.filter(s => Number(s.year) === y);
+                const fCnt = yrStudents.filter(s => s.gender === 'female').length;
+                const mCnt = yrStudents.filter(s => s.gender === 'male').length;
+                summaryRows.push([`ປີທີ ${y}`, fCnt, mCnt, fCnt + mCnt]);
+            }
+            summaryRows.push(["ລວມທັງໝົດ (ປີ 1 - ປີສຸດທ້າຍ)", totalFemale, totalMale, sortedStudents.length]);
+
+            if (typeof XLSX !== 'undefined') {
+                const wb = XLSX.utils.book_new();
+
+                // Sheet 1: ລາຍຊື່ລະອຽດ
+                const wsDetail = XLSX.utils.aoa_to_sheet(sheetRows);
+                wsDetail['!cols'] = [
+                    { wch: 7 },  // ລຳດັບ
+                    { wch: 18 }, // ລະຫັດນັກສຶກສາ
+                    { wch: 26 }, // ຊື່ ແລະ ນາມສະກຸນ
+                    { wch: 8 },  // ເພດ
+                    { wch: 16 }, // ຊັ້ນປີຮຽນ
+                    { wch: 15 }, // ວັນເດືອນປີເກີດ
+                    { wch: 12 }, // ຊົນເຜົ່າ
+                    { wch: 12 }, // ສາດສະໜາ
+                    { wch: 18 }, // ບ້ານເກີດ
+                    { wch: 20 }, // ເມືອງເກີດ
+                    { wch: 22 }, // ແຂວງເກີດ
+                    { wch: 24 }, // ມາຈາກກົມກອງ
+                    { wch: 20 }, // ປະເພດນັກສຶກສາ
+                    { wch: 24 }, // ທຶນສະໜັບສະໜູນ
+                    { wch: 16 }  // ເບີໂທ
+                ];
+                XLSX.utils.book_append_sheet(wb, wsDetail, "ລາຍຊື່ນັກສຶກສາລະອຽດ");
+
+                // Sheet 2: ສະຫຼຸບແຍກຕາມປີຮຽນ
+                const wsSummary = XLSX.utils.aoa_to_sheet(summaryRows);
+                wsSummary['!cols'] = [
+                    { wch: 28 },
+                    { wch: 18 },
+                    { wch: 18 },
+                    { wch: 20 }
+                ];
+                XLSX.utils.book_append_sheet(wb, wsSummary, "ສະຫຼຸບຕາມຊັ້ນປີ");
+
+                const safeFilename = sanitizeExcelFilename(
+                    `${faculty.shortName}_${normDeg.level}_${normDeg.program}_ປີ1-ປີ${maxY}_${currentYear}`
+                ) + ".xlsx";
+
+                XLSX.writeFile(wb, safeFilename);
+                return safeFilename;
+            } else {
+                // Fallback CSV UTF-8 BOM ຖ້າໂຫຼດ CDN ບໍ່ສຳເລັດ
+                const csvContent = "\uFEFF" + sheetRows.map(row =>
+                    row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(",")
+                ).join("\n");
+                const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                const safeFilename = sanitizeExcelFilename(
+                    `${faculty.shortName}_${normDeg.level}_${normDeg.program}_ປີ1-ປີ${maxY}_${currentYear}`
+                ) + ".csv";
+                link.href = url;
+                link.download = safeFilename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                return safeFilename;
+            }
+        }
+
+        function executeExcelExportSingleBranch() {
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            const branchSelect = document.getElementById('excelExportBranchSelect');
+            if (!facSelect || !branchSelect) return;
+
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facSelect.value);
+            const degIdx = parseInt(branchSelect.value, 10);
+
+            if (!faculty || Number.isNaN(degIdx) || !faculty.degrees[degIdx]) {
+                showToast('ກະລຸນາເລືອກສາຂາວິຊາທີ່ຕ້ອງການສົ່ງອອກ!', true);
+                return;
+            }
+
+            const deg = faculty.degrees[degIdx];
+            const exportedName = generateBranchExcelWorkbook(faculty, deg);
+            closeExcelExportModal();
+            showToast(`ສົ່ງອອກໄຟລ໌ "${exportedName}" ສຳເລັດ!`);
+        }
+
+        function executeExcelExportAllBranchesSeparately() {
+            const facSelect = document.getElementById('excelExportFacultySelect');
+            const levelSelect = document.getElementById('excelExportLevelSelect');
+            if (!facSelect || !levelSelect) return;
+
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facSelect.value);
+            const selectedLevel = levelSelect.value;
+
+            if (!faculty || !selectedLevel) {
+                showToast('ບໍ່ພົບຂໍ້ມູນຫຼັກສູດທີ່ເລືອກ!', true);
+                return;
+            }
+
+            const branchesInLevel = (faculty.degrees || []).filter(d => d.level === selectedLevel);
+            if (branchesInLevel.length === 0) {
+                showToast('ຍັງບໍ່ມີສາຂາວິຊາໃນຫຼັກສູດນີ້!', true);
+                return;
+            }
+
+            branchesInLevel.forEach((deg, idx) => {
+                setTimeout(() => {
+                    generateBranchExcelWorkbook(faculty, deg);
+                }, idx * 350);
+            });
+
+            closeExcelExportModal();
+            showToast(`ກຳລັງດາວໂຫຼດແຍກ ${branchesInLevel.length} ໄຟລ໌ Excel ຕາມແຕ່ລະສາຂາ...`);
         }
 
         function openStudentProfile(lookupKey) {
@@ -2670,10 +3126,12 @@
             }
 
             // Connect separated buttons
+            const exportExcelBtn = document.getElementById('exportExcelFacultyBtn');
             const shiftBtn = document.getElementById('shiftYearFacultyBtn');
             const addNewStuBtn = document.getElementById('addNewStudentFacultyBtn');
             const editBranchBtn = document.getElementById('editBranchFacultyBtn');
 
+            if (exportExcelBtn) exportExcelBtn.onclick = () => openExcelExportModal(faculty.id);
             if (shiftBtn) shiftBtn.onclick = () => requireAuth(() => openShiftYearModal(faculty.id), faculty.id);
             if (addNewStuBtn) addNewStuBtn.onclick = () => requireAuth(() => openStudentBioModal('add', faculty.id, 0, null), faculty.id);
             if (editBranchBtn) editBranchBtn.onclick = () => requireAuth(() => openBranchEditModal(faculty.id), faculty.id);
@@ -2722,8 +3180,18 @@
                 rowsHTML += `
                     <tr class="bg-emerald-100 border-y border-emerald-200/90">
                         <td class="py-2.5 pl-5 pr-2 font-bold text-navy-900 text-xs sm:text-sm leading-snug">
-                            <span class="text-emerald-800 font-extrabold mr-1">${branchCounter}.</span>${escapeHTML(d.program)}
-                            <span class="ml-1 inline-block text-[10px] font-bold text-emerald-900 bg-white/85 border border-emerald-300 px-1.5 py-0.2 rounded">ຮຽນ ${progYears} ປີ</span>
+                            <div class="flex items-center justify-between gap-1.5 flex-wrap">
+                                <div>
+                                    <span class="text-emerald-800 font-extrabold mr-1">${branchCounter}.</span>${escapeHTML(d.program)}
+                                    <span class="ml-1 inline-block text-[10px] font-bold text-emerald-900 bg-white/85 border border-emerald-300 px-1.5 py-0.2 rounded">ຮຽນ ${progYears} ປີ</span>
+                                </div>
+                                <button type="button" onclick="quickExportSingleBranchByIndex('${escapeHTML(faculty.id)}', ${degIdx})"
+                                    title="ດາວໂຫຼດ Excel ສະເພາະສາຂານີ້ (ປີ 1 ຮອດປີ ${progYears})"
+                                    class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-white hover:bg-emerald-700 text-emerald-800 hover:text-white border border-emerald-400/70 text-[10px] font-bold transition-colors cursor-pointer shrink-0">
+                                    <i class="ph-bold ph-microsoft-excel-logo"></i>
+                                    <span>Excel</span>
+                                </button>
+                            </div>
                         </td>
                         <td class="py-2.5 px-2 text-center font-bold text-rose-700 text-xs">${formatNum(degFilteredStats.female)}</td>
                         <td class="py-2.5 px-2 text-center font-bold text-teal-800 text-xs">${formatNum(degFilteredStats.male)}</td>
@@ -2779,6 +3247,14 @@
             }
 
             switchView('facultyDetailView');
+        }
+
+        function quickExportSingleBranchByIndex(facultyId, degIdx) {
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
+            if (!faculty || !faculty.degrees[degIdx]) return;
+            const exportedName = generateBranchExcelWorkbook(faculty, faculty.degrees[degIdx]);
+            showToast(`ສົ່ງອອກໄຟລ໌ "${exportedName}" ສຳເລັດ!`);
         }
 
         function setStudyYearFilter(filterVal) {
@@ -3364,16 +3840,16 @@
                         </div>
                         <div>
                             <input type="text" data-org-idx="${idx}" data-field="name" value="${escapeHTML(person.name)}"
-                                placeholder="ຊື່ ແລະ ນາມສະກຸນ (ເຊັ່ນ: ດຣ. ນາງ ...)"
-                                class="org-field-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                placeholder="ຊື່ ແລະ ນາມສະກຸນ (ເຊັ່ນ: ທ່ານ ປອ. ນາງ ...)"
+                                class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <input type="text" data-org-idx="${idx}" data-field="duty" value="${escapeHTML(person.duty)}"
-                                placeholder="ໜ້າທີ່ຮັບຜິດຊອບ"
-                                class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
-                            <input type="text" data-org-idx="${idx}" data-field="phone" value="${escapeHTML(person.phone)}"
-                                placeholder="ເບີໂທຕິດຕໍ່ (020 ...)"
-                                class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                placeholder="ໜ້າທີ່ຮັບຜິດຊອບ..."
+                                class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            <input type="text" data-org-idx="${idx}" data-field="phone" value="${escapeHTML(person.phone || '')}"
+                                placeholder="ເບີໂທຕິດຕໍ່ (020...)"
+                                class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
                         </div>
                     </div>
                 `).join('');
@@ -3397,109 +3873,273 @@
         // =====================================================================
         // BRANCH MANAGEMENT MODAL FUNCTIONS (ເພີ່ມ ແລະ ແກ້ໄຂສາຂາເທົ່ານັ້ນ)
         // =====================================================================
-        function getEditModalEls() {
-            return {
-                editModal: document.getElementById('editModal'),
-                modalFacultySelect: document.getElementById('modalFacultySelect'),
-                modalDegreeInputsContainer: document.getElementById('modalDegreeInputsContainer')
-            };
-        }
+        function renderAdminYearLimitConfig() {
+            const configBox = document.getElementById('adminProgramYearConfigBox');
+            const inputsContainer = document.getElementById('adminYearLimitInputs');
+            if (!configBox || !inputsContainer) return;
 
-        function openBranchEditModal(preselectFacultyId = null) {
-            if (!currentUser) return;
-            const { editModal, modalFacultySelect } = getEditModalEls();
-            if (!editModal || !modalFacultySelect) return;
-
-            const store = getStore();
-            setText('editModalCategoryLabel', `${store.title} (${currentUser.label})`);
-            let faculties = getCurrentYearBlock(activeCategory).faculties || [];
-
-            if (currentUser.role === 'faculty') {
-                faculties = faculties.filter(f => f.id === currentUser.facultyId);
+            if (currentUser && currentUser.role === 'admin') {
+                configBox.classList.remove('hidden');
+                const levels = Object.keys(DEFAULT_PROGRAM_YEAR_LIMITS);
+                inputsContainer.innerHTML = levels.map(lvl => {
+                    const displayLabel = PROGRAM_YEAR_DISPLAY_LABELS[lvl] || lvl;
+                    return `
+                        <div class="flex items-center justify-between gap-1.5 bg-white px-2.5 py-1.5 rounded-xl border border-amber-200">
+                            <span class="text-[10px] font-bold text-slate-700 truncate">${escapeHTML(displayLabel)}</span>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <input type="number" min="1" max="15" data-admin-year-level="${escapeHTML(lvl)}" value="${getMaxStudyYears(lvl)}"
+                                    class="w-11 px-1 py-0.5 text-center text-xs font-extrabold text-amber-900 bg-amber-50 border border-amber-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-600">
+                                <span class="text-[10px] text-slate-500">ປີ</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                configBox.classList.add('hidden');
             }
-
-            modalFacultySelect.innerHTML = faculties.map(f =>
-                `<option value="${escapeHTML(f.id)}">${escapeHTML(f.shortName)}</option>`
-            ).join('');
-
-            if (currentUser.role === 'faculty') {
-                modalFacultySelect.value = currentUser.facultyId;
-            } else if (preselectFacultyId) {
-                modalFacultySelect.value = preselectFacultyId;
-            } else if (activeFacultyId) {
-                modalFacultySelect.value = activeFacultyId;
-            }
-
-            const resetBtn = document.getElementById('resetDataBtn');
-            if (resetBtn) {
-                resetBtn.style.display = currentUser.role === 'admin' ? 'inline-block' : 'none';
-            }
-
-            const adminConfigBox = document.getElementById('adminProgramYearConfigBox');
-            if (adminConfigBox) {
-                if (currentUser.role === 'admin') {
-                    adminConfigBox.classList.remove('hidden');
-                    renderAdminYearLimitInputs();
-                } else {
-                    adminConfigBox.classList.add('hidden');
-                }
-            }
-
-            loadFacultyDegreesIntoTemp();
-            renderModalDegreeInputs();
-            editModal.classList.remove('hidden');
-            editModal.classList.add('flex');
-        }
-
-        function renderAdminYearLimitInputs() {
-            const container = document.getElementById('adminYearLimitInputs');
-            if (!container) return;
-            const keys = Object.keys(PROGRAM_YEAR_LIMITS);
-            container.innerHTML = keys.map(key => {
-                const labelText = PROGRAM_YEAR_DISPLAY_LABELS[key] || key;
-                return `
-                <div class="bg-white border border-amber-200 rounded-lg px-2 py-1.5 flex items-center justify-between gap-1.5">
-                    <span class="text-[10px] font-bold text-slate-700 truncate" title="${escapeHTML(labelText)}">${escapeHTML(labelText)}</span>
-                    <div class="flex items-center gap-1 shrink-0">
-                        <input type="number" min="1" max="15" data-limit-key="${escapeHTML(key)}" value="${Number(PROGRAM_YEAR_LIMITS[key]) || 2}"
-                            class="admin-year-limit-input w-11 px-1.5 py-0.5 bg-amber-50/60 border border-amber-300 rounded text-xs font-extrabold text-center text-navy-900 focus:outline-none focus:ring-1 focus:ring-amber-600">
-                        <span class="text-[10px] text-slate-500">ປີ</span>
-                    </div>
-                </div>
-            `;
-            }).join('');
         }
 
         function saveAdminYearLimits() {
-            if (!currentUser || currentUser.role !== 'admin') {
-                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດກຳນົດຈຳນວນປີຮຽນໄດ້!', true);
-                return;
-            }
-            syncBranchInputsToTemp();
-
-            document.querySelectorAll('.admin-year-limit-input').forEach(inp => {
-                const key = inp.dataset.limitKey;
-                const parsedVal = parseInt(inp.value, 10);
-                if (key && !Number.isNaN(parsedVal)) {
-                    PROGRAM_YEAR_LIMITS[key] = Math.min(Math.max(parsedVal, 1), 15);
+            if (!currentUser || currentUser.role !== 'admin') return;
+            const inputs = document.querySelectorAll('[data-admin-year-level]');
+            inputs.forEach(inp => {
+                const lvl = inp.getAttribute('data-admin-year-level');
+                const val = parseInt(inp.value, 10);
+                if (lvl && !Number.isNaN(val) && val >= 1 && val <= 15) {
+                    PROGRAM_YEAR_LIMITS[lvl] = val;
                 }
             });
-
+            window.PROGRAM_YEAR_LIMITS = PROGRAM_YEAR_LIMITS;
             saveProgramYearLimitsToStorage();
-            modalTempDegrees = modalTempDegrees.map(normalizeDegreeEntry);
-            renderModalDegreeInputs();
-            renderAdminYearLimitInputs();
-            showToast('ບັນທຶກຈຳນວນປີຮຽນຂອງແຕ່ລະຫຼັກສູດສຳເລັດ!');
+
+            normalizeDatabaseStudyYears(stateByCategory.postgrad.appData);
+            normalizeDatabaseStudyYears(stateByCategory.undergrad.appData);
+            saveToStorage(STORAGE_KEYS.POSTGRAD_STATS, stateByCategory.postgrad.appData);
+            saveToStorage(STORAGE_KEYS.UNDERGRAD_STATS, stateByCategory.undergrad.appData);
+
+            const facSelect = document.getElementById('modalFacultySelect');
+            if (facSelect && facSelect.value) {
+                populateModalInputsForFaculty(facSelect.value);
+            }
+            renderPortalView();
+            renderHomeView();
+            if (activeFacultyId) {
+                openFacultyDetail(activeFacultyId, false);
+            }
+            showToast('ບັນທຶກການກຳນົດຈຳນວນປີຮຽນຂອງຫຼັກສູດສຳເລັດ!');
         }
 
-        function openShiftYearModal(facultyId) {
+        function openBranchEditModal(preselectFacultyId = activeFacultyId) {
+            if (!currentUser) return;
             const store = getStore();
+            const yearBlock = getCurrentYearBlock(activeCategory);
+            let availableFaculties = yearBlock.faculties || [];
+
+            if (currentUser.role === 'faculty') {
+                availableFaculties = availableFaculties.filter(f => f.id === currentUser.facultyId);
+                setText('editModalCategoryLabel', `ຈັດການສາຂາ • ${currentUser.label} (${currentYear})`);
+            } else {
+                setText('editModalCategoryLabel', `${store.title} • ສົກຮຽນ ${currentYear}`);
+            }
+
+            renderAdminYearLimitConfig();
+
+            const resetBtn = document.getElementById('resetDataBtn');
+            if (resetBtn) {
+                if (currentUser.role === 'admin') {
+                    resetBtn.classList.remove('hidden');
+                } else {
+                    resetBtn.classList.add('hidden');
+                }
+            }
+
+            const facSelect = document.getElementById('modalFacultySelect');
+            if (facSelect) {
+                facSelect.innerHTML = availableFaculties.map(f =>
+                    `<option value="${escapeHTML(f.id)}">${escapeHTML(f.shortName)}</option>`
+                ).join('');
+
+                if (preselectFacultyId && availableFaculties.some(f => f.id === preselectFacultyId)) {
+                    facSelect.value = preselectFacultyId;
+                }
+                if (facSelect.value) {
+                    populateModalInputsForFaculty(facSelect.value);
+                }
+            }
+
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+        }
+
+        function closeEditModal() {
+            const modal = document.getElementById('editModal');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function getLevelOptionsForCategory() {
+            if (activeCategory === 'undergrad') {
+                return [
+                    "ອະນຸປະລິນຍາ",
+                    "ປະລິນຍາຕີ",
+                    "ຕໍ່ເນື່ອງປະລິນຍາຕີ"
+                ];
+            }
+            return [
+                "ແພດລົງເລີກຂະແໜງ",
+                "ປະລິນຍາໂທ",
+                "ແພດຊ່ຽວຊານ ຂັ້ນ 1",
+                "ແພດຊ່ຽວຊານ ຂັ້ນ 2",
+                "ປະລິນຍາເອກ"
+            ];
+        }
+
+        function populateModalInputsForFaculty(facultyId) {
             const faculties = getCurrentYearBlock(activeCategory).faculties || [];
             const faculty = faculties.find(f => f.id === facultyId);
             if (!faculty) return;
 
-            setText('shiftYearFacultyLabel', `${faculty.shortName} • ${store.title}`);
-            shiftTempDegrees = JSON.parse(JSON.stringify((faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id))));
+            modalTempDegrees = JSON.parse(JSON.stringify(faculty.degrees || [])).map(d => normalizeDegreeEntry(d, faculty.id));
+            renderModalDegreeRows();
+        }
+
+        function renderModalDegreeRows() {
+            const container = document.getElementById('modalDegreeInputsContainer');
+            if (!container) return;
+            const levelOptions = getLevelOptionsForCategory();
+
+            if (modalTempDegrees.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-6 bg-slate-50 rounded-2xl border border-dashed border-slate-300 space-y-2">
+                        <p class="text-xs text-slate-500">ຍັງບໍ່ມີສາຂາວິຊາໃນຄະນະນີ້</p>
+                        <button type="button" onclick="addDegreeRowInModal()" class="inline-flex items-center gap-1 bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl cursor-pointer">
+                            <i class="ph-bold ph-plus"></i> ເພີ່ມສາຂາວິຊາໃໝ່
+                        </button>
+                    </div>
+                `;
+                updateModalPreview();
+                return;
+            }
+
+            const rowsHTML = modalTempDegrees.map((d, idx) => {
+                const maxY = getMaxStudyYears(d.level, d.program);
+                const stuCount = Array.isArray(d.students) ? d.students.length : 0;
+                const optionsHTML = levelOptions.map(lvl =>
+                    `<option value="${escapeHTML(lvl)}" ${d.level === lvl ? 'selected' : ''}>${escapeHTML(lvl)} (${getMaxStudyYears(lvl)} ປີ)</option>`
+                ).join('');
+
+                const customOption = !levelOptions.includes(d.level)
+                    ? `<option value="${escapeHTML(d.level)}" selected>${escapeHTML(d.level)} (${maxY} ປີ)</option>`
+                    : '';
+
+                return `
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2 relative">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-teal-800 bg-teal-100/80 px-2.5 py-0.5 rounded-full">
+                                <span>ສາຂາທີ ${idx + 1}</span>
+                                <span>• ຫຼັກສູດ ${maxY} ປີ</span>
+                            </span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                                    ມີນັກສຶກສາ ${stuCount} ຄົນ
+                                </span>
+                                <button type="button" onclick="removeDegreeRowInModal(${idx})" title="ລຶບສາຂານີ້"
+                                    class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-[11px] font-bold transition-colors cursor-pointer">
+                                    <i class="ph-bold ph-trash"></i>
+                                    <span>ລຶບ</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 mb-1">ຫຼັກສູດ</label>
+                                <select onchange="updateTempDegreeField(${idx}, 'level', this.value)"
+                                    class="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    ${optionsHTML}
+                                    ${customOption}
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 mb-1">ຊື່ສາຂາວິຊາ</label>
+                                <input type="text" value="${escapeHTML(d.program)}" placeholder="ປ້ອນຊື່ສາຂາວິຊາ..."
+                                    oninput="updateTempDegreeField(${idx}, 'program', this.value)"
+                                    class="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            const addButtonHTML = `
+                <button type="button" onclick="addDegreeRowInModal()"
+                    class="w-full py-2.5 px-3 rounded-2xl border-2 border-dashed border-teal-500/50 hover:border-teal-600 bg-teal-50/40 hover:bg-teal-50 text-teal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                    <i class="ph-bold ph-plus-circle text-base"></i>
+                    <span>+ ເພີ່ມສາຂາວິຊາໃໝ່</span>
+                </button>
+            `;
+
+            container.innerHTML = rowsHTML + addButtonHTML;
+            updateModalPreview();
+        }
+
+        function updateTempDegreeField(idx, field, value) {
+            if (!modalTempDegrees[idx]) return;
+            modalTempDegrees[idx][field] = value;
+            if (field === 'level' || field === 'program') {
+                const newMaxY = getMaxStudyYears(modalTempDegrees[idx].level, modalTempDegrees[idx].program);
+                const facId = document.getElementById('modalFacultySelect')?.value || activeFacultyId || 'med';
+                modalTempDegrees[idx].students = (modalTempDegrees[idx].students || []).map(s =>
+                    sanitizeStudentObject(s, newMaxY, 'recalc', facId)
+                );
+                modalTempDegrees[idx].studyYears = rebuildStudyYearsFromStudents(modalTempDegrees[idx].students, newMaxY);
+                renderModalDegreeRows();
+            }
+        }
+
+        function addDegreeRowInModal() {
+            const levelOptions = getLevelOptionsForCategory();
+            const defaultLevel = levelOptions[0] || "ປະລິນຍາຕີ";
+            const maxY = getMaxStudyYears(defaultLevel);
+            modalTempDegrees.push({
+                level: defaultLevel,
+                program: "ສາຂາໃໝ່",
+                students: [],
+                studyYears: rebuildStudyYearsFromStudents([], maxY)
+            });
+            renderModalDegreeRows();
+        }
+
+        function removeDegreeRowInModal(idx) {
+            modalTempDegrees.splice(idx, 1);
+            renderModalDegreeRows();
+        }
+
+        function updateModalPreview() {
+            let totalStu = 0;
+            modalTempDegrees.forEach(d => {
+                totalStu += Array.isArray(d.students) ? d.students.length : 0;
+            });
+            setText('modalFacultyTotalPreview', `${modalTempDegrees.length} ສາຂາ (${formatNum(totalStu)} ຄົນ)`);
+        }
+
+        // =====================================================================
+        // SHIFT / CHANGE STUDY YEAR IN FACULTY MODAL FUNCTIONS
+        // =====================================================================
+        function openShiftYearModal(facultyId) {
+            if (!currentUser) return;
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
+            if (!faculty) return;
+
+            activeFacultyId = facultyId;
+            setText('shiftYearFacultyLabel', `${faculty.shortName} • ສົກຮຽນ ${currentYear}`);
+            shiftTempDegrees = JSON.parse(JSON.stringify(faculty.degrees || [])).map(d => normalizeDegreeEntry(d, faculty.id));
             renderShiftYearRows();
 
             const modal = document.getElementById('shiftYearModal');
@@ -3517,30 +4157,70 @@
             }
         }
 
-        function updateSingleDegreeYear(degIndex, newYearStr) {
-            const deg = shiftTempDegrees[degIndex];
+        function renderShiftYearRows() {
+            const container = document.getElementById('shiftYearRowsContainer');
+            if (!container) return;
+            if (shiftTempDegrees.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">ບໍ່ມີສາຂາວິຊາໃນຄະນະນີ້</p>`;
+                return;
+            }
+
+            container.innerHTML = shiftTempDegrees.map((d, idx) => {
+                const maxY = getMaxStudyYears(d.level, d.program);
+                const stats = getDegreeTotals(d);
+                let activeYearsText = d.studyYears
+                    .filter(sy => (sy.female + sy.male) > 0)
+                    .map(sy => `ປີ ${sy.year} (${sy.female + sy.male} ຄົນ)`)
+                    .join(', ');
+                if (!activeYearsText) activeYearsText = 'ຍັງບໍ່ມີນັກສຶກສາ';
+
+                let yearButtons = '';
+                for (let y = 1; y <= maxY; y++) {
+                    yearButtons += `
+                        <button type="button" onclick="moveAllStudentsInBranchToYear(${idx}, ${y})"
+                            class="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-white hover:bg-amber-600 hover:text-white text-slate-700 border border-slate-300 transition-colors cursor-pointer">
+                            ຍ້າຍເປັນ ປີ ${y}
+                        </button>
+                    `;
+                }
+
+                return `
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 space-y-2">
+                        <div class="flex items-start justify-between gap-2">
+                            <div>
+                                <span class="text-[10px] font-bold text-teal-800 bg-teal-100/70 px-2 py-0.5 rounded">${escapeHTML(d.level)} (${maxY} ປີ)</span>
+                                <p class="text-xs font-bold text-navy-900 mt-1">${escapeHTML(d.program)}</p>
+                                <p class="text-[11px] text-slate-500 mt-0.5">ປັດຈຸບັນ: <strong class="text-amber-800">${activeYearsText}</strong> (ລວມ ${formatNum(stats.total)} ຄົນ)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 flex-wrap pt-1 border-t border-slate-200/70">
+                            <span class="text-[10px] font-semibold text-slate-500 mr-1">ປ່ຽນເປັນ:</span>
+                            ${yearButtons}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function moveAllStudentsInBranchToYear(degIdx, targetYear) {
+            const deg = shiftTempDegrees[degIdx];
             if (!deg) return;
             const maxY = getMaxStudyYears(deg.level, deg.program);
-            const targetYear = Math.min(Math.max(parseInt(newYearStr, 10) || 1, 1), maxY);
-
-            if (Array.isArray(deg.students)) {
-                deg.students.forEach(stu => {
-                    stu.year = targetYear;
-                });
-                deg.studyYears = rebuildStudyYearsFromStudents(deg.students, maxY);
-            }
+            const clampedTarget = Math.min(Math.max(parseInt(targetYear, 10) || 1, 1), maxY);
+            (deg.students || []).forEach(s => {
+                s.year = clampedTarget;
+            });
+            deg.studyYears = rebuildStudyYearsFromStudents(deg.students || [], maxY);
             renderShiftYearRows();
         }
 
         function promoteAllYearsInTemp() {
             shiftTempDegrees.forEach(deg => {
                 const maxY = getMaxStudyYears(deg.level, deg.program);
-                if (Array.isArray(deg.students)) {
-                    deg.students = deg.students
-                        .map(stu => ({ ...stu, year: Number(stu.year) + 1 }))
-                        .filter(stu => stu.year <= maxY);
-                    deg.studyYears = rebuildStudyYearsFromStudents(deg.students, maxY);
-                }
+                (deg.students || []).forEach(s => {
+                    s.year = Math.min(maxY, (Number(s.year) || 1) + 1);
+                });
+                deg.studyYears = rebuildStudyYearsFromStudents(deg.students || [], maxY);
             });
             renderShiftYearRows();
             showToast('ເລື່ອນຊັ້ນປີຂຶ້ນ +1 ປີ ແລ້ວ (ກົດບັນທຶກເພື່ອຢືນຢັນ)');
@@ -3549,357 +4229,185 @@
         function demoteAllYearsInTemp() {
             shiftTempDegrees.forEach(deg => {
                 const maxY = getMaxStudyYears(deg.level, deg.program);
-                if (Array.isArray(deg.students)) {
-                    deg.students.forEach(stu => {
-                        stu.year = Math.max(1, Number(stu.year) - 1);
-                    });
-                    deg.studyYears = rebuildStudyYearsFromStudents(deg.students, maxY);
-                }
+                (deg.students || []).forEach(s => {
+                    s.year = Math.max(1, (Number(s.year) || 1) - 1);
+                });
+                deg.studyYears = rebuildStudyYearsFromStudents(deg.students || [], maxY);
             });
             renderShiftYearRows();
-            showToast('ປັບຫຼຸດ -1 ປີ ແລ້ວ (ກົດບັນທຶກເພື່ອຢືນຢັນ)');
+            showToast('ຫຼຸດຊັ້ນປີລົງ -1 ປີ ແລ້ວ (ກົດບັນທຶກເພື່ອຢືນຢັນ)');
         }
 
-        function renderShiftYearRows() {
-            const container = document.getElementById('shiftYearRowsContainer');
-            if (!container) return;
-            container.innerHTML = shiftTempDegrees.map((deg, idx) => {
-                const maxY = getMaxStudyYears(deg.level, deg.program);
-                const normDeg = normalizeDegreeEntry(deg);
-                const firstYear = normDeg.students.length > 0 ? normDeg.students[0].year : 1;
-                const totalPeople = normDeg.students.length;
-
-                let optionsHTML = '';
-                for (let y = 1; y <= maxY; y++) {
-                    optionsHTML += `<option value="${y}" ${y === firstYear ? 'selected' : ''}>ປີທີ ${y} / ${maxY} ປີ</option>`;
-                }
-
-                return `
-                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex items-center justify-between gap-2">
-                        <div class="min-w-0 flex-1">
-                            <span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">${escapeHTML(deg.level)} (${maxY} ປີ)</span>
-                            <p class="text-xs font-bold text-navy-900 truncate mt-0.5">${escapeHTML(deg.program)}</p>
-                            <p class="text-[11px] text-slate-500">ລວມ: <strong>${formatNum(totalPeople)}</strong> ຄົນ (ຕາມລາຍຊື່)</p>
-                        </div>
-                        <select onchange="updateSingleDegreeYear(${idx}, this.value)" class="px-2.5 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-500 shrink-0 cursor-pointer">
-                            ${optionsHTML}
-                        </select>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function closeEditModal() {
-            const { editModal } = getEditModalEls();
-            if (editModal) {
-                editModal.classList.add('hidden');
-                editModal.classList.remove('flex');
-            }
-        }
-
-        function loadFacultyDegreesIntoTemp() {
-            const { modalFacultySelect } = getEditModalEls();
-            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
-            const faculty = faculties.find(f => f.id === (modalFacultySelect && modalFacultySelect.value));
-            modalTempDegrees = faculty
-                ? JSON.parse(JSON.stringify((faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id))))
-                : [];
-        }
-
-        // Sync branch level and branch name ONLY (keeps existing students intact)
-        function syncBranchInputsToTemp() {
-            document.querySelectorAll('.modal-deg-item').forEach((row, idx) => {
-                if (!modalTempDegrees[idx]) return;
-                const levelInp = row.querySelector('.modal-level-input');
-                const progInp = row.querySelector('.modal-prog-input');
-                const newLevel = levelInp ? (levelInp.value.trim() || 'ປະລິນຍາຕີ') : modalTempDegrees[idx].level;
-                const newProg = progInp ? (progInp.value.trim() || 'ສາຂາໃໝ່') : modalTempDegrees[idx].program;
-                modalTempDegrees[idx].level = newLevel;
-                modalTempDegrees[idx].program = newProg;
-
-                const maxY = getMaxStudyYears(newLevel, newProg);
-                modalTempDegrees[idx].studyYears = rebuildStudyYearsFromStudents(modalTempDegrees[idx].students || [], maxY);
-            });
-        }
-
-        function handleDegreeLevelOrNameChange(index) {
-            const { modalFacultySelect } = getEditModalEls();
-            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            syncBranchInputsToTemp();
-            modalTempDegrees[index] = normalizeDegreeEntry(modalTempDegrees[index], activeFacId);
-            renderModalDegreeInputs();
-        }
-
-        function addNewProgramRow() {
-            const { modalFacultySelect } = getEditModalEls();
-            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-            syncBranchInputsToTemp();
-            const defaultLevel = activeCategory === 'undergrad' ? 'ປະລິນຍາຕີ' : 'ປະລິນຍາໂທ';
-            const newItem = normalizeDegreeEntry({
-                level: defaultLevel,
-                program: 'ສາຂາ ',
-                students: []
-            }, activeFacId);
-            modalTempDegrees.push(newItem);
-            renderModalDegreeInputs();
-            setTimeout(() => {
-                const { modalDegreeInputsContainer } = getEditModalEls();
-                if (!modalDegreeInputsContainer) return;
-                modalDegreeInputsContainer.scrollTop = modalDegreeInputsContainer.scrollHeight;
-                const inputs = modalDegreeInputsContainer.querySelectorAll('.modal-prog-input');
-                if (inputs.length > 0) inputs[inputs.length - 1].focus();
-            }, 50);
-        }
-
-        function removeProgramRow(index) {
-            if (modalTempDegrees.length <= 1) {
-                showToast('ຕ້ອງມີຢ່າງໜ້ອຍ 1 ສາຂາໃນຄະນະ!', true);
-                return;
-            }
-            syncBranchInputsToTemp();
-            modalTempDegrees.splice(index, 1);
-            renderModalDegreeInputs();
-        }
-
-        // Renders ONLY branch management rows (no inline student list editing here)
-        function renderModalDegreeInputs() {
-            const { modalFacultySelect, modalDegreeInputsContainer } = getEditModalEls();
-            if (!modalDegreeInputsContainer) return;
-
-            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
-
-            const levelOptions = activeCategory === 'undergrad'
-                ? ['ອະນຸປະລິນຍາ', 'ປະລິນຍາຕີ', 'ຕໍ່ເນື່ອງປະລິນຍາຕີ']
-                : ['ແພດລົງເລີກຂະແໜງ', 'ແພດຊ່ຽວຊານ ຂັ້ນ 1', 'ແພດຊ່ຽວຊານ ຂັ້ນ 2', 'ປະລິນຍາໂທ', 'ປະລິນຍາເອກ'];
-
-            const rowsHTML = modalTempDegrees.map((d, index) => {
-                const normDeg = normalizeDegreeEntry(d, activeFacId);
-                modalTempDegrees[index] = normDeg;
-                const optionsList = levelOptions.includes(normDeg.level) ? levelOptions : [normDeg.level, ...levelOptions];
-                const maxY = getMaxStudyYears(normDeg.level, normDeg.program);
-
-                const fCount = normDeg.students.filter(s => s.gender === 'female').length;
-                const mCount = normDeg.students.filter(s => s.gender === 'male').length;
-                const tCount = normDeg.students.length;
-
-                return `
-                <div class="modal-deg-item bg-slate-50 p-3 rounded-2xl border border-slate-200/90 space-y-2 relative">
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex items-center gap-1.5 flex-1">
-                            <span class="text-xs font-extrabold text-teal-800">${index + 1}.</span>
-                            <select onchange="handleDegreeLevelOrNameChange(${index})" class="modal-level-input px-2.5 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                ${optionsList.map(opt => `<option value="${escapeHTML(opt)}" ${opt === normDeg.level ? 'selected' : ''}>${escapeHTML(opt)}</option>`).join('')}
-                            </select>
-                            <span class="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-md">ຫຼັກສູດ ${maxY} ປີ</span>
-                        </div>
-                        <button type="button" onclick="removeProgramRow(${index})" title="ລຶບສາຂານີ້" class="text-rose-500 hover:text-rose-700 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer">
-                            <i class="ph-bold ph-trash text-sm"></i>
-                        </button>
-                    </div>
-
-                    <div>
-                        <label class="block text-[10px] font-bold text-slate-500 mb-1">ຊື່ສາຂາວິຊາ:</label>
-                        <input type="text" onchange="handleDegreeLevelOrNameChange(${index})" value="${escapeHTML(normDeg.program)}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ທັນຕະແພດສາດ)"
-                            class="modal-prog-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                    </div>
-
-                    <div class="flex items-center justify-between bg-white border border-slate-200/80 rounded-xl px-2.5 py-1.5 text-[11px]">
-                        <span class="text-slate-500">ນັກສຶກສາໃນສາຂານີ້:</span>
-                        <div class="flex items-center gap-2 font-bold">
-                            <span class="text-rose-600">ຍິງ: ${fCount}</span>
-                            <span class="text-teal-700">ຊາຍ: ${mCount}</span>
-                            <span class="text-navy-900 bg-slate-100 px-2 py-0.5 rounded-md">ລວມ: ${tCount} ຄົນ</span>
-                        </div>
-                    </div>
-                </div>
-            `;
-            }).join('');
-
-            const addBtnHTML = `
-                <button type="button" onclick="addNewProgramRow()" class="w-full py-2.5 px-3 rounded-xl border-2 border-dashed border-teal-400 bg-teal-50/50 hover:bg-teal-100/70 text-teal-800 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                    <i class="ph-bold ph-plus-circle text-base text-teal-600"></i>
-                    <span>+ ເພີ່ມສາຂາວິຊາໃໝ່</span>
-                </button>
-            `;
-
-            modalDegreeInputsContainer.innerHTML = rowsHTML + addBtnHTML;
-            updateModalTotalPreview();
-        }
-
-        function updateModalTotalPreview() {
-            const totalBranches = modalTempDegrees.length;
-            const totalStudents = modalTempDegrees.reduce((acc, d) => acc + ((d.students && d.students.length) || 0), 0);
-            setText('modalFacultyTotalPreview', `${formatNum(totalBranches)} ສາຂາ (${formatNum(totalStudents)} ຄົນ)`);
-        }
-
-        function resetAllData() {
+        async function resetAllData() {
             if (!currentUser || currentUser.role !== 'admin') {
-                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດຄືນຄ່າເດີມທັງໝົດໄດ້!', true);
+                showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດຄືນຄ່າເດີມໄດ້', true);
                 return;
             }
-            PROGRAM_YEAR_LIMITS = { ...DEFAULT_PROGRAM_YEAR_LIMITS };
-            saveProgramYearLimitsToStorage();
             const store = getStore();
             store.appData = normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(store.initialStats)));
             saveToStorage(store.statsKey, store.appData);
-            if (typeof window.pushDataToCloudGlobal === 'function') window.pushDataToCloudGlobal();
             updateLastModifiedDate();
             renderPortalView();
             renderHomeView();
+            const facSelect = document.getElementById('modalFacultySelect');
+            if (facSelect && facSelect.value) {
+                populateModalInputsForFaculty(facSelect.value);
+            }
             if (activeFacultyId) {
-                openFacultyDetail(activeFacultyId);
+                openFacultyDetail(activeFacultyId, false);
             }
-            closeEditModal();
-            showToast('ຄືນຄ່າຂໍ້ມູນເລີ່ມຕົ້ນທັງໝົດແລ້ວ');
-        }
 
-        let toastTimer = null;
-        function showToast(msg, isError = false) {
-            const banner = document.getElementById('toastBanner');
-            const msgEl = document.getElementById('toastMessage');
-            if (!banner || !msgEl) return;
-            const icon = banner.querySelector('i');
-            msgEl.textContent = msg;
-            if (isError) {
-                banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-rose-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-rose-400/30 whitespace-nowrap";
-                if (icon) icon.className = "ph-fill ph-warning-circle text-rose-300 text-base";
+            if (typeof window.pushDataToCloudGlobal === 'function') {
+                await window.pushDataToCloudGlobal();
             } else {
-                banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-white/10 whitespace-nowrap";
-                if (icon) icon.className = "ph-fill ph-check-circle text-emerald-400 text-base";
+                showToast('ຄືນຄ່າຂໍ້ມູນເລີ່ມຕົ້ນສຳເລັດແລ້ວ!');
             }
-            banner.classList.remove('hidden');
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                banner.classList.add('hidden');
-            }, 3200);
         }
 
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toastBanner');
+            const msgEl = document.getElementById('toastMessage');
+            if (!toast || !msgEl) return;
+
+            const iconEl = toast.querySelector('i');
+            msgEl.textContent = message;
+
+            if (iconEl) {
+                iconEl.className = isError
+                    ? 'ph-fill ph-warning-circle text-rose-400 text-base'
+                    : 'ph-fill ph-check-circle text-emerald-400 text-base';
+            }
+
+            toast.classList.remove('hidden');
+            clearTimeout(window.__toastTimer);
+            window.__toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 2800);
+        }
+
+        // =====================================================================
+        // EVENT LISTENERS & INITIALIZATION
+        // =====================================================================
         document.addEventListener('DOMContentLoaded', () => {
             const savedDate = safeGetStorage(STORAGE_KEYS.LAST_UPDATED);
-            if (savedDate) {
-                setText('lastUpdatedTimestamp', savedDate);
+            const tsEl = document.getElementById('lastUpdatedTimestamp');
+            if (tsEl) {
+                tsEl.textContent = savedDate || getCurrentLaoDate();
             }
-
-            updateAuthUI();
-            renderPortalView();
 
             const yearSelect = document.getElementById('academicYearSelect');
             if (yearSelect) {
                 yearSelect.addEventListener('change', (e) => {
                     currentYear = e.target.value;
                     renderPortalView();
-                    renderHomeView();
-                    if (activeFacultyId) {
-                        openFacultyDetail(activeFacultyId);
+                    const homeEl = document.getElementById('homeView');
+                    const detailEl = document.getElementById('facultyDetailView');
+                    if (homeEl && !homeEl.classList.contains('hidden')) {
+                        renderHomeView();
+                    } else if (detailEl && !detailEl.classList.contains('hidden') && activeFacultyId) {
+                        openFacultyDetail(activeFacultyId, false);
                     }
-                    showToast(`ປ່ຽນເປັນ ${e.target.options[e.target.selectedIndex].text}`);
+                    showToast(`ປ່ຽນເປັນສົກຮຽນ ${currentYear}`);
                 });
             }
-
-            const { editModal, modalFacultySelect } = getEditModalEls();
-            if (modalFacultySelect) {
-                modalFacultySelect.addEventListener('change', () => {
-                    loadFacultyDegreesIntoTemp();
-                    renderModalDegreeInputs();
-                });
-            }
-
-            if (editModal) {
-                editModal.addEventListener('click', (e) => {
-                    if (e.target === editModal) closeEditModal();
-                });
-            }
-
-            const backdropMap = [
-                { id: 'studentBioModal', closeFn: closeStudentBioModal },
-                { id: 'deleteStudentConfirmModal', closeFn: closeDeleteStudentConfirmModal },
-                { id: 'shiftYearModal', closeFn: closeShiftYearModal },
-                { id: 'orgEditModal', closeFn: closeOrgEditModal },
-                { id: 'newsFormModal', closeFn: closeNewsFormModal },
-                { id: 'deleteNewsConfirmModal', closeFn: closeDeleteNewsConfirmModal },
-                { id: 'loginModal', closeFn: closeLoginModal }
-            ];
-            backdropMap.forEach(({ id, closeFn }) => {
-                const el = document.getElementById(id);
-                if (el) {
-                    el.addEventListener('click', (e) => {
-                        if (e.target === el) closeFn();
-                    });
-                }
-            });
 
             const loginForm = document.getElementById('loginForm');
             if (loginForm) {
                 loginForm.addEventListener('submit', (e) => {
                     e.preventDefault();
-                    const userInp = document.getElementById('loginUsername');
-                    const passInp = document.getElementById('loginPassword');
-                    const errEl = document.getElementById('loginErrorMsg');
-                    const user = (userInp ? userInp.value : '').trim().toLowerCase();
-                    const pass = passInp ? passInp.value : '';
-                    const account = USER_ACCOUNTS[user];
+                    const rawUser = document.getElementById('loginUsername').value.trim().toLowerCase();
+                    const password = document.getElementById('loginPassword').value.trim();
+                    const account = USER_ACCOUNTS[rawUser];
 
-                    if (account && account.password === pass) {
-                        currentUser = { username: user, ...account };
-                        updateAuthUI();
+                    if (account && account.password === password) {
+                        currentUser = { username: rawUser, ...account };
                         closeLoginModal();
+                        updateAuthUI();
+
                         const orgView = document.getElementById('orgChartView');
-                        const newsView = document.getElementById('newsView');
-                        if (orgView && !orgView.classList.contains('hidden')) renderOrgChart();
-                        if (newsView && !newsView.classList.contains('hidden')) renderNewsFeed();
-                        showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
+                        if (orgView && !orgView.classList.contains('hidden')) {
+                            renderOrgChart();
+                        }
 
                         if (typeof pendingAuthAction === 'function') {
-                            const action = pendingAuthAction;
-                            const reqFac = pendingRequiredFacultyId;
+                            const actionToRun = pendingAuthAction;
+                            const reqFacId = pendingRequiredFacultyId;
                             pendingAuthAction = null;
                             pendingRequiredFacultyId = null;
 
-                            if (currentUser.role === 'admin') {
-                                action();
-                            } else if (reqFac === 'admin') {
-                                showToast('ບັນຊີຂອງທ່ານບໍ່ມີສິດແກ້ໄຂສ່ວນນີ້ (ສະເພາະ Admin)', true);
-                            } else if (reqFac && currentUser.facultyId !== reqFac) {
-                                showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
-                            } else {
-                                action();
+                            if (currentUser.role !== 'admin') {
+                                if (reqFacId === 'admin') {
+                                    showToast(`ເຂົ້າສູ່ລະບົບສຳເລັດ (ສະເພາະ Admin ເທົ່ານັ້ນທີ່ແກ້ໄຂສ່ວນນີ້ໄດ້)`, true);
+                                    return;
+                                }
+                                if (reqFacId && currentUser.facultyId !== reqFacId) {
+                                    showToast(`ເຂົ້າສູ່ລະບົບສຳເລັດ ແຕ່ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}"`, true);
+                                    return;
+                                }
                             }
+
+                            showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
+                            actionToRun();
+                        } else {
+                            showToast(`ເຂົ້າສູ່ລະບົບສຳເລັດ: ${currentUser.label}`);
                         }
-                    } else if (errEl) {
-                        errEl.classList.remove('hidden');
+                    } else {
+                        const errEl = document.getElementById('loginErrorMsg');
+                        if (errEl) errEl.classList.remove('hidden');
                     }
                 });
             }
 
-            // Submit handler for Branch Management Modal (ເພີ່ມ ແລະ ແກ້ໄຂສາຂາເທົ່ານັ້ນ)
-            const editFacultyForm = document.getElementById('editFacultyForm');
-            if (editFacultyForm) {
-                editFacultyForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    if (!currentUser || !modalFacultySelect) return;
-                    const targetFacId = modalFacultySelect.value;
+            const modalFacSelect = document.getElementById('modalFacultySelect');
+            if (modalFacSelect) {
+                modalFacSelect.addEventListener('change', (e) => {
+                    populateModalInputsForFaculty(e.target.value);
+                });
+            }
 
-                    if (currentUser.role === 'faculty' && currentUser.facultyId !== targetFacId) {
-                        showToast('ທ່ານບໍ່ມີສິດບັນທຶກຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
+            // Form 1: Save Branches Only
+            const editFacForm = document.getElementById('editFacultyForm');
+            if (editFacForm) {
+                editFacForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser) return;
+
+                    const selectedFacId = document.getElementById('modalFacultySelect').value;
+                    if (currentUser.role === 'faculty' && currentUser.facultyId !== selectedFacId) {
+                        showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
                         return;
                     }
 
-                    syncBranchInputsToTemp();
                     const store = getStore();
                     const faculties = getCurrentYearBlock(activeCategory).faculties || [];
-                    const faculty = faculties.find(f => f.id === targetFacId);
+                    const faculty = faculties.find(f => f.id === selectedFacId);
                     if (!faculty) return;
 
-                    faculty.degrees = JSON.parse(JSON.stringify(modalTempDegrees.map(d => normalizeDegreeEntry(d, faculty.id))));
+                    const cleanedDegrees = modalTempDegrees.map(d => {
+                        const cleanProgram = String(d.program || '').trim() || "ສາຂາທົ່ວໄປ";
+                        const maxY = getMaxStudyYears(d.level, cleanProgram);
+                        const cleanedStudents = (Array.isArray(d.students) ? d.students : []).map((s, idx) =>
+                            sanitizeStudentObject(s, maxY, `${d.level}_${cleanProgram}_${idx}`, faculty.id)
+                        );
+                        return {
+                            level: d.level || "ປະລິນຍາຕີ",
+                            program: cleanProgram,
+                            students: cleanedStudents,
+                            studyYears: rebuildStudyYearsFromStudents(cleanedStudents, maxY)
+                        };
+                    });
+
+                    faculty.degrees = cleanedDegrees;
 
                     saveToStorage(store.statsKey, store.appData);
                     updateLastModifiedDate();
                     renderPortalView();
                     renderHomeView();
-                    if (activeFacultyId === faculty.id) {
-                        openFacultyDetail(faculty.id, false);
-                    }
                     closeEditModal();
+
+                    if (activeFacultyId === selectedFacId) {
+                        openFacultyDetail(selectedFacId, false);
+                    }
 
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
@@ -3909,101 +4417,82 @@
                 });
             }
 
-            // Submit handler for Unified Student Bio Form (ເພີ່ມນັກສຶກສາໃໝ່ & ແກ້ໄຂປະຫວັດຈຸດດຽວ)
+            // Form 1A: Unified Student Bio Form Submit
             const studentBioForm = document.getElementById('studentBioForm');
             if (studentBioForm) {
                 studentBioForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     if (!currentUser || !editingStudentBioState) return;
-                    const { mode, originalFacultyId, originalDegIdx, studentId } = editingStudentBioState;
-                    const selectedFacId = document.getElementById('stuBioFacultySelect')?.value || editingStudentBioState.facultyId;
 
-                    if (currentUser.role === 'faculty' && currentUser.facultyId !== selectedFacId) {
+                    const { mode, facultyId, originalFacultyId, originalDegIdx, studentId } = editingStudentBioState;
+                    const chosenFacId = document.getElementById('stuBioFacultySelect')?.value || facultyId;
+
+                    if (currentUser.role === 'faculty' && (currentUser.facultyId !== chosenFacId || (originalFacultyId && currentUser.facultyId !== originalFacultyId))) {
                         showToast('ທ່ານບໍ່ມີສິດແກ້ໄຂຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
                         return;
                     }
 
                     const store = getStore();
                     const faculties = getCurrentYearBlock(activeCategory).faculties || [];
-                    const faculty = faculties.find(f => f.id === selectedFacId);
-                    if (!faculty || !Array.isArray(faculty.degrees) || faculty.degrees.length === 0) {
-                        showToast('ກະລຸນາເລືອກຄະນະ ແລະ ສາຂາວິຊາໃຫ້ຖືກຕ້ອງ!', true);
+                    const targetFaculty = faculties.find(f => f.id === chosenFacId);
+                    if (!targetFaculty) {
+                        showToast('ບໍ່ພົບຄະນະວິຊາທີ່ເລືອກ!', true);
                         return;
                     }
 
-                    const rawBranchVal = document.getElementById('stuBioBranchSelect')?.value;
-                    if (rawBranchVal === '' || rawBranchVal === null || rawBranchVal === undefined) {
-                        showToast('ຄະນະທີ່ເລືອກຍັງບໍ່ມີສາຂາວິຊາ!', true);
+                    const targetDegIdx = parseInt(document.getElementById('stuBioBranchSelect').value, 10) || 0;
+                    const targetDeg = targetFaculty.degrees[targetDegIdx];
+                    if (!targetDeg) {
+                        showToast('ກະລຸນາເລືອກສາຂາວິຊາກ່ອນ!', true);
                         return;
                     }
-
-                    const targetDegIdx = Math.min(
-                        Math.max(parseInt(rawBranchVal, 10) || 0, 0),
-                        faculty.degrees.length - 1
-                    );
-                    const targetDeg = faculty.degrees[targetDegIdx];
-                    if (!targetDeg) return;
 
                     const maxY = getMaxStudyYears(targetDeg.level, targetDeg.program);
-                    const selectedYear = Math.min(
-                        Math.max(parseInt(document.getElementById('stuBioYearSelect')?.value, 10) || 1, 1),
-                        maxY
-                    );
-                    const selectedGender = document.getElementById('stuBioGenderSelect')?.value === 'male' ? 'male' : 'female';
-                    const suffixVal = document.getElementById('stuBioCodeSuffixInput')?.value || '';
-                    const fullCode = formatStudentFullCode(suffixVal, faculty.id);
+                    const selectedYear = Math.min(Math.max(parseInt(document.getElementById('stuBioYearSelect').value, 10) || 1, 1), maxY);
+                    const selectedGender = document.getElementById('stuBioGenderSelect').value === 'male' ? 'male' : 'female';
+                    const suffixVal = document.getElementById('stuBioCodeSuffixInput').value.trim();
+                    const fullCode = formatStudentFullCode(suffixVal, targetFaculty.id);
+                    const stuName = document.getElementById('stuBioNameInput').value.trim();
 
-                    const nameVal = (document.getElementById('stuBioNameInput')?.value || '').trim();
-                    if (!nameVal) {
+                    if (!stuName) {
                         showToast('ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນຂອງນັກສຶກສາ!', true);
                         return;
                     }
 
-                    const updatedStudentRecord = sanitizeStudentObject({
-                        id: (mode === 'edit' && studentId) ? studentId : `stu_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
+                    const bioData = {
+                        id: (mode === 'edit' && studentId)
+                            ? studentId
+                            : `stu_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
                         code: fullCode,
-                        name: nameVal,
+                        name: stuName,
                         gender: selectedGender,
                         year: selectedYear,
-                        dob: (document.getElementById('stuBioDobInput')?.value || '').trim(),
-                        ethnicity: (document.getElementById('stuBioEthnicityInput')?.value || '').trim(),
-                        religion: (document.getElementById('stuBioReligionInput')?.value || '').trim(),
-                        birthVillage: (document.getElementById('stuBioVillageInput')?.value || '').trim(),
-                        birthDistrict: (document.getElementById('stuBioDistrictInput')?.value || '').trim(),
-                        birthProvince: (document.getElementById('stuBioProvinceInput')?.value || '').trim(),
-                        organization: (document.getElementById('stuBioOrgInput')?.value || '').trim(),
-                        studentType: (document.getElementById('stuBioTypeSelect')?.value || 'ພະນັກງານ').trim(),
-                        scholarship: (document.getElementById('stuBioScholarshipInput')?.value || '').trim(),
-                        phone: (document.getElementById('stuBioPhoneInput')?.value || '').trim()
-                    }, maxY, nameVal, faculty.id);
-
-                    const sourceFacId = originalFacultyId || selectedFacId;
-                    const sourceFaculty = faculties.find(f => f.id === sourceFacId);
+                        dob: document.getElementById('stuBioDobInput').value.trim(),
+                        ethnicity: document.getElementById('stuBioEthnicityInput').value.trim(),
+                        religion: document.getElementById('stuBioReligionInput').value.trim(),
+                        birthVillage: document.getElementById('stuBioVillageInput').value.trim(),
+                        birthDistrict: document.getElementById('stuBioDistrictInput').value.trim(),
+                        birthProvince: document.getElementById('stuBioProvinceInput').value.trim(),
+                        organization: document.getElementById('stuBioOrgInput').value.trim(),
+                        studentType: document.getElementById('stuBioTypeSelect').value.trim() || 'ພະນັກງານ',
+                        scholarship: document.getElementById('stuBioScholarshipInput').value.trim(),
+                        phone: document.getElementById('stuBioPhoneInput').value.trim()
+                    };
 
                     if (mode === 'edit' && studentId) {
-                        if ((sourceFacId !== selectedFacId || originalDegIdx !== targetDegIdx) && sourceFaculty && sourceFaculty.degrees[originalDegIdx]) {
-                            const oldDeg = sourceFaculty.degrees[originalDegIdx];
-                            oldDeg.students = (oldDeg.students || []).filter(s => s.id !== studentId);
-                            oldDeg.studyYears = rebuildStudyYearsFromStudents(
-                                oldDeg.students,
-                                getMaxStudyYears(oldDeg.level, oldDeg.program)
+                        const sourceFaculty = faculties.find(f => f.id === (originalFacultyId || targetFaculty.id)) || targetFaculty;
+                        const origDeg = sourceFaculty.degrees[originalDegIdx];
+                        if (origDeg && Array.isArray(origDeg.students)) {
+                            origDeg.students = origDeg.students.filter(s => s.id !== studentId);
+                            origDeg.studyYears = rebuildStudyYearsFromStudents(
+                                origDeg.students,
+                                getMaxStudyYears(origDeg.level, origDeg.program)
                             );
-                            if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
-                            targetDeg.students.push(updatedStudentRecord);
-                        } else {
-                            if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
-                            const idx = targetDeg.students.findIndex(s => s.id === studentId);
-                            if (idx !== -1) {
-                                targetDeg.students[idx] = updatedStudentRecord;
-                            } else {
-                                targetDeg.students.push(updatedStudentRecord);
-                            }
                         }
-                    } else {
-                        if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
-                        targetDeg.students.push(updatedStudentRecord);
                     }
 
+                    if (!Array.isArray(targetDeg.students)) targetDeg.students = [];
+                    targetDeg.students.push(bioData);
                     targetDeg.studyYears = rebuildStudyYearsFromStudents(targetDeg.students, maxY);
 
                     saveToStorage(store.statsKey, store.appData);
@@ -4011,36 +4500,26 @@
                     renderPortalView();
                     renderHomeView();
                     closeStudentBioModal();
-
-                    // Refresh underlying view (either Student Profile View or Faculty Detail View)
-                    const stuProfileViewEl = document.getElementById('studentProfileView');
-                    if (mode === 'edit' && stuProfileViewEl && !stuProfileViewEl.classList.contains('hidden')) {
-                        openFacultyDetail(faculty.id, false);
-                        const matchingKey = Object.keys(currentDisplayedStudentsMap).find(
-                            k => currentDisplayedStudentsMap[k].id === updatedStudentRecord.id
-                        );
-                        if (matchingKey) {
-                            openStudentProfile(matchingKey);
-                        }
-                    } else {
-                        openFacultyDetail(faculty.id, false);
-                    }
+                    openFacultyDetail(targetFaculty.id, false);
 
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
                     } else {
-                        showToast(mode === 'edit' ? 'ບັນທຶກການແກ້ໄຂປະຫວັດນັກສຶກສາສຳເລັດ!' : 'ເພີ່ມນັກສຶກສາໃໝ່ສຳເລັດ!');
+                        showToast(mode === 'edit'
+                            ? `ອັບເດດປະຫວັດ "${stuName}" ສຳເລັດ!`
+                            : `ເພີ່ມນັກສຶກສາ "${stuName}" ສຳເລັດ!`);
                     }
                 });
             }
 
+            // Form 1B: Shift Study Year Submit
             const shiftYearForm = document.getElementById('shiftYearForm');
             if (shiftYearForm) {
                 shiftYearForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     if (!currentUser || !activeFacultyId) return;
                     if (currentUser.role === 'faculty' && currentUser.facultyId !== activeFacultyId) {
-                        showToast('ທ່ານບໍ່ມີສິດປ່ຽນປີຮຽນຂອງຄະນະອື່ນ!', true);
+                        showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
                         return;
                     }
 
@@ -4049,13 +4528,14 @@
                     const faculty = faculties.find(f => f.id === activeFacultyId);
                     if (!faculty) return;
 
-                    faculty.degrees = JSON.parse(JSON.stringify(shiftTempDegrees.map(d => normalizeDegreeEntry(d, faculty.id))));
+                    faculty.degrees = shiftTempDegrees.map(d => normalizeDegreeEntry(d, faculty.id));
+
                     saveToStorage(store.statsKey, store.appData);
                     updateLastModifiedDate();
                     renderPortalView();
                     renderHomeView();
-                    openFacultyDetail(faculty.id, false);
                     closeShiftYearModal();
+                    openFacultyDetail(activeFacultyId, false);
 
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
@@ -4065,16 +4545,22 @@
                 });
             }
 
+            // Form 2: Org Chart Submit
             const orgEditForm = document.getElementById('orgEditForm');
             if (orgEditForm) {
                 orgEditForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    if (!currentUser || currentUser.role !== 'admin') return;
+                    if (!currentUser || currentUser.role !== 'admin') {
+                        showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດແກ້ໄຂໂຄງຮ່າງໄດ້', true);
+                        return;
+                    }
+
                     const store = getStore();
-                    document.querySelectorAll('.org-field-input').forEach(inp => {
-                        const idx = parseInt(inp.dataset.orgIdx, 10);
-                        const field = inp.dataset.field;
-                        if (store.orgData[idx] && field) {
+                    const inputs = document.querySelectorAll('[data-org-idx]');
+                    inputs.forEach(inp => {
+                        const idx = parseInt(inp.getAttribute('data-org-idx'), 10);
+                        const field = inp.getAttribute('data-field');
+                        if (store.orgData[idx]) {
                             store.orgData[idx][field] = inp.value.trim();
                         }
                     });
@@ -4087,44 +4573,55 @@
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
                     } else {
-                        showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
+                        showToast('ອັບເດດໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
                     }
                 });
             }
 
+            // Form 3: Add / Edit News Submit
             const newsForm = document.getElementById('newsForm');
             if (newsForm) {
                 newsForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
-                    if (!currentUser || currentUser.role !== 'admin') return;
+                    if (!currentUser || currentUser.role !== 'admin') {
+                        showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດບັນທຶກຂ່າວສານໄດ້', true);
+                        return;
+                    }
+
                     const targetCat = activeCategory;
                     const store = getStore(targetCat);
-                    const editingId = (document.getElementById('editingNewsIdInput')?.value || '').trim();
-                    const category = document.getElementById('newsCategoryInput')?.value || 'ແຈ້ງການທົ່ວໄປ';
-                    const title = (document.getElementById('newsTitleInput')?.value || '').trim();
-                    const content = (document.getElementById('newsContentInput')?.value || '').trim();
+                    const editingIdRaw = document.getElementById('editingNewsIdInput')?.value.trim() || '';
+                    const categoryVal = document.getElementById('newsCategoryInput').value;
+                    const titleVal = document.getElementById('newsTitleInput').value.trim();
+                    const contentVal = document.getElementById('newsContentInput').value.trim();
 
-                    if (!title || !content) return;
+                    if (!titleVal || !contentVal) {
+                        showToast('ກະລຸນາປ້ອນຫົວຂໍ້ ແລະ ເນື້ອໃນຂ່າວສານໃຫ້ຄົບຖ້ວນ!', true);
+                        return;
+                    }
 
-                    if (editingId !== '') {
-                        const targetIndex = store.newsData.findIndex(n => Number(n.id) === Number(editingId));
-                        if (targetIndex !== -1) {
-                            store.newsData[targetIndex] = {
-                                ...store.newsData[targetIndex],
-                                category,
-                                title,
-                                content,
-                                date: `${getCurrentLaoDate()} (ແກ້ໄຂ)`
+                    const todayStr = getCurrentLaoDate();
+
+                    if (editingIdRaw !== '') {
+                        const targetIdx = store.newsData.findIndex(n => String(n.id) === String(editingIdRaw));
+                        if (targetIdx !== -1) {
+                            store.newsData[targetIdx] = {
+                                ...store.newsData[targetIdx],
+                                category: categoryVal,
+                                title: titleVal,
+                                content: contentVal,
+                                date: `${todayStr} (ແກ້ໄຂ)`
                             };
                         }
                     } else {
-                        store.newsData.unshift({
+                        const newItem = {
                             id: Date.now(),
-                            category,
-                            date: getCurrentLaoDate(),
-                            title,
-                            content
-                        });
+                            category: categoryVal,
+                            date: todayStr,
+                            title: titleVal,
+                            content: contentVal
+                        };
+                        store.newsData.unshift(newItem);
                     }
 
                     saveToStorage(store.newsKey, store.newsData);
@@ -4136,180 +4633,179 @@
                     if (typeof window.pushDataToCloudGlobal === 'function') {
                         await window.pushDataToCloudGlobal();
                     } else {
-                        showToast(editingId !== '' ? `ແກ້ໄຂຂ່າວສານ (${store.shortTitle}) ສຳເລັດ!` : `ເພີ່ມຂ່າວສານໃໝ່ (${store.shortTitle}) ສຳເລັດ!`);
+                        showToast(editingIdRaw !== ''
+                            ? `ແກ້ໄຂຂ່າວສານ (${store.shortTitle}) ສຳເລັດ!`
+                            : `ເພີ່ມຂ່າວສານໃໝ່ (${store.shortTitle}) ສຳເລັດ!`);
                     }
                 });
             }
+
+            // Close Modals on Backdrop Click
+            ['editModal', 'studentBioModal', 'deleteStudentConfirmModal', 'shiftYearModal', 'orgEditModal', 'newsFormModal', 'deleteNewsConfirmModal', 'loginModal', 'excelExportModal'].forEach(modalId => {
+                const modalEl = document.getElementById(modalId);
+                if (modalEl) {
+                    modalEl.addEventListener('click', (e) => {
+                        if (e.target === modalEl) {
+                            modalEl.classList.add('hidden');
+                            modalEl.classList.remove('flex');
+                        }
+                    });
+                }
+            });
+
+            updateAuthUI();
+            renderPortalView();
         });
+
+        window.refreshAllViewsFromCloud = function () {
+            if (window.PROGRAM_YEAR_LIMITS && typeof window.PROGRAM_YEAR_LIMITS === 'object') {
+                PROGRAM_YEAR_LIMITS = { ...DEFAULT_PROGRAM_YEAR_LIMITS, ...window.PROGRAM_YEAR_LIMITS };
+            }
+            renderPortalView();
+            const homeEl = document.getElementById('homeView');
+            const detailEl = document.getElementById('facultyDetailView');
+            const newsEl = document.getElementById('newsView');
+            const orgEl = document.getElementById('orgChartView');
+
+            if (homeEl && !homeEl.classList.contains('hidden')) {
+                renderHomeView();
+            } else if (detailEl && !detailEl.classList.contains('hidden') && activeFacultyId) {
+                openFacultyDetail(activeFacultyId, false);
+            } else if (newsEl && !newsEl.classList.contains('hidden')) {
+                openNewsView();
+            } else if (orgEl && !orgEl.classList.contains('hidden')) {
+                renderOrgChart();
+            }
+        };
     </script>
 
     <!-- =====================================================================
-         FIREBASE REAL-TIME CLOUD SYNC MODULE (ສຳລັບ GitHub Pages)
+         FIREBASE REAL-TIME CLOUD SYNC MODULE (Auto-loaded safely)
          ===================================================================== -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const YOUR_GITHUB_FIREBASE_CONFIG = {
-            apiKey: "AIzaSyBivBI2haH7PaIzbbRp5u0xtT73R7AsXho",
-            authDomain: "databox-190f8.firebaseapp.com",
-            projectId: "databox-190f8",
-            storageBucket: "databox-190f8.firebasestorage.app",
-            messagingSenderId: "950008480387",
-            appId: "1:950008480387:web:7b400e3284cd3865a411b6"
+        const firebaseConfig = {
+            apiKey: "AIzaSyDemoReplaceWithYourRealFirebaseApiKey",
+            authDomain: "uhs-student-stats.firebaseapp.com",
+            projectId: "uhs-student-stats",
+            storageBucket: "uhs-student-stats.appspot.com",
+            messagingSenderId: "123456789012",
+            appId: "1:123456789012:web:abcdef1234567890"
         };
 
-        let db = null;
-        let docRef = null;
-        let isCloudReady = false;
+        const isConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("DemoReplace");
 
-        async function initCloudSync() {
-            const safeUpdateCloudStatus = typeof window.updateCloudStatusUI === 'function'
-                ? window.updateCloudStatusUI
-                : () => {};
-            let configToUse = null;
-            let docPath = ['uhs_public_data', 'main_database'];
-
-            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-                configToUse = JSON.parse(__firebase_config);
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-                docPath = ['artifacts', appId, 'public', 'data', 'uhs_stats', 'main_database'];
-            } else if (
-                YOUR_GITHUB_FIREBASE_CONFIG.apiKey &&
-                !YOUR_GITHUB_FIREBASE_CONFIG.apiKey.includes("PASTE_YOUR")
-            ) {
-                configToUse = YOUR_GITHUB_FIREBASE_CONFIG;
+        if (!isConfigured) {
+            if (typeof window.updateCloudStatusUI === 'function') {
+                window.updateCloudStatusUI('local', 'ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Config (ໃຊ້ Local Storage ປົກກະຕິ)');
             }
-
-            if (!configToUse) {
-                safeUpdateCloudStatus('local');
-                return;
-            }
-
-            try {
-                safeUpdateCloudStatus('syncing');
-                const app = initializeApp(configToUse);
-                const auth = getAuth(app);
-                db = getFirestore(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                docRef = doc(db, ...docPath);
-                isCloudReady = true;
-
-                onSnapshot(docRef, (snapshot) => {
-                    safeUpdateCloudStatus('connected');
-                    const stateRef = window.stateByCategory;
-                    if (!stateRef) return;
-                    if (snapshot.exists()) {
-                        const cloudData = snapshot.data() || {};
-                        if (cloudData.postgrad) {
-                            stateRef.postgrad.appData = normalizeDatabaseStudyYears(cloudData.postgrad.appData || stateRef.postgrad.appData);
-                            stateRef.postgrad.orgData = cloudData.postgrad.orgData || stateRef.postgrad.orgData;
-                            if (Array.isArray(cloudData.postgrad.newsData)) {
-                                stateRef.postgrad.newsData = cloudData.postgrad.newsData;
-                            }
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_STATS, stateRef.postgrad.appData);
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_ORG, stateRef.postgrad.orgData);
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_NEWS, stateRef.postgrad.newsData);
-                        }
-                        if (cloudData.undergrad) {
-                            stateRef.undergrad.appData = normalizeDatabaseStudyYears(cloudData.undergrad.appData || stateRef.undergrad.appData);
-                            stateRef.undergrad.orgData = cloudData.undergrad.orgData || stateRef.undergrad.orgData;
-                            if (Array.isArray(cloudData.undergrad.newsData)) {
-                                stateRef.undergrad.newsData = cloudData.undergrad.newsData;
-                            }
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_STATS, stateRef.undergrad.appData);
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_ORG, stateRef.undergrad.orgData);
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_NEWS, stateRef.undergrad.newsData);
-                        }
-                        if (cloudData.programYearLimits) {
-                            Object.keys(cloudData.programYearLimits).forEach(key => {
-                                const val = parseInt(cloudData.programYearLimits[key], 10);
-                                if (!Number.isNaN(val) && val >= 1 && val <= 15) {
-                                    PROGRAM_YEAR_LIMITS[key] = val;
-                                }
-                            });
-                            saveToStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS, PROGRAM_YEAR_LIMITS);
-                        }
-                        if (cloudData.lastUpdated) {
-                            saveToStorage(STORAGE_KEYS.LAST_UPDATED, cloudData.lastUpdated);
-                            setText('lastUpdatedTimestamp', cloudData.lastUpdated);
-                        }
-
-                        renderPortalView();
-                        const homeViewEl = document.getElementById('homeView');
-                        const facultyDetailViewEl = document.getElementById('facultyDetailView');
-                        const orgChartViewEl = document.getElementById('orgChartView');
-                        const newsViewEl = document.getElementById('newsView');
-
-                        if (homeViewEl && !homeViewEl.classList.contains('hidden')) renderHomeView();
-                        if (facultyDetailViewEl && !facultyDetailViewEl.classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId, false);
-                        if (orgChartViewEl && !orgChartViewEl.classList.contains('hidden')) renderOrgChart();
-                        if (newsViewEl && !newsViewEl.classList.contains('hidden')) renderNewsFeed();
-                    } else {
-                        pushDataToCloud(true);
-                    }
-                }, (error) => {
-                    isCloudReady = false;
-                    safeUpdateCloudStatus('error', error && error.code ? `Error: ${error.code}` : 'Local Mode');
-                });
-            } catch (err) {
-                isCloudReady = false;
-                safeUpdateCloudStatus('error', err && err.message ? err.message : 'Local Mode');
-            }
-        }
-
-        async function pushDataToCloud(silent = false) {
-            const safeUpdateCloudStatus = typeof window.updateCloudStatusUI === 'function'
-                ? window.updateCloudStatusUI
-                : () => {};
-            const stateRef = window.stateByCategory;
-            if (!isCloudReady || !docRef || !stateRef) {
-                if (!silent) {
-                    showToast('ບັນທຶກຂໍ້ມູນໃນເຄື່ອງສຳເລັດແລ້ວ!');
-                }
-                return;
-            }
-            try {
-                safeUpdateCloudStatus('syncing');
-                await setDoc(docRef, {
-                    postgrad: {
-                        appData: stateRef.postgrad.appData,
-                        orgData: stateRef.postgrad.orgData,
-                        newsData: stateRef.postgrad.newsData
-                    },
-                    undergrad: {
-                        appData: stateRef.undergrad.appData,
-                        orgData: stateRef.undergrad.orgData,
-                        newsData: stateRef.undergrad.newsData
-                    },
-                    programYearLimits: window.PROGRAM_YEAR_LIMITS || PROGRAM_YEAR_LIMITS,
-                    lastUpdated: getCurrentLaoDate()
-                });
-                safeUpdateCloudStatus('connected');
-                if (!silent) {
-                    showToast('ບັນທຶກຂຶ້ນ Cloud ສຳເລັດ!');
-                }
-            } catch (err) {
-                safeUpdateCloudStatus('error', err && err.code ? `Error: ${err.code}` : 'Local Mode');
-                if (!silent) {
-                    showToast('ບັນທຶກໃນເຄື່ອງສຳເລັດ (Cloud ບໍ່ສາມາດເຊື່ອມຕໍ່ໄດ້)', true);
-                }
-            }
-        }
-
-        window.pushDataToCloudGlobal = pushDataToCloud;
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initCloudSync);
         } else {
-            initCloudSync();
+            try {
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+                const stateDocRef = doc(db, "uhs_database", "main_state_v1");
+
+                let isApplyingRemote = false;
+
+                window.pushDataToCloudGlobal = async function () {
+                    if (isApplyingRemote) return;
+                    try {
+                        if (typeof window.updateCloudStatusUI === 'function') {
+                            window.updateCloudStatusUI('syncing');
+                        }
+                        const payload = {
+                            postgradStats: window.stateByCategory.postgrad.appData,
+                            postgradOrg: window.stateByCategory.postgrad.orgData,
+                            postgradNews: window.stateByCategory.postgrad.newsData,
+                            undergradStats: window.stateByCategory.undergrad.appData,
+                            undergradOrg: window.stateByCategory.undergrad.orgData,
+                            undergradNews: window.stateByCategory.undergrad.newsData,
+                            programYearLimits: window.PROGRAM_YEAR_LIMITS || {},
+                            updatedAt: new Date().toISOString()
+                        };
+                        await setDoc(stateDocRef, payload, { merge: true });
+                        if (typeof window.updateCloudStatusUI === 'function') {
+                            window.updateCloudStatusUI('connected');
+                        }
+                        if (typeof showToast === 'function') {
+                            showToast('ບັນທຶກ ແລະ ຊິ້ງຂໍ້ມູນຂຶ້ນ Cloud ສຳເລັດ!');
+                        }
+                    } catch (err) {
+                        console.error("Cloud push error:", err);
+                        if (typeof window.updateCloudStatusUI === 'function') {
+                            window.updateCloudStatusUI('error', err.message);
+                        }
+                        if (typeof showToast === 'function') {
+                            showToast('ບັນທຶກໃນເຄື່ອງສຳເລັດ (Cloud ຂັດຂ້ອງຊົ່ວຄາວ)', true);
+                        }
+                    }
+                };
+
+                getDoc(stateDocRef).then((snap) => {
+                    if (!snap.exists()) {
+                        window.pushDataToCloudGlobal();
+                    }
+                }).catch(() => {});
+
+                onSnapshot(stateDocRef, (snapshot) => {
+                    if (typeof window.updateCloudStatusUI === 'function') {
+                        window.updateCloudStatusUI('connected');
+                    }
+                    if (!snapshot.exists()) return;
+                    const data = snapshot.data();
+                    if (!data) return;
+
+                    isApplyingRemote = true;
+                    try {
+                        if (data.programYearLimits && typeof data.programYearLimits === 'object') {
+                            window.PROGRAM_YEAR_LIMITS = { ...window.PROGRAM_YEAR_LIMITS, ...data.programYearLimits };
+                            saveToStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS, window.PROGRAM_YEAR_LIMITS);
+                        }
+                        if (data.postgradStats) {
+                            window.stateByCategory.postgrad.appData = normalizeDatabaseStudyYears(data.postgradStats);
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_STATS, window.stateByCategory.postgrad.appData);
+                        }
+                        if (data.postgradOrg) {
+                            window.stateByCategory.postgrad.orgData = data.postgradOrg;
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_ORG, data.postgradOrg);
+                        }
+                        if (data.postgradNews) {
+                            window.stateByCategory.postgrad.newsData = data.postgradNews;
+                            saveToStorage(STORAGE_KEYS.POSTGRAD_NEWS, data.postgradNews);
+                        }
+                        if (data.undergradStats) {
+                            window.stateByCategory.undergrad.appData = normalizeDatabaseStudyYears(data.undergradStats);
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_STATS, window.stateByCategory.undergrad.appData);
+                        }
+                        if (data.undergradOrg) {
+                            window.stateByCategory.undergrad.orgData = data.undergradOrg;
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_ORG, data.undergradOrg);
+                        }
+                        if (data.undergradNews) {
+                            window.stateByCategory.undergrad.newsData = data.undergradNews;
+                            saveToStorage(STORAGE_KEYS.UNDERGRAD_NEWS, data.undergradNews);
+                        }
+
+                        if (typeof window.refreshAllViewsFromCloud === 'function') {
+                            window.refreshAllViewsFromCloud();
+                        }
+                    } finally {
+                        isApplyingRemote = false;
+                    }
+                }, (err) => {
+                    console.warn("Firestore snapshot warning:", err);
+                    if (typeof window.updateCloudStatusUI === 'function') {
+                        window.updateCloudStatusUI('error', err.message);
+                    }
+                });
+            } catch (initErr) {
+                console.warn("Firebase init skipped:", initErr);
+                if (typeof window.updateCloudStatusUI === 'function') {
+                    window.updateCloudStatusUI('local');
+                }
+            }
         }
     </script>
 </body>
