@@ -744,11 +744,18 @@
                     <div class="bg-teal-50/70 border border-teal-200/90 rounded-2xl p-3 space-y-2.5">
                         <p class="text-[11px] font-extrabold text-teal-900 flex items-center gap-1.5">
                             <i class="ph-fill ph-graduation-cap text-teal-700 text-sm"></i>
-                            <span>ຂໍ້ມູນການຮຽນ ແລະ ສາຂາວິຊາ</span>
+                            <span>ຂໍ້ມູນການຮຽນ, ຄະນະ ແລະ ສາຂາວິຊາ</span>
                         </p>
 
                         <div>
-                            <label for="stuBioBranchSelect" class="block text-[11px] font-bold text-slate-700 mb-1">ຫຼັກສູດ ແລະ ສາຂາວິຊາ *</label>
+                            <label for="stuBioFacultySelect" class="block text-[11px] font-bold text-slate-700 mb-1">1. ເລືອກຄະນະວິຊາ *</label>
+                            <select id="stuBioFacultySelect" onchange="handleStudentBioFacultyChange()" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-blue-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="stuBioBranchSelect" class="block text-[11px] font-bold text-slate-700 mb-1">2. ຫຼັກສູດ ແລະ ສາຂາວິຊາ (ຕາມຄະນະທີ່ເລືອກ) *</label>
                             <select id="stuBioBranchSelect" onchange="handleStudentBioBranchChange()" required class="w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
                                 <!-- Populated dynamically -->
                             </select>
@@ -810,8 +817,58 @@
                             </div>
                             <div>
                                 <label for="stuBioEthnicityInput" class="block text-[11px] font-bold text-slate-700 mb-1">4. ຊົນເຜົ່າ</label>
-                                <input type="text" id="stuBioEthnicityInput" placeholder="ເຊັ່ນ: ລາວລຸ່ມ"
-                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <select id="stuBioEthnicityInput"
+                                    class="w-full px-2 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <option value="ລາວລຸ່ມ">ລາວລຸ່ມ</option>
+                                    <option value="ລາວ">ລາວ</option>
+                                    <option value="ກຶມມຸ">ກຶມມຸ</option>
+                                    <option value="ມົ້ງ">ມົ້ງ</option>
+                                    <option value="ຜູ້ໄທ">ຜູ້ໄທ</option>
+                                    <option value="ໄຕ">ໄຕ</option>
+                                    <option value="ລື້">ລື້</option>
+                                    <option value="ຍວນ">ຍວນ</option>
+                                    <option value="ຢັ້ງ">ຢັ້ງ</option>
+                                    <option value="ແຊກ">ແຊກ</option>
+                                    <option value="ໄທເໜືອ">ໄທເໜືອ</option>
+                                    <option value="ໄປຣ">ໄປຣ</option>
+                                    <option value="ຊິງມູນ">ຊິງມູນ</option>
+                                    <option value="ຜ້ອງ">ຜ້ອງ</option>
+                                    <option value="ແທ່ນ">ແທ່ນ</option>
+                                    <option value="ເອີດູ">ເອີດູ</option>
+                                    <option value="ບິດ">ບິດ</option>
+                                    <option value="ລະເມດ">ລະເມດ</option>
+                                    <option value="ສາມຕ່າວ">ສາມຕ່າວ</option>
+                                    <option value="ກະຕາງ">ກະຕາງ</option>
+                                    <option value="ມະກອງ">ມະກອງ</option>
+                                    <option value="ຕຣີ">ຕຣີ</option>
+                                    <option value="ຍະເຫີນ">ຍະເຫີນ</option>
+                                    <option value="ຕະໂອ້ຍ">ຕະໂອ້ຍ</option>
+                                    <option value="ກະຕູ">ກະຕູ</option>
+                                    <option value="ຮະຣັກ">ຮະຣັກ</option>
+                                    <option value="ອາລັກ">ອາລັກ</option>
+                                    <option value="ໂອຍ">ໂອຍ</option>
+                                    <option value="ເບຣົາ">ເບຣົາ</option>
+                                    <option value="ເຈັງ">ເຈັງ</option>
+                                    <option value="ສະດາງ">ສະດາງ</option>
+                                    <option value="ຊ່ວຍ">ຊ່ວຍ</option>
+                                    <option value="ຍະຮູນ">ຍະຮູນ</option>
+                                    <option value="ລະວີ">ລະວີ</option>
+                                    <option value="ປະໂກະ">ປະໂກະ</option>
+                                    <option value="ຂະແມ">ຂະແມ</option>
+                                    <option value="ຕຸ້ມ">ຕຸ້ມ</option>
+                                    <option value="ງວນ">ງວນ</option>
+                                    <option value="ມ້ອຍ">ມ້ອຍ</option>
+                                    <option value="ກຣຽງ">ກຣຽງ</option>
+                                    <option value="ອາຄາ">ອາຄາ</option>
+                                    <option value="ພູນ້ອຍ">ພູນ້ອຍ</option>
+                                    <option value="ລາຫູ">ລາຫູ</option>
+                                    <option value="ສີລາ">ສີລາ</option>
+                                    <option value="ຮ່າຍີ່">ຮ່າຍີ່</option>
+                                    <option value="ໂລໂລ">ໂລໂລ</option>
+                                    <option value="ຫໍ້">ຫໍ້</option>
+                                    <option value="ອິວມຽນ">ອິວມຽນ</option>
+                                    <option value="ອື່ນໆ">ອື່ນໆ</option>
+                                </select>
                             </div>
                             <div>
                                 <label for="stuBioReligionInput" class="block text-[11px] font-bold text-slate-700 mb-1">5. ສາດສະໜາ</label>
@@ -820,21 +877,25 @@
                             </div>
                         </div>
 
-                        <!-- 6. ບ້ານເກີດ & 7. ເມືອງເກີດ & 8. ແຂວງເກີດ -->
+                        <!-- 6. ແຂວງເກີດ & 7. ເມືອງເກີດ & 8. ບ້ານເກີດ -->
                         <div class="grid grid-cols-3 gap-2">
                             <div>
-                                <label for="stuBioVillageInput" class="block text-[11px] font-bold text-slate-700 mb-1">6. ບ້ານເກີດ</label>
-                                <input type="text" id="stuBioVillageInput" placeholder="ບ້ານ..."
-                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <label for="stuBioProvinceInput" class="block text-[11px] font-bold text-slate-700 mb-1">6. ແຂວງເກີດ</label>
+                                <select id="stuBioProvinceInput" onchange="handleStudentBioProvinceChange()"
+                                    class="w-full px-2 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <!-- Populated dynamically with all 18 provinces -->
+                                </select>
                             </div>
                             <div>
                                 <label for="stuBioDistrictInput" class="block text-[11px] font-bold text-slate-700 mb-1">7. ເມືອງເກີດ</label>
-                                <input type="text" id="stuBioDistrictInput" placeholder="ເມືອງ..."
-                                    class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                <select id="stuBioDistrictInput"
+                                    class="w-full px-2 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                                    <!-- Populated dynamically based on selected province -->
+                                </select>
                             </div>
                             <div>
-                                <label for="stuBioProvinceInput" class="block text-[11px] font-bold text-slate-700 mb-1">8. ແຂວງເກີດ</label>
-                                <input type="text" id="stuBioProvinceInput" placeholder="ແຂວງ..."
+                                <label for="stuBioVillageInput" class="block text-[11px] font-bold text-slate-700 mb-1">8. ບ້ານເກີດ</label>
+                                <input type="text" id="stuBioVillageInput" placeholder="ບ້ານ..."
                                     class="w-full px-2.5 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
                             </div>
                         </div>
@@ -1328,20 +1389,97 @@
             "ອາສາສະໝັກ,ສັນຍາຈ້າງ"
         ];
 
-        const FACULTY_CODE_MAP = {
+        const LAO_PROVINCES_DISTRICTS = {
+            "ນະຄອນຫຼວງວຽງຈັນ": ["ເມືອງ ຈັນທະບູລີ", "ເມືອງ ສີໂຄດຕະບອງ", "ເມືອງ ໄຊເສດຖາ", "ເມືອງ ສີສັດຕະນາກ", "ເມືອງ ນາຊາຍທອງ", "ເມືອງ ໄຊທານີ", "ເມືອງ ຫາດຊາຍຟອງ", "ເມືອງ ສັງທອງ", "ເມືອງ ປາກງື່ມ"],
+            "ແຂວງ ຜົ້ງສາລີ": ["ເມືອງ ຜົ້ງສາລີ", "ເມືອງ ໃໝ່", "ເມືອງ ຂວາ", "ເມືອງ ສຳພັນ", "ເມືອງ ບຸນເໜືອ", "ເມືອງ ຍອດອູ", "ເມືອງ ບຸນໃຕ້"],
+            "ແຂວງ ຫຼວງນ້ຳທາ": ["ເມືອງ ຫຼວງນ້ຳທາ", "ເມືອງ ສິງ", "ເມືອງ ລອງ", "ເມືອງ ວຽງພູຄາ", "ເມືອງ ນາແລ"],
+            "ແຂວງ ອຸດົມໄຊ": ["ເມືອງ ໄຊ", "ເມືອງ ຫຼາ", "ເມືອງ ນາໝໍ້", "ເມືອງ ງາ", "ເມືອງ ແບ່ງ", "ເມືອງ ຮຸນ", "ເມືອງ ປາກແບ່ງ"],
+            "ແຂວງ ບໍ່ແກ້ວ": ["ເມືອງ ຫ້ວຍຊາຍ", "ເມືອງ ຕົ້ນເຜິ້ງ", "ເມືອງ ເມິງ", "ເມືອງ ຜາອຸດົມ", "ເມືອງ ປາກທາ"],
+            "ແຂວງ ຫຼວງພະບາງ": ["ນະຄອນ ຫຼວງພະບາງ", "ເມືອງ ຊຽງເງິນ", "ເມືອງ ນານ", "ເມືອງ ປາກອູ", "ເມືອງ ນ້ຳບາກ", "ເມືອງ ງອຍ", "ເມືອງ ປາກແຊງ", "ເມືອງ ໂພນໄຊ", "ເມືອງ ຈອມເພັດ", "ເມືອງ ວຽງຄຳ", "ເມືອງ ພູຄູນ", "ເມືອງ ໂພນທອງ"],
+            "ແຂວງ ຫົວພັນ": ["ເມືອງ ຊຳເໜືອ", "ເມືອງ ຊຽງຄໍ້", "ເມືອງ ວຽງທອງ", "ເມືອງ ວຽງໄຊ", "ເມືອງ ຫົວເມືອງ", "ເມືອງ ຊຳໃຕ້", "ເມືອງ ສົບເບົາ", "ເມືອງ ແອດ", "ເມືອງ ກວັນ", "ເມືອງ ຊ່ອນ"],
+            "ແຂວງ ໄຊຍະບູລີ": ["ເມືອງ ໄຊຍະບູລີ", "ເມືອງ ຄອບ", "ເມືອງ ຫົງສາ", "ເມືອງ ເງິນ", "ເມືອງ ຊຽງຮ່ອນ", "ເມືອງ ພຽງ", "ເມືອງ ປາກລາຍ", "ເມືອງ ແກ່ນທ້າວ", "ເມືອງ ບໍ່ແຕນ", "ເມືອງ ທົ່ງມີໄຊ", "ເມືອງ ໄຊສະຖານ"],
+            "ແຂວງ ຊຽງຂວາງ": ["ເມືອງ ແປກ", "ເມືອງ ຄຳ", "ເມືອງ ໜອງແຮດ", "ເມືອງ ຄູນ", "ເມືອງ ໝອກໃໝ່", "ເມືອງ ພູກູດ", "ເມືອງ ຜາໄຊ"],
+            "ແຂວງ ວຽງຈັນ": ["ເມືອງ ໂພນໂຮງ", "ເມືອງ ທຸລະຄົມ", "ເມືອງ ແກ້ວອຸດົມ", "ເມືອງ ກາສີ", "ເມືອງ ວັງວຽງ", "ເມືອງ ເຟືອງ", "ເມືອງ ຊະນະຄາມ", "ເມືອງ ແມດ", "ເມືອງ ວຽງຄຳ", "ເມືອງ ຫີນເຫີບ", "ເມືອງ ໝື່ນ"],
+            "ແຂວງ ບໍລິຄຳໄຊ": ["ເມືອງ ປາກຊັນ", "ເມືອງ ທ່າພະບາດ", "ເມືອງ ປາກກະດິງ", "ເມືອງ ບໍລິຄັນ", "ເມືອງ ຄຳເກີດ", "ເມືອງ ວຽງທອງ", "ເມືອງ ໄຊຈຳພອນ"],
+            "ແຂວງ ຄຳມ່ວນ": ["ເມືອງ ທ່າແຂກ", "ເມືອງ ມະຫາໄຊ", "ເມືອງ ໜອງບົກ", "ເມືອງ ຫີນບູນ", "ເມືອງ ຍົມມະລາດ", "ເມືອງ ບົວລະພາ", "ເມືອງ ນາກາຍ", "ເມືອງ ເຊບັ້ງໄຟ", "ເມືອງ ໄຊບົວທອງ", "ເມືອງ ຄູນຄຳ"],
+            "ແຂວງ ສະຫວັນນະເຂດ": ["ນະຄອນ ໄກສອນ ພົມວິຫານ", "ເມືອງ ອຸທຸມພອນ", "ເມືອງ ອາດສະພັງທອງ", "ເມືອງ ພີນ", "ເມືອງ ເຊໂປນ", "ເມືອງ ນອງ", "ເມືອງ ທ່າປາງທອງ", "ເມືອງ ສອງຄອນ", "ເມືອງ ຈຳພອນ", "ເມືອງ ຊົນນະບູລີ", "ເມືອງ ໄຊບູລີ", "ເມືອງ ວິລະບູລີ", "ເມືອງ ອາດສະພອນ", "ເມືອງ ໄຊພູທອງ", "ເມືອງ ພະລານໄຊ"],
+            "ແຂວງ ສາລະວັນ": ["ເມືອງ ສາລະວັນ", "ເມືອງ ຕາໂອ້ຍ", "ເມືອງ ຕຸ້ມລານ", "ເມືອງ ລະຄອນເພັງ", "ເມືອງ ວາປີ", "ເມືອງ ຄົງເຊໂດນ", "ເມືອງ ເລົ່າງາມ", "ເມືອງ ສະມ້ວຍ"],
+            "ແຂວງ ເຊກອງ": ["ເມືອງ ລະມາມ", "ເມືອງ ກະລຶມ", "ເມືອງ ດາກຈຶງ", "ເມືອງ ທ່າແຕງ"],
+            "ແຂວງ ຈຳປາສັກ": ["ນະຄອນ ປາກເຊ", "ເມືອງ ຊະນະສົມບູນ", "ເມືອງ ບາຈຽງຈະເລີນສຸກ", "ເມືອງ ປາກຊ່ອງ", "ເມືອງ ປະທຸມພອນ", "ເມືອງ ໂພນທອງ", "ເມືອງ ຈຳປາສັກ", "ເມືອງ ສຸຂຸມາ", "ເມືອງ ມູນລະປະໂມກ", "ເມືອງ ໂຂງ"],
+            "ແຂວງ ອັດຕະປື": ["ເມືອງ ໄຊເສດຖາ", "ເມືອງ ສາມັກຄີໄຊ", "ເມືອງ ສະໜາມໄຊ", "ເມືອງ ຊານໄຊ", "ເມືອງ ພູວົງ"],
+            "ແຂວງ ໄຊສົມບູນ": ["ເມືອງ ອະນຸວົງ", "ເມືອງ ທ່າໂທມ", "ເມືອງ ລ້ອງແຈ້ງ", "ເມືອງ ຮົ່ມ", "ເມືອງ ລ້ອງຊານ"]
+        };
+
+        function setSelectValueWithFallback(selectEl, rawValue, defaultValue = '') {
+            if (!selectEl) return;
+            const cleanVal = String(rawValue || '').trim() || defaultValue;
+            if (!cleanVal) {
+                if (selectEl.options.length > 0) selectEl.selectedIndex = 0;
+                return;
+            }
+            const exists = Array.from(selectEl.options).some(opt => opt.value === cleanVal);
+            if (!exists) {
+                const customOpt = document.createElement('option');
+                customOpt.value = cleanVal;
+                customOpt.textContent = cleanVal;
+                selectEl.appendChild(customOpt);
+            }
+            selectEl.value = cleanVal;
+        }
+
+        function populateStudentBioProvinces(selectedProvince = 'ນະຄອນຫຼວງວຽງຈັນ', selectedDistrict = '') {
+            const provSelect = document.getElementById('stuBioProvinceInput');
+            if (!provSelect) return;
+
+            const provinceNames = Object.keys(LAO_PROVINCES_DISTRICTS);
+            provSelect.innerHTML = provinceNames.map(p =>
+                `<option value="${escapeHTML(p)}">${escapeHTML(p)}</option>`
+            ).join('');
+
+            const targetProv = String(selectedProvince || '').trim() || 'ນະຄອນຫຼວງວຽງຈັນ';
+            setSelectValueWithFallback(provSelect, targetProv, 'ນະຄອນຫຼວງວຽງຈັນ');
+            populateStudentBioDistricts(provSelect.value, selectedDistrict);
+        }
+
+        function populateStudentBioDistricts(provinceName, selectedDistrict = '') {
+            const distSelect = document.getElementById('stuBioDistrictInput');
+            if (!distSelect) return;
+
+            const districts = LAO_PROVINCES_DISTRICTS[provinceName] || [];
+            if (districts.length > 0) {
+                distSelect.innerHTML = districts.map(d =>
+                    `<option value="${escapeHTML(d)}">${escapeHTML(d)}</option>`
+                ).join('');
+            } else {
+                distSelect.innerHTML = `<option value="ເມືອງ ອື່ນໆ">ເມືອງ ອື່ນໆ</option>`;
+            }
+
+            if (selectedDistrict && String(selectedDistrict).trim() !== '') {
+                setSelectValueWithFallback(distSelect, selectedDistrict);
+            } else if (distSelect.options.length > 0) {
+                distSelect.selectedIndex = 0;
+            }
+        }
+
+        function handleStudentBioProvinceChange() {
+            const provSelect = document.getElementById('stuBioProvinceInput');
+            if (!provSelect) return;
+            populateStudentBioDistricts(provSelect.value, '');
+        }
+
+        const STUDENT_CODE_PREFIX_FIXED = "104";
+        const STUDENT_CODE_TOTAL_LENGTH = 14;
+        const FACULTY_DIGIT_CODES = {
             med: "1",
-            dent: "2",
-            pharm: "3",
+            pharm: "2",
+            dent: "3",
             nurse: "4",
             tech: "5",
             pubhealth: "6"
         };
 
-        const STUDENT_CODE_PREFIX_FIXED = "104";
-        const STUDENT_CODE_TOTAL_LENGTH = 14;
-
         function getFacultyDigitCode(facultyId) {
-            return FACULTY_CODE_MAP[String(facultyId || '').trim()] || "1";
+            return FACULTY_DIGIT_CODES[facultyId] || "1";
         }
 
         function getStudentCodeFixedPrefix(facultyId) {
@@ -2653,33 +2791,100 @@
         // =====================================================================
         // UNIFIED STUDENT BIO MODAL FUNCTIONS (ເພີ່ມນັກສຶກສາໃໝ່ & ແກ້ໄຂປະຫວັດຈຸດດຽວ)
         // =====================================================================
+        function populateStudentBioBranchesForFaculty(facultyId, preselectDegIdx = 0) {
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
+            const branchSelect = document.getElementById('stuBioBranchSelect');
+            if (!faculty || !branchSelect) return 0;
+
+            faculty.degrees = (faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id));
+
+            if (faculty.degrees.length === 0) {
+                branchSelect.innerHTML = `<option value="">-- ຄະນະນີ້ຍັງບໍ່ມີສາຂາວິຊາ --</option>`;
+                return -1;
+            }
+
+            const safeDegIdx = Math.min(Math.max(parseInt(preselectDegIdx, 10) || 0, 0), faculty.degrees.length - 1);
+            branchSelect.innerHTML = faculty.degrees.map((d, idx) =>
+                `<option value="${idx}">${idx + 1}. [${escapeHTML(d.level)}] ${escapeHTML(d.program)}</option>`
+            ).join('');
+            branchSelect.value = String(safeDegIdx);
+            return safeDegIdx;
+        }
+
+        function updateStudentBioCodePrefixForFaculty(facultyId) {
+            const fixedPrefix = getStudentCodeFixedPrefix(facultyId);
+            const maxSuffixLen = getStudentCodeSuffixMaxLen(facultyId);
+            setText('stuBioCodePrefixBadge', fixedPrefix);
+
+            const suffixInput = document.getElementById('stuBioCodeSuffixInput');
+            if (suffixInput) {
+                suffixInput.maxLength = maxSuffixLen;
+                suffixInput.placeholder = `ປ້ອນຕົວເລກຕໍ່ (${maxSuffixLen} ໂຕ)`;
+                suffixInput.value = String(suffixInput.value || '').replace(/\D/g, '').slice(0, maxSuffixLen);
+            }
+            handleStudentBioSuffixPreview();
+        }
+
+        function handleStudentBioFacultyChange() {
+            const facSelect = document.getElementById('stuBioFacultySelect');
+            if (!facSelect || !editingStudentBioState) return;
+
+            const newFacId = facSelect.value;
+            editingStudentBioState.facultyId = newFacId;
+
+            const safeDegIdx = populateStudentBioBranchesForFaculty(newFacId, 0);
+            updateStudentBioCodePrefixForFaculty(newFacId);
+
+            if (safeDegIdx >= 0) {
+                const defaultYr = activeStudyYearFilter !== 'all' ? parseInt(activeStudyYearFilter, 10) : 1;
+                populateStudentBioYearSelect(safeDegIdx, defaultYr);
+            } else {
+                const yearSelect = document.getElementById('stuBioYearSelect');
+                if (yearSelect) yearSelect.innerHTML = `<option value="1">ປີທີ 1</option>`;
+            }
+        }
+
         function openStudentBioModal(mode = 'add', facultyId = activeFacultyId, degIdx = 0, studentId = null) {
             if (!currentUser) return;
             const targetFacId = facultyId || activeFacultyId || (currentUser.role === 'faculty' ? currentUser.facultyId : 'med');
-            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
-            const faculty = faculties.find(f => f.id === targetFacId);
-            if (!faculty || !Array.isArray(faculty.degrees) || faculty.degrees.length === 0) {
+            let faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            if (currentUser.role === 'faculty') {
+                faculties = faculties.filter(f => f.id === currentUser.facultyId);
+            }
+
+            const faculty = faculties.find(f => f.id === targetFacId) || faculties[0];
+            if (!faculty) {
+                showToast('ບໍ່ພົບຂໍ້ມູນຄະນະວິຊາ!', true);
+                return;
+            }
+
+            faculty.degrees = (faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id));
+            if (faculty.degrees.length === 0) {
                 showToast('ກະລຸນາເພີ່ມສາຂາວິຊາກ່ອນຈຶ່ງສາມາດເພີ່ມນັກສຶກສາໄດ້!', true);
                 return;
             }
 
-            faculty.degrees = faculty.degrees.map(d => normalizeDegreeEntry(d, faculty.id));
             const safeDegIdx = Math.min(Math.max(parseInt(degIdx, 10) || 0, 0), faculty.degrees.length - 1);
 
             editingStudentBioState = {
                 mode,
                 facultyId: faculty.id,
+                originalFacultyId: faculty.id,
                 originalDegIdx: safeDegIdx,
                 studentId
             };
 
-            const branchSelect = document.getElementById('stuBioBranchSelect');
-            if (branchSelect) {
-                branchSelect.innerHTML = faculty.degrees.map((d, idx) =>
-                    `<option value="${idx}">${idx + 1}. [${escapeHTML(d.level)}] ${escapeHTML(d.program)}</option>`
+            const facultySelect = document.getElementById('stuBioFacultySelect');
+            if (facultySelect) {
+                facultySelect.innerHTML = faculties.map(f =>
+                    `<option value="${escapeHTML(f.id)}">${escapeHTML(f.shortName)}</option>`
                 ).join('');
-                branchSelect.value = String(safeDegIdx);
+                facultySelect.value = faculty.id;
+                facultySelect.disabled = (currentUser.role === 'faculty');
             }
+
+            populateStudentBioBranchesForFaculty(faculty.id, safeDegIdx);
 
             const fixedPrefix = getStudentCodeFixedPrefix(faculty.id);
             const maxSuffixLen = getStudentCodeSuffixMaxLen(faculty.id);
@@ -2721,11 +2926,10 @@
 
                 document.getElementById('stuBioNameInput').value = existingStu.name || '';
                 document.getElementById('stuBioDobInput').value = existingStu.dob || '';
-                document.getElementById('stuBioEthnicityInput').value = existingStu.ethnicity || '';
+                setSelectValueWithFallback(document.getElementById('stuBioEthnicityInput'), existingStu.ethnicity, 'ລາວລຸ່ມ');
                 document.getElementById('stuBioReligionInput').value = existingStu.religion || '';
                 document.getElementById('stuBioVillageInput').value = existingStu.birthVillage || '';
-                document.getElementById('stuBioDistrictInput').value = existingStu.birthDistrict || '';
-                document.getElementById('stuBioProvinceInput').value = existingStu.birthProvince || '';
+                populateStudentBioProvinces(existingStu.birthProvince || 'ນະຄອນຫຼວງວຽງຈັນ', existingStu.birthDistrict || '');
                 document.getElementById('stuBioOrgInput').value = existingStu.organization || '';
 
                 const typeSel = document.getElementById('stuBioTypeSelect');
@@ -2744,7 +2948,7 @@
                 document.getElementById('stuBioPhoneInput').value = existingStu.phone || '';
             } else {
                 setText('studentBioModalTitle', 'ເພີ່ມນັກສຶກສາໃໝ່ (ຟອມປະຫວັດລະອຽດ)');
-                setText('studentBioModalSubtitle', `${faculty.shortName} • ປ້ອນຂໍ້ມູນປະຫວັດ 12 ລາຍການ`);
+                setText('studentBioModalSubtitle', 'ເລືອກຄະນະ, ສາຂາ ແລະ ປ້ອນຂໍ້ມູນປະຫວັດ 12 ລາຍການ');
                 setText('studentBioSubmitBtn', 'ບັນທຶກນັກສຶກສາໃໝ່');
                 if (iconEl) iconEl.className = 'ph-bold ph-user-plus text-lg text-emerald-300';
                 if (deleteBtn) deleteBtn.classList.add('hidden');
@@ -2761,11 +2965,10 @@
 
                 document.getElementById('stuBioNameInput').value = '';
                 document.getElementById('stuBioDobInput').value = '';
-                document.getElementById('stuBioEthnicityInput').value = 'ລາວລຸ່ມ';
+                setSelectValueWithFallback(document.getElementById('stuBioEthnicityInput'), 'ລາວລຸ່ມ', 'ລາວລຸ່ມ');
                 document.getElementById('stuBioReligionInput').value = 'ພຸດ';
                 document.getElementById('stuBioVillageInput').value = '';
-                document.getElementById('stuBioDistrictInput').value = '';
-                document.getElementById('stuBioProvinceInput').value = '';
+                populateStudentBioProvinces('ນະຄອນຫຼວງວຽງຈັນ', 'ເມືອງ ໄຊເສດຖາ');
                 document.getElementById('stuBioOrgInput').value = '';
                 document.getElementById('stuBioTypeSelect').value = 'ພະນັກງານ';
                 document.getElementById('stuBioScholarshipInput').value = 'ທຶນລັດຖະບານ';
@@ -3712,20 +3915,30 @@
                 studentBioForm.addEventListener('submit', async (e) => {
                     e.preventDefault();
                     if (!currentUser || !editingStudentBioState) return;
-                    const { mode, facultyId, originalDegIdx, studentId } = editingStudentBioState;
+                    const { mode, originalFacultyId, originalDegIdx, studentId } = editingStudentBioState;
+                    const selectedFacId = document.getElementById('stuBioFacultySelect')?.value || editingStudentBioState.facultyId;
 
-                    if (currentUser.role === 'faculty' && currentUser.facultyId !== facultyId) {
+                    if (currentUser.role === 'faculty' && currentUser.facultyId !== selectedFacId) {
                         showToast('ທ່ານບໍ່ມີສິດແກ້ໄຂຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
                         return;
                     }
 
                     const store = getStore();
                     const faculties = getCurrentYearBlock(activeCategory).faculties || [];
-                    const faculty = faculties.find(f => f.id === facultyId);
-                    if (!faculty || !Array.isArray(faculty.degrees)) return;
+                    const faculty = faculties.find(f => f.id === selectedFacId);
+                    if (!faculty || !Array.isArray(faculty.degrees) || faculty.degrees.length === 0) {
+                        showToast('ກະລຸນາເລືອກຄະນະ ແລະ ສາຂາວິຊາໃຫ້ຖືກຕ້ອງ!', true);
+                        return;
+                    }
+
+                    const rawBranchVal = document.getElementById('stuBioBranchSelect')?.value;
+                    if (rawBranchVal === '' || rawBranchVal === null || rawBranchVal === undefined) {
+                        showToast('ຄະນະທີ່ເລືອກຍັງບໍ່ມີສາຂາວິຊາ!', true);
+                        return;
+                    }
 
                     const targetDegIdx = Math.min(
-                        Math.max(parseInt(document.getElementById('stuBioBranchSelect')?.value, 10) || 0, 0),
+                        Math.max(parseInt(rawBranchVal, 10) || 0, 0),
                         faculty.degrees.length - 1
                     );
                     const targetDeg = faculty.degrees[targetDegIdx];
@@ -3764,10 +3977,12 @@
                         phone: (document.getElementById('stuBioPhoneInput')?.value || '').trim()
                     }, maxY, nameVal, faculty.id);
 
+                    const sourceFacId = originalFacultyId || selectedFacId;
+                    const sourceFaculty = faculties.find(f => f.id === sourceFacId);
+
                     if (mode === 'edit' && studentId) {
-                        if (originalDegIdx !== targetDegIdx && faculty.degrees[originalDegIdx]) {
-                            // Moved to another branch inside the same faculty
-                            const oldDeg = faculty.degrees[originalDegIdx];
+                        if ((sourceFacId !== selectedFacId || originalDegIdx !== targetDegIdx) && sourceFaculty && sourceFaculty.degrees[originalDegIdx]) {
+                            const oldDeg = sourceFaculty.degrees[originalDegIdx];
                             oldDeg.students = (oldDeg.students || []).filter(s => s.id !== studentId);
                             oldDeg.studyYears = rebuildStudyYearsFromStudents(
                                 oldDeg.students,
@@ -3800,7 +4015,6 @@
                     // Refresh underlying view (either Student Profile View or Faculty Detail View)
                     const stuProfileViewEl = document.getElementById('studentProfileView');
                     if (mode === 'edit' && stuProfileViewEl && !stuProfileViewEl.classList.contains('hidden')) {
-                        // Recompute lookup map silently and refresh profile screen
                         openFacultyDetail(faculty.id, false);
                         const matchingKey = Object.keys(currentDisplayedStudentsMap).find(
                             k => currentDisplayedStudentsMap[k].id === updatedStudentRecord.id
