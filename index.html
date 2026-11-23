@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>ສະຖິຕິນັກສຶກສາ ມວສຊ - ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ</title>
-    
+
     <!-- SEO & Social Share Meta Tags -->
     <meta name="description" content="ລະບົບຖານຂໍ້ມູນ ແລະ ລາຍງານສະຖິຕິນັກສຶກສາ ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)">
     <meta property="og:title" content="ສະຖິຕິນັກສຶກສາ ມວສຊ">
@@ -20,10 +20,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -58,12 +58,12 @@
                     }
                 }
             }
-        }
+        };
     </script>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-teal-600 selection:text-white min-h-screen flex flex-col items-center">
 
-    <!-- Mobile App Shell Container (ຂະຫຍາຍຄວາມກວ້າງຂຶ້ນ ~20% ຈາກ max-w-md ເປັນ max-w-[540px]) -->
+    <!-- Mobile App Shell Container -->
     <div class="w-full max-w-[540px] bg-slate-50 min-h-screen shadow-2xl border-x border-slate-200/80 flex flex-col relative overflow-x-hidden">
 
         <!-- Sticky Top Header -->
@@ -108,7 +108,7 @@
                         <span>Local</span>
                     </span>
 
-                    <button id="authHeaderActionBtn" onclick="handleAuthHeaderAction()" class="font-bold text-emerald-300 hover:text-emerald-200 flex items-center gap-1 cursor-pointer transition-colors">
+                    <button id="authHeaderActionBtn" type="button" onclick="handleAuthHeaderAction()" class="font-bold text-emerald-300 hover:text-emerald-200 flex items-center gap-1 cursor-pointer transition-colors">
                         <i class="ph-bold ph-sign-in"></i>
                         <span>ເຂົ້າສູ່ລະບົບ</span>
                     </button>
@@ -178,8 +178,9 @@
                     </div>
 
                     <!-- Option 1: ຫຼັກສູດ ອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ -->
-                    <button 
-                        onclick="selectProgramCategory('undergrad')" 
+                    <button
+                        type="button"
+                        onclick="selectProgramCategory('undergrad')"
                         class="w-full group text-left bg-white hover:bg-sky-50/40 active:scale-[0.99] rounded-3xl p-4 sm:p-5 shadow-md border-2 border-slate-200/90 hover:border-sky-500 transition-all cursor-pointer relative overflow-hidden"
                     >
                         <div class="flex items-start gap-4">
@@ -200,7 +201,6 @@
                                     ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ • 6 ຄະນະວິຊາ
                                 </p>
 
-                                <!-- Live Stats Preview Pill -->
                                 <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
                                     <span class="text-slate-500">ຈຳນວນນັກສຶກສາລວມ:</span>
                                     <span class="font-extrabold text-sky-700 bg-sky-50 px-2.5 py-0.5 rounded-lg">
@@ -212,8 +212,9 @@
                     </button>
 
                     <!-- Option 2: ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ -->
-                    <button 
-                        onclick="selectProgramCategory('postgrad')" 
+                    <button
+                        type="button"
+                        onclick="selectProgramCategory('postgrad')"
                         class="w-full group text-left bg-white hover:bg-teal-50/40 active:scale-[0.99] rounded-3xl p-4 sm:p-5 shadow-md border-2 border-slate-200/90 hover:border-teal-500 transition-all cursor-pointer relative overflow-hidden"
                     >
                         <div class="flex items-start gap-4">
@@ -234,7 +235,6 @@
                                     ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ • 6 ຄະນະວິຊາ
                                 </p>
 
-                                <!-- Live Stats Preview Pill -->
                                 <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs">
                                     <span class="text-slate-500">ຈຳນວນນັກສຶກສາລວມ:</span>
                                     <span class="font-extrabold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded-lg">
@@ -247,7 +247,6 @@
                 </section>
             </div>
 
-            <!-- Footer -->
             <footer class="pt-4 text-center">
                 <p class="text-[11px] text-slate-400">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
             </footer>
@@ -256,11 +255,11 @@
         <!-- =====================================================================
              VIEW 1: MAIN HOME VIEW (ໜ້າຫຼັກຂອງໝວດຫຼັກສູດທີ່ເລືອກ)
              ===================================================================== -->
-        <main id="homeView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4 transition-all duration-300">
-            
+        <section id="homeView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4 transition-all duration-300">
+
             <!-- Back to Portal Button -->
             <div class="flex items-center justify-between">
-                <button onclick="navigateToPortal()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs px-3 py-2 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToPortal()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs px-3 py-2 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-sm"></i>
                     <span>ປ່ຽນປະເພດຫຼັກສູດ (ໜ້າທຳອິດ)</span>
                 </button>
@@ -280,7 +279,7 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                             <span id="heroYearLabel">ສົກຮຽນ 2025-2026</span>
                         </span>
-                        <button onclick="requireAuth(() => openQuickEditModal())" class="admin-protected-btn text-xs font-medium text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors cursor-pointer">
+                        <button type="button" onclick="requireAuth(() => openQuickEditModal())" class="admin-protected-btn text-xs font-medium text-teal-100 hover:text-white bg-white/10 hover:bg-white/20 px-2.5 py-1 rounded-lg flex items-center gap-1 transition-colors cursor-pointer">
                             <i class="ph-bold ph-lock-simple lock-indicator text-amber-300"></i>
                             <span>ແກ້ໄຂ</span>
                         </button>
@@ -332,31 +331,32 @@
                 </div>
             </section>
 
-            <!-- Footer -->
             <footer class="pt-2 text-center">
                 <p class="text-[11px] text-slate-400">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
             </footer>
-        </main>
+        </section>
 
         <!-- =====================================================================
-             VIEW 2: FACULTY DETAIL SUB-VIEW (ລາຍລະອຽດແຕ່ລະຄະນະ ແຍກປີຮຽນໃນສາຂາ + ຕົວຢ່າງລາຍຊື່ນັກສຶກສາ 3 ລາຍຊື່ຕໍ່ສາຂາ)
+             VIEW 2: FACULTY DETAIL VIEW (ລາຍລະອຽດແຕ່ລະຄະນະວິຊາ)
              ===================================================================== -->
         <section id="facultyDetailView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
-            <div class="flex items-center justify-between gap-2">
-                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
-                    <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
-                    <span>ກັບຄືນໜ້າຫຼັກ</span>
-                </button>
-
+            <div class="flex items-center justify-between gap-2 flex-wrap">
                 <div class="flex items-center gap-1.5">
-                    <button id="shiftYearFacultyBtn" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2.5 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
+                    <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                        <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
+                        <span>ກັບຄືນໜ້າຫຼັກ</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <button id="shiftYearFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 active:scale-95 text-amber-900 font-bold text-xs px-3 py-2.5 rounded-xl border border-amber-300 shadow-2xs transition-all cursor-pointer" title="ປ່ຽນ / ເລື່ອນປີຮຽນຂອງສາຂາໃນຄະນະນີ້">
                         <i class="ph-bold ph-calendar-check text-amber-700 text-sm"></i>
                         <span>ປ່ຽນປີຮຽນ</span>
                     </button>
 
-                    <button id="editCurrentFacultyBtn" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                    <button id="editCurrentFacultyBtn" type="button" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
                         <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
-                        <span>ແກ້ໄຂຂໍ້ມູນ</span>
+                        <span>ເພີ່ມນັກສຶກສາໃໝ່,ແກ້ໄຂ</span>
                     </button>
                 </div>
             </div>
@@ -393,7 +393,7 @@
 
             <!-- Filter Bar by Study Year inside Faculty -->
             <div class="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs flex items-center justify-between gap-2">
-                <span class="text-xs font-bold text-slate-600 flex items-center gap-1.5">
+                <span class="text-xs font-bold text-slate-600 flex items-center gap-1.5 shrink-0">
                     <i class="ph-fill ph-funnel text-teal-600"></i>
                     <span>ກັ່ນຕອງປີຮຽນ:</span>
                 </span>
@@ -431,9 +431,8 @@
                 </div>
             </div>
 
-            <!-- Bottom Back Button for Faculty Detail View -->
             <div class="pt-2">
-                <button onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ຍ້ອນກັບຫຼັງ (ກັບຄືນໜ້າຫຼັກ)</span>
                 </button>
@@ -441,11 +440,11 @@
         </section>
 
         <!-- =====================================================================
-             VIEW 2B: STUDENT PROFILE DETAIL VIEW (ໜ້າປະຫວັດລະອຽດຂອງນັກສຶກສາເມື່ອ Click ຊື່)
+             VIEW 2B: STUDENT PROFILE DETAIL VIEW (ໜ້າປະຫວັດລະອຽດຂອງນັກສຶກສາ)
              ===================================================================== -->
         <section id="studentProfileView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
             <div class="flex items-center justify-between gap-2">
-                <button onclick="backToFacultyDetailFromStudent()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                <button type="button" onclick="backToFacultyDetailFromStudent()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ກັບຄືນລາຍຊື່ສາຂາ</span>
                 </button>
@@ -454,7 +453,6 @@
                 </span>
             </div>
 
-            <!-- Student Header Banner Card -->
             <div class="rounded-3xl bg-gradient-to-br from-navy-900 via-blue-900 to-teal-800 text-white p-5 shadow-md">
                 <div class="flex items-center gap-3.5">
                     <div id="stuProfileAvatarBox" class="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center shrink-0">
@@ -474,7 +472,6 @@
                 </div>
             </div>
 
-            <!-- 12-Item Student Biography Table Card -->
             <div class="bg-white rounded-3xl shadow-xs border border-slate-200/80 overflow-hidden">
                 <div class="px-4 py-3.5 bg-blue-900 text-white flex items-center gap-2">
                     <i class="ph-fill ph-identification-card text-lg text-emerald-300"></i>
@@ -482,13 +479,12 @@
                 </div>
 
                 <div id="studentProfileFieldsList" class="divide-y divide-slate-100 text-xs sm:text-sm">
-                    <!-- Populated dynamically via JS (12 fields in exact order) -->
+                    <!-- Populated dynamically via JS -->
                 </div>
             </div>
 
-            <!-- Bottom Back Button for Student Profile View -->
             <div class="pt-2">
-                <button onclick="backToFacultyDetailFromStudent()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
+                <button type="button" onclick="backToFacultyDetailFromStudent()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ຍ້ອນກັບຫຼັງ (ກັບຄືນລາຍຊື່ສາຂາ)</span>
                 </button>
@@ -500,12 +496,12 @@
              ===================================================================== -->
         <section id="newsView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
             <div class="flex items-center justify-between gap-2">
-                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ກັບຄືນໜ້າຫຼັກ</span>
                 </button>
 
-                <button onclick="requireAuth(() => openNewsFormModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                <button type="button" onclick="requireAuth(() => openNewsFormModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
                     <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
                     <span>ເພີ່ມຂ່າວສານ</span>
                 </button>
@@ -527,9 +523,8 @@
                 <!-- Populated dynamically via JS -->
             </div>
 
-            <!-- Bottom Back Button for News View -->
             <div class="pt-2">
-                <button onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ຍ້ອນກັບຫຼັງ (ກັບຄືນໜ້າຫຼັກ)</span>
                 </button>
@@ -541,12 +536,12 @@
              ===================================================================== -->
         <section id="orgChartView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
             <div class="flex items-center justify-between gap-2">
-                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ກັບຄືນໜ້າຫຼັກ</span>
                 </button>
 
-                <button onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
+                <button type="button" onclick="requireAuth(() => openOrgEditModal(), 'admin')" class="admin-protected-btn inline-flex items-center gap-1.5 bg-teal-700 hover:bg-teal-800 active:scale-95 text-white font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl shadow-sm transition-all cursor-pointer">
                     <i class="ph-bold ph-lock-simple lock-indicator text-amber-300 text-base"></i>
                     <span>ແກ້ໄຂລາຍຊື່</span>
                 </button>
@@ -568,9 +563,8 @@
                 <!-- Populated dynamically via JS -->
             </div>
 
-            <!-- Bottom Back Button for Org Chart View -->
             <div class="pt-2">
-                <button onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ຍ້ອນກັບຫຼັງ (ກັບຄືນໜ້າຫຼັກ)</span>
                 </button>
@@ -582,7 +576,7 @@
              ===================================================================== -->
         <section id="versionView" class="hidden flex-1 px-4 pt-4 pb-8 space-y-4">
             <div>
-                <button onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 active:scale-95 text-navy-900 font-semibold text-xs sm:text-sm px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-2xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ກັບຄືນໜ້າຫຼັກ</span>
                 </button>
@@ -594,7 +588,7 @@
                 </div>
 
                 <div>
-                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.1 (Cloud Sync Edition)</span>
+                    <span class="inline-block text-xs font-bold text-teal-700 bg-teal-50 border border-teal-200 px-3 py-1 rounded-full">Version 2.4.2 (Cloud Sync Edition)</span>
                     <h2 class="text-lg font-bold text-navy-900 mt-2">ລະບົບລາຍງານສະຖິຕິນັກສຶກສາ ມວສຊ</h2>
                     <p class="text-xs text-slate-500 mt-1">ມະຫາວິທະຍາໄລວິທະຍາສາດສຸຂະພາບແຫ່ງຊາດ (ມວສຊ)</p>
                 </div>
@@ -602,7 +596,7 @@
                 <div class="bg-slate-50 rounded-2xl p-4 text-left space-y-2.5 border border-slate-100 text-xs">
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ເວີຊັນລະບົບ (App Version):</span>
-                        <span class="font-bold text-navy-900">v2.4.1-cloud</span>
+                        <span class="font-bold text-navy-900">v2.4.2-cloud</span>
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ສະຖານະຖານຂໍ້ມູນ:</span>
@@ -610,7 +604,7 @@
                     </div>
                     <div class="flex justify-between py-1 border-b border-slate-200/70">
                         <span class="text-slate-500">ອັບເດດຂໍ້ມູນລ່າສຸດ:</span>
-                        <span id="lastUpdatedTimestamp" class="font-semibold text-teal-700">19 ພະຈິກ 2026</span>
+                        <span id="lastUpdatedTimestamp" class="font-semibold text-teal-700">23 ພະຈິກ 2026</span>
                     </div>
                     <div class="flex justify-between py-1">
                         <span class="text-slate-500">ພັດທະນາໂດຍ:</span>
@@ -619,9 +613,8 @@
                 </div>
             </div>
 
-            <!-- Bottom Back Button for Version View -->
             <div class="pt-2">
-                <button onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
+                <button type="button" onclick="navigateToHome()" class="w-full inline-flex items-center justify-center gap-2 bg-white hover:bg-slate-100 active:scale-[0.99] text-navy-900 font-bold text-xs sm:text-sm px-4 py-3 rounded-2xl border border-slate-200 shadow-xs transition-all cursor-pointer">
                     <i class="ph-bold ph-arrow-left text-teal-700 text-base"></i>
                     <span>ຍ້ອນກັບຫຼັງ (ກັບຄືນໜ້າຫຼັກ)</span>
                 </button>
@@ -645,7 +638,7 @@
                         <p id="editModalCategoryLabel" class="text-[11px] text-teal-200">ຫຼັກສູດ ຫຼັງປະລິນຍາຕີ</p>
                     </div>
                 </div>
-                <button onclick="closeEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -693,8 +686,11 @@
                     <button type="button" id="resetDataBtn" onclick="resetAllData()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
                         ຄືນຄ່າເດີມ
                     </button>
+                    <button type="button" onclick="closeEditModal()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 transition-colors cursor-pointer">
+                        ຍົກເລີກ
+                    </button>
                     <button type="submit" class="flex-1 bg-gradient-to-r from-teal-700 to-emerald-600 hover:from-teal-800 hover:to-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-sm shadow-md transition-all cursor-pointer">
-                        ບັນທຶກຂໍ້ມູນ
+                        ປິດໜ້ານີ້ ແລະ ບັນທຶກ
                     </button>
                 </div>
             </form>
@@ -716,7 +712,7 @@
                         <p id="shiftYearFacultyLabel" class="text-[11px] text-amber-100">ຄະນະວິຊາ</p>
                     </div>
                 </div>
-                <button onclick="closeShiftYearModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeShiftYearModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -768,7 +764,7 @@
                         <p id="orgModalSubtitle" class="text-[11px] text-teal-200">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</p>
                     </div>
                 </div>
-                <button onclick="closeOrgEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeOrgEditModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -805,7 +801,7 @@
                         <p id="newsModalSubtitle" class="text-[11px] text-teal-200">ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ</p>
                     </div>
                 </div>
-                <button onclick="closeNewsFormModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeNewsFormModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -860,7 +856,7 @@
                         <p class="text-[11px] text-rose-100">ການດຳເນີນການນີ້ບໍ່ສາມາດກູ້ຄືນໄດ້</p>
                     </div>
                 </div>
-                <button onclick="closeDeleteNewsConfirmModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeDeleteNewsConfirmModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -902,7 +898,7 @@
                         <p class="text-[11px] text-teal-200">ຢືນຢັນສິດເພື່ອແກ້ໄຂຂໍ້ມູນ</p>
                     </div>
                 </div>
-                <button onclick="closeLoginModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+                <button type="button" onclick="closeLoginModal()" class="p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
                     <i class="ph-bold ph-x text-lg"></i>
                 </button>
             </div>
@@ -949,16 +945,44 @@
          JAVASCRIPT APPLICATION LOGIC
          ===================================================================== -->
     <script>
+        // Storage keys and safe wrappers
         const STORAGE_KEYS = {
-            POSTGRAD_STATS: 'uhs_postgrad_stats_v6_synced_students',
+            POSTGRAD_STATS: 'uhs_postgrad_stats_v7_clean',
             POSTGRAD_ORG: 'uhs_postgrad_org_v2',
             POSTGRAD_NEWS: 'uhs_postgrad_news_v2',
-            UNDERGRAD_STATS: 'uhs_undergrad_stats_v6_synced_students',
+            UNDERGRAD_STATS: 'uhs_undergrad_stats_v7_clean',
             UNDERGRAD_ORG: 'uhs_undergrad_org_v1',
             UNDERGRAD_NEWS: 'uhs_undergrad_news_v1',
             LAST_UPDATED: 'uhs_last_updated_v1',
             PROGRAM_YEAR_LIMITS: 'uhs_program_year_limits_v2_dent6y'
         };
+
+        const memoryFallbackStorage = {};
+
+        function safeGetStorage(key) {
+            try {
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    return window.localStorage.getItem(key);
+                }
+            } catch (e) {
+                // Fallback when localStorage is blocked
+            }
+            return Object.prototype.hasOwnProperty.call(memoryFallbackStorage, key)
+                ? memoryFallbackStorage[key]
+                : null;
+        }
+
+        function safeSetStorage(key, value) {
+            try {
+                if (typeof window !== 'undefined' && window.localStorage) {
+                    window.localStorage.setItem(key, value);
+                    return;
+                }
+            } catch (e) {
+                // Fallback when localStorage is blocked
+            }
+            memoryFallbackStorage[key] = value;
+        }
 
         const DEFAULT_PROGRAM_YEAR_LIMITS = {
             "ອະນຸປະລິນຍາ": 2,
@@ -1001,11 +1025,11 @@
 
         function loadProgramYearLimits() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEYS.PROGRAM_YEAR_LIMITS);
+                const raw = safeGetStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS);
                 const parsed = raw ? JSON.parse(raw) : {};
                 const merged = { ...DEFAULT_PROGRAM_YEAR_LIMITS };
                 Object.keys(DEFAULT_PROGRAM_YEAR_LIMITS).forEach(key => {
-                    if (parsed[key] !== undefined) {
+                    if (parsed && parsed[key] !== undefined) {
                         const val = parseInt(parsed[key], 10);
                         if (!Number.isNaN(val) && val >= 1 && val <= 15) {
                             merged[key] = val;
@@ -1038,24 +1062,12 @@
             return (!Number.isNaN(fallbackVal) && fallbackVal >= 1 && fallbackVal <= 15) ? fallbackVal : 2;
         }
 
-        function getStudyYearOptions(level, programName = '') {
-            const maxY = getMaxStudyYears(level, programName);
-            const list = [];
-            for (let y = 1; y <= maxY; y++) {
-                list.push(y);
-            }
-            return list;
-        }
-
         function formatStudyYearLabel(yearNum, level, programName = '') {
             const maxY = getMaxStudyYears(level, programName);
             const safeYear = Math.min(Math.max(parseInt(yearNum, 10) || 1, 1), maxY);
             return `ປີທີ ${safeYear} / ${maxY} ປີ`;
         }
 
-        // =========================================================================
-        // ລະບົບສ້າງ ແລະ ຈັດການລາຍຊື່ນັກສຶກສາໃຫ້ສອດຄ່ອງກັບຕົວເລກສະຖິຕິ 100%
-        // =========================================================================
         const SAMPLE_LAO_FEMALE_NAMES = [
             "ນ. ວັນນາ ສີຫາລາດ",
             "ນ. ສຸພາພອນ ວົງສະຫວັດ",
@@ -1134,7 +1146,6 @@
         let currentYear = "2025-2026";
         let activeFacultyId = null;
         let activeStudyYearFilter = 'all';
-
         let currentDisplayedStudentsMap = {};
 
         function createSampleStudentRecord(seedText, index, yearNum, gender, level, program, facultyId = 'med') {
@@ -1181,30 +1192,29 @@
         }
 
         function sanitizeStudentObject(stu, maxY, fallbackSeed = 'stu', facultyId = 'med') {
-            const safeGender = (stu.gender === 'male' || stu.gender === 'ຊາຍ') ? 'male' : 'female';
-            const safeYear = Math.min(Math.max(parseInt(stu.year, 10) || 1, 1), maxY);
+            const safeGender = (stu && (stu.gender === 'male' || stu.gender === 'ຊາຍ')) ? 'male' : 'female';
+            const safeYear = Math.min(Math.max(parseInt(stu && stu.year, 10) || 1, 1), maxY);
             const fallbackSuffix = String(Math.floor(Math.random() * 8999999999) + 1000000000).slice(0, getStudentCodeSuffixMaxLen(facultyId));
-            const rawCode = stu.code ? stu.code : fallbackSuffix;
+            const rawCode = (stu && stu.code) ? stu.code : fallbackSuffix;
             return {
-                id: stu.id || `stu_${Math.random().toString(36).slice(2, 9)}`,
+                id: (stu && stu.id) || `stu_${fallbackSeed}_${Math.random().toString(36).slice(2, 8)}`,
                 code: formatStudentFullCode(rawCode, facultyId),
-                name: String(stu.name || (safeGender === 'female' ? 'ນ. ນັກສຶກສາ ໃໝ່' : 'ທ. ນັກສຶກສາ ໃໝ່')).trim(),
+                name: String((stu && stu.name) || (safeGender === 'female' ? 'ນ. ນັກສຶກສາ ໃໝ່' : 'ທ. ນັກສຶກສາ ໃໝ່')).trim(),
                 gender: safeGender,
                 year: safeYear,
-                dob: String(stu.dob || '01/01/1998').trim(),
-                ethnicity: String(stu.ethnicity || 'ລາວລຸ່ມ').trim(),
-                religion: String(stu.religion || 'ພຸດ').trim(),
-                birthVillage: String(stu.birthVillage || 'ບ້ານ ໂພນໄຊ').trim(),
-                birthDistrict: String(stu.birthDistrict || 'ເມືອງ ໄຊເສດຖາ').trim(),
-                birthProvince: String(stu.birthProvince || 'ນະຄອນຫຼວງວຽງຈັນ').trim(),
-                organization: String(stu.organization || 'ມວສຊ').trim(),
-                studentType: String(stu.studentType || 'ພະນັກງານ').trim(),
-                scholarship: String(stu.scholarship || 'ທຶນລັດຖະບານ').trim(),
-                phone: String(stu.phone || '020 5555 0000').trim()
+                dob: String((stu && stu.dob) || '01/01/1998').trim(),
+                ethnicity: String((stu && stu.ethnicity) || 'ລາວລຸ່ມ').trim(),
+                religion: String((stu && stu.religion) || 'ພຸດ').trim(),
+                birthVillage: String((stu && stu.birthVillage) || 'ບ້ານ ໂພນໄຊ').trim(),
+                birthDistrict: String((stu && stu.birthDistrict) || 'ເມືອງ ໄຊເສດຖາ').trim(),
+                birthProvince: String((stu && stu.birthProvince) || 'ນະຄອນຫຼວງວຽງຈັນ').trim(),
+                organization: String((stu && stu.organization) || 'ມວສຊ').trim(),
+                studentType: String((stu && stu.studentType) || 'ພະນັກງານ').trim(),
+                scholarship: String((stu && stu.scholarship) || 'ທຶນລັດຖະບານ').trim(),
+                phone: String((stu && stu.phone) || '020 5555 0000').trim()
             };
         }
 
-        // ຄິດໄລ່ studyYears ຈາກລາຍຊື່ນັກສຶກສາຕົວຈິງສະເໝີ ເພື່ອໃຫ້ຕົວເລກກົງກັບລາຍຊື່ 100%
         function rebuildStudyYearsFromStudents(studentsList, maxY) {
             const years = [];
             for (let y = 1; y <= maxY; y++) {
@@ -1222,27 +1232,32 @@
         }
 
         function normalizeDegreeEntry(deg, facultyId = 'med') {
+            if (!deg || typeof deg !== 'object') {
+                return {
+                    level: 'ປະລິນຍາຕີ',
+                    program: 'ສາຂາທົ່ວໄປ',
+                    students: [],
+                    studyYears: rebuildStudyYearsFromStudents([], 2)
+                };
+            }
             const maxY = getMaxStudyYears(deg.level, deg.program);
 
-            // ກໍລະນີມີລາຍຊື່ນັກສຶກສາ (students array) ແລ້ວ: ໃຫ້ຍຶດຖືລາຍຊື່ນັກສຶກສາເປັນຫຼັກ ແລະ ຄິດໄລ່ຕົວເລກໃຫ້ກົງກັນ
             if (Array.isArray(deg.students)) {
                 const cleanedStudents = deg.students.map((s, idx) =>
                     sanitizeStudentObject(s, maxY, `${deg.level}_${deg.program}_${idx}`, facultyId)
                 );
                 return {
-                    level: deg.level,
-                    program: deg.program,
+                    level: deg.level || 'ປະລິນຍາຕີ',
+                    program: deg.program || 'ສາຂາທົ່ວໄປ',
                     students: cleanedStudents,
                     studyYears: rebuildStudyYearsFromStudents(cleanedStudents, maxY)
                 };
             }
 
-            // ກໍລະນີຂໍ້ມູນເລີ່ມຕົ້ນທີ່ຍັງບໍ່ທັນມີ array ລາຍຊື່ນັກສຶກສາ:
-            // ຖ້າມີນັກສຶກສາໃນສາຂານັ້ນ (>0) ໃຫ້ສ້າງລາຍຊື່ຕົວຢ່າງສາຂາລະ 3 ລາຍຊື່ (2 ຍິງ, 1 ຊາຍ) ແລະ ປັບຕົວເລກໃຫ້ກົງກັບ 3 ລາຍຊື່ນັ້ນທັນທີ!
             let totalInitial = 0;
             if (Array.isArray(deg.studyYears) && deg.studyYears.length > 0) {
                 deg.studyYears.forEach(sy => {
-                    totalInitial += (parseInt(sy.female, 10) || 0) + (parseInt(sy.male, 10) || 0);
+                    totalInitial += (parseInt(sy && sy.female, 10) || 0) + (parseInt(sy && sy.male, 10) || 0);
                 });
             } else {
                 totalInitial = (parseInt(deg.female, 10) || 0) + (parseInt(deg.male, 10) || 0);
@@ -1250,26 +1265,27 @@
 
             const generatedStudents = [];
             if (totalInitial > 0) {
-                const seedBase = `${deg.level}|${deg.program}`;
+                const seedBase = `${deg.level || 'prog'}|${deg.program || 'branch'}`;
                 generatedStudents.push(createSampleStudentRecord(seedBase, 0, 1, 'female', deg.level, deg.program, facultyId));
                 generatedStudents.push(createSampleStudentRecord(seedBase, 1, 1, 'male', deg.level, deg.program, facultyId));
                 generatedStudents.push(createSampleStudentRecord(seedBase, 2, 1, 'female', deg.level, deg.program, facultyId));
             }
 
             return {
-                level: deg.level,
-                program: deg.program,
+                level: deg.level || 'ປະລິນຍາຕີ',
+                program: deg.program || 'ສາຂາທົ່ວໄປ',
                 students: generatedStudents,
                 studyYears: rebuildStudyYearsFromStudents(generatedStudents, maxY)
             };
         }
 
         function normalizeDatabaseStudyYears(dbObj) {
+            if (!dbObj || typeof dbObj !== 'object') return {};
             Object.keys(dbObj).forEach(yrKey => {
                 const yearBlock = dbObj[yrKey];
                 if (yearBlock && Array.isArray(yearBlock.faculties)) {
                     yearBlock.faculties.forEach(fac => {
-                        if (Array.isArray(fac.degrees)) {
+                        if (fac && Array.isArray(fac.degrees)) {
                             fac.degrees = fac.degrees.map(d => normalizeDegreeEntry(d, fac.id));
                         }
                     });
@@ -1307,7 +1323,7 @@
         }
 
         function getStudentsForProgram(facultyId, degreeObj, branchIndex, yearFilter = 'all') {
-            const normDeg = normalizeDegreeEntry(degreeObj);
+            const normDeg = normalizeDegreeEntry(degreeObj, facultyId);
             const filtered = normDeg.students.filter(stu =>
                 yearFilter === 'all' || Number(stu.year) === Number(yearFilter)
             );
@@ -1338,59 +1354,10 @@
                         accent: "teal",
                         degrees: [
                             { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 6, male: 12 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ລະບົບຫາຍໃຈ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ກຸມມານເວດສາດ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການແພດສູກເສີນ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ວາງຢາສະຫຼົບ-ຟື້ນຟູຊີບ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານ ຟື້ນຟູຊີບຜູ້ໃຫຍ່", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານ ຟື້ນຟູຊີບເດັກເກີດໃໝ່ ແລະ ເດັກ", female: 0, male: 0 },
-                            { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ການພະຍາບານຕາ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ກຸມມານເວດສາດ", female: 0, male: 0 },
                             { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດສຸກເສີນ", female: 28, male: 22 },
                             { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຄອບຄົວ", female: 24, male: 12 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຟື້ນຟູໜ້າທີ່ການ", female: 0, male: 0 },
                             { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 22, male: 10 },
                             { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ອາຍຸຣະສາດ", female: 10, male: 24 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ວາງຢາສະຫຼົບ-ຟື້ນຟູຊີບ", female: 6, male: 18 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ລັງສີ ແລະ ຮູບພາບການແພດ", female: 4, male: 12 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຫູ ດັງ ຄໍ ວິທະຍາ", female: 14, male: 11 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 12, male: 14 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ປະສາດວິທະຍາ", female: 11, male: 8 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຊີວະວິທະຍາ ການແພດ", female: 10, male: 9 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ເລືອດວິທະຍາ", female: 12, male: 5 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຜ່າຕັດທົ່ວໄປ (ສັນລະຍະສາດ)", female: 9, male: 7 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ຜ່າຕັດກະດູກ", female: 10, male: 8 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ສຸຂະພາບຈິດ", female: 8, male: 6 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ພະຍາດຜິວໜັງ", female: 16, male: 12 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຫົວໃຈ-ເສັ້ນເລືອດ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບຖ່າຍເທທາງນາລີເວດ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ກະເພາະລໍາໄສ້ ແລະ ຕັບ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຕ່ອມຂັບຍ່ອຍໃນ ແລະ ລະບົບເຜົາປ່ຽນທາດ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດສຸກເສີນໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ເດັກເກີດໃໝ່", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ເລືອດວິທະຍາ ແລະ ມະເຮັງໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດຈະເລີນພັນ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ການແພດແມ່ ແລະ ເດັກໃນທ້ອງ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຊືມເຊື້ອໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຂໍ່ວິທະຍາ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຊືມເຊື້ອ-ເຂດຮ້ອນ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດເລືອດ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດລະບົບຫາຍໃຈ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດເລືອດ ແລະ ມະເຮັງ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດໄຂ່ຫຼັງ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດຜິວໜັງໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພະຍາດໄຂ່ຫຼັງໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ປະສາດວິທະຍາ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ມະເຮັງວິທະຍາ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ມະເຮັງທາງນາລີເວດ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບລະລາຍ ແລະ ໂພຊະນາການໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ລະບົບຫາຍໃຈ ແລະ ຟື້ນຟູຊີບໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ພັດທະນາການໃນເດັກ ແລະການຈະເລີນເຕີຍໂຕໃນເດັກ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດສະໝອງ ແລະ ກະດູກສັນຫຼັງ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດ ຕັບ, ທາງເດີນນໍ້າບີ ແລະ ມ້າມ", female: 0, male: 0 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 2", program: "ສາຂາ ຜ່າຕັດລະບົບຖ່າຍເທ", female: 0, male: 0 },
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການແພດຄອບຄົວ (ທາງໄກ)", female: 18, male: 14 }
                         ]
                     },
@@ -1403,8 +1370,7 @@
                         accent: "sky",
                         degrees: [
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ທັນຕະສາທາລະນະສຸກສາດ", female: 24, male: 18 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຜ່າຕັດແຂ້ວຄາງໜ້າ", female: 24, male: 18 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ເວດຊະສາດປ້ອງກັນພະຍາດຊື້ມເຊື້ອຜົ້ງປາກ", female: 24, male: 18 }
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຜ່າຕັດແຂ້ວຄາງໜ້າ", female: 24, male: 18 }
                         ]
                     },
                     {
@@ -1451,11 +1417,7 @@
                         accent: "amber",
                         degrees: [
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ (ສາຍ La)", female: 36, male: 28 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ (ສາຍ En)", female: 28, male: 22 },
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ລະບາດວິທະຍາ", female: 28, male: 22 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ໂພຊະນາການ", female: 28, male: 22 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ສຸຂະພາບຄອບຄົວ", female: 28, male: 22 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ອະນາໄມສີ່ງແວດລ້ອມ ແລະ ສຸຂະພາບຄອບຄົວ", female: 24, male: 12 },
                             { level: "ປະລິນຍາເອກ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກສາດ", female: 12, male: 10 }
                         ]
                     }
@@ -1473,9 +1435,6 @@
                         degrees: [
                             { level: "ແພດລົງເລີກຂະແໜງ", program: "ສາຂາ ຈັກຂຸວິທະຍາ", female: 6, male: 12 },
                             { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດສຸກເສີນ", female: 28, male: 22 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ການແພດຄອບຄົວ", female: 24, male: 12 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ນາລີເວດ-ສູຕິສາດ", female: 22, male: 10 },
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ອາຍຸຣະສາດ", female: 10, male: 24 },
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການແພດຄອບຄົວ (ທາງໄກ)", female: 18, male: 14 }
                         ]
                     },
@@ -1498,7 +1457,6 @@
                         icon: "ph-pill",
                         accent: "emerald",
                         degrees: [
-                            { level: "ແພດຊ່ຽວຊານ ຂັ້ນ 1", program: "ສາຂາ ເພສັຊຄລີນິກ", female: 23, male: 12 },
                             { level: "ປະລິນຍາໂທ", program: "ສາຂາ ການຄຸ້ມຄອງ ແລະ ບໍລິຫານການຢາ", female: 29, male: 16 }
                         ]
                     },
@@ -1521,8 +1479,7 @@
                         icon: "ph-microscope",
                         accent: "indigo",
                         degrees: [
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ວິທະຍາສາດການແພດຊີວະໂມເລກຸນ", female: 19, male: 12 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ຈຸລິນຊີວິທະຍາທາງການແພດ", female: 18, male: 10 }
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ວິທະຍາສາດການແພດຊີວະໂມເລກຸນ", female: 19, male: 12 }
                         ]
                     },
                     {
@@ -1533,10 +1490,7 @@
                         icon: "ph-globe-hemisphere-east",
                         accent: "amber",
                         degrees: [
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 32, male: 25 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ບໍລິຫານສາທາລະນະສຸກ", female: 25, male: 20 },
-                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ໂພຊະນາການສາດ", female: 21, male: 10 },
-                            { level: "ປະລິນຍາເອກ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 10, male: 8 }
+                            { level: "ປະລິນຍາໂທ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 32, male: 25 }
                         ]
                     }
                 ]
@@ -1589,7 +1543,6 @@
                         accent: "rose",
                         degrees: [
                             { level: "ປະລິນຍາຕີ", program: "ສາຂາ ພະຍາບານສາດ", female: 285, male: 65 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ຜະດຸງຄັນ", female: 130, male: 0 },
                             { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ພະຍາບານສາດ", female: 95, male: 25 }
                         ]
                     },
@@ -1602,8 +1555,7 @@
                         accent: "indigo",
                         degrees: [
                             { level: "ປະລິນຍາຕີ", program: "ສາຂາ ວິເຄາະການແພດ", female: 165, male: 92 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ກາຍະພາບບຳບັດ", female: 112, male: 74 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ລັງສີເຕັກນິກ", female: 88, male: 64 }
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ກາຍະພາບບຳບັດ", female: 112, male: 74 }
                         ]
                     },
                     {
@@ -1641,8 +1593,7 @@
                         icon: "ph-tooth",
                         accent: "sky",
                         degrees: [
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ທັນຕະແພດສາດ", female: 138, male: 92 },
-                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ຊ່າງທັນຕະກຳ", female: 38, male: 25 }
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ທັນຕະແພດສາດ", female: 138, male: 92 }
                         ]
                     },
                     {
@@ -1664,9 +1615,7 @@
                         icon: "ph-first-aid-kit",
                         accent: "rose",
                         degrees: [
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ພະຍາບານສາດ", female: 270, male: 60 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ຜະດຸງຄັນ", female: 120, male: 0 },
-                            { level: "ອະນຸປະລິນຍາ", program: "ສາຂາ ພະຍາບານສາດ", female: 90, male: 22 }
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ພະຍາບານສາດ", female: 270, male: 60 }
                         ]
                     },
                     {
@@ -1677,9 +1626,7 @@
                         icon: "ph-microscope",
                         accent: "indigo",
                         degrees: [
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ວິເຄາະການແພດ", female: 155, male: 88 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ກາຍະພາບບຳບັດ", female: 105, male: 70 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ລັງສີເຕັກນິກ", female: 82, male: 60 }
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ວິເຄາະການແພດ", female: 155, male: 88 }
                         ]
                     },
                     {
@@ -1690,8 +1637,7 @@
                         icon: "ph-globe-hemisphere-east",
                         accent: "amber",
                         degrees: [
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 132, male: 80 },
-                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ອະນາໄມສິ່ງແວດລ້ອມ", female: 72, male: 50 }
+                            { level: "ປະລິນຍາຕີ", program: "ສາຂາ ສາທາລະນະສຸກສາດ", female: 132, male: 80 }
                         ]
                     }
                 ]
@@ -1721,13 +1667,6 @@
                 date: "02 ພະຈິກ 2026",
                 title: "ກອງປະຊຸມປ້ອງກັນບົດວິທະຍານິພົນ ລະດັບປະລິນຍາໂທ ແລະ ຊ່ຽວຊານຂັ້ນ 2",
                 content: "ກຳນົດການປ້ອງກັນບົດວິທະຍານິພົນ ປະຈຳພາກຮຽນທີ 1 ຈະຈັດຂຶ້ນທີ່ຫ້ອງປະຊຸມໃຫຍ່ ມະຫາວິທະຍາໄລ ວິທະຍາສາດ ສຸຂະພາບ."
-            },
-            {
-                id: 3,
-                category: "ທຶນການສຶກສາ",
-                date: "25 ຕຸລາ 2026",
-                title: "ປະກາດລາຍຊື່ຜູ້ໄດ້ຮັບທຶນການສຶກສາແລກປ່ຽນວິໄຈທາງການແພດ",
-                content: "ນັກສຶກສາຫຼັງປະລິນຍາຕີ ທີ່ມີຜົນການຮຽນດີເດັ່ນ ສາມາດກວດສອບລາຍຊື່ ແລະ ຍື່ນເອກະສານໄດ້ທີ່ຫ້ອງການພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ."
             }
         ];
 
@@ -1738,56 +1677,31 @@
                 date: "12 ພະຈິກ 2026",
                 title: "ປະກາດແຜນຮັບນັກສຶກສາໃໝ່ ລະດັບອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ",
                 content: "ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ ຂໍແຈ້ງມາຍັງນັກຮຽນມັດທະຍົມຕອນປາຍທົ່ວປະເທດ ກ່ຽວກັບກຳນົດການສອບເສັງຄັດເລືອກເຂົ້າຮຽນໃນ 6 ຄະນະວິຊາ ຂອງ ມວສຊ."
-            },
-            {
-                id: 102,
-                category: "ແຈ້ງການທົ່ວໄປ",
-                date: "05 ພະຈິກ 2026",
-                title: "ກຳນົດການລົງທະບຽນຮຽນ ແລະ ກວດສຸຂະພາບປະຈຳພາກຮຽນທີ 1",
-                content: "ນັກສຶກສາລະດັບອະນຸປະລິນຍາ ແລະ ປະລິນຍາຕີ ທຸກຊັ້ນປີ ສາມາດດຳເນີນການລົງທະບຽນຜ່ານລະບົບ ແລະ ຫ້ອງການວິຊາການແຕ່ລະຄະນະ."
             }
         ];
 
-        function loadSavedData(key, fallback) {
-            try {
-                const raw = localStorage.getItem(key);
-                const parsed = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(fallback));
-                if (Array.isArray(fallback)) {
-                    return Array.isArray(parsed) ? parsed : JSON.parse(JSON.stringify(fallback));
-                }
-                Object.keys(fallback).forEach(yr => {
-                    if (!parsed[yr]) {
-                        parsed[yr] = JSON.parse(JSON.stringify(fallback[yr]));
-                    }
-                });
-                return normalizeDatabaseStudyYears(parsed);
-            } catch (e) {
-                return Array.isArray(fallback)
-                    ? JSON.parse(JSON.stringify(fallback))
-                    : normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(fallback)));
-            }
-        }
-
         function populateFutureAcademicYears(dbObj) {
             const futureYears = ["2026-2027", "2027-2028", "2028-2029", "2029-2030"];
-            const template = dbObj["2025-2026"];
-            if (!template) return;
+            const template = dbObj && dbObj["2025-2026"];
+            if (!template || !Array.isArray(template.faculties)) return;
 
             futureYears.forEach(yr => {
                 if (!dbObj[yr]) {
                     const clonedYear = JSON.parse(JSON.stringify(template));
                     clonedYear.faculties.forEach(fac => {
-                        fac.degrees.forEach(deg => {
-                            deg.female = 0;
-                            deg.male = 0;
-                            deg.students = [];
-                            if (Array.isArray(deg.studyYears)) {
-                                deg.studyYears.forEach(sy => {
-                                    sy.female = 0;
-                                    sy.male = 0;
-                                });
-                            }
-                        });
+                        if (Array.isArray(fac.degrees)) {
+                            fac.degrees.forEach(deg => {
+                                deg.female = 0;
+                                deg.male = 0;
+                                deg.students = [];
+                                if (Array.isArray(deg.studyYears)) {
+                                    deg.studyYears.forEach(sy => {
+                                        sy.female = 0;
+                                        sy.male = 0;
+                                    });
+                                }
+                            });
+                        }
                     });
                     dbObj[yr] = clonedYear;
                 }
@@ -1799,11 +1713,32 @@
         normalizeDatabaseStudyYears(initialPostgradDatabase);
         normalizeDatabaseStudyYears(initialUndergradDatabase);
 
+        function loadSavedData(key, fallback) {
+            try {
+                const raw = safeGetStorage(key);
+                const parsed = raw ? JSON.parse(raw) : JSON.parse(JSON.stringify(fallback));
+                if (Array.isArray(fallback)) {
+                    return Array.isArray(parsed) ? parsed : JSON.parse(JSON.stringify(fallback));
+                }
+                const target = (parsed && typeof parsed === 'object') ? parsed : {};
+                Object.keys(fallback).forEach(yr => {
+                    if (!target[yr]) {
+                        target[yr] = JSON.parse(JSON.stringify(fallback[yr]));
+                    }
+                });
+                return normalizeDatabaseStudyYears(target);
+            } catch (e) {
+                return Array.isArray(fallback)
+                    ? JSON.parse(JSON.stringify(fallback))
+                    : normalizeDatabaseStudyYears(JSON.parse(JSON.stringify(fallback)));
+            }
+        }
+
         function saveToStorage(key, data) {
             try {
-                localStorage.setItem(key, JSON.stringify(data));
+                safeSetStorage(key, JSON.stringify(data));
             } catch (e) {
-                console.warn('Storage save skipped:', e);
+                // Ignore storage quota or private mode issues
             }
         }
 
@@ -1835,7 +1770,18 @@
         };
         window.stateByCategory = stateByCategory;
 
-        const getStore = () => stateByCategory[activeCategory];
+        function getStore() {
+            return stateByCategory[activeCategory] || stateByCategory.postgrad;
+        }
+
+        function getCurrentYearBlock(catKey = activeCategory) {
+            const catStore = stateByCategory[catKey];
+            if (!catStore || !catStore.appData) return { faculties: [] };
+            if (!catStore.appData[currentYear]) {
+                catStore.appData[currentYear] = JSON.parse(JSON.stringify(catStore.initialStats["2025-2026"] || { faculties: [] }));
+            }
+            return catStore.appData[currentYear];
+        }
 
         const USER_ACCOUNTS = {
             "admin": { password: "nuhs2026", role: "admin",   facultyId: "all",       label: "ຜູ້ດູແລລະບົບສູງສຸດ (Admin)" },
@@ -1862,7 +1808,7 @@
             if (status === 'connected') {
                 badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
                 badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Cloud Online</span>`;
-                badge.title = "ເຊື່ອມຕໍ່ Firebase Cloud ສຳເລັດ (ຂໍ້ມູນອັບເດດໃຫ້ທຸກຄົນເຫັນ)";
+                badge.title = "ເຊື່ອມຕໍ່ Firebase Cloud ສຳເລັດ";
                 if (versionText) {
                     versionText.textContent = "Cloud Real-time Connected";
                     versionText.className = "font-bold text-emerald-600";
@@ -1872,22 +1818,27 @@
                 badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping"></span><span>Syncing...</span>`;
             } else if (status === 'error') {
                 badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-300 border border-rose-400/30";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span>Sync Error</span>`;
-                badge.title = detailText || "ເກີດຂໍ້ຜິດພາດໃນການເຊື່ອມຕໍ່ Firebase";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span>Local Mode</span>`;
+                badge.title = detailText || "ໃຊ້ງານໂໝດ Local ໄດ້ປົກກະຕິ";
                 if (versionText) {
-                    versionText.textContent = detailText || "Firebase Sync Error";
-                    versionText.className = "font-bold text-rose-600";
+                    versionText.textContent = "Local Storage Active";
+                    versionText.className = "font-bold text-amber-600";
                 }
             } else {
                 badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-400/30";
-                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Local Only</span>`;
-                badge.title = "ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Config (ຂໍ້ມູນຢູ່ສະເພາະເຄື່ອງນີ້)";
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Local</span>`;
+                badge.title = "ບັນທຶກຂໍ້ມູນໃນເຄື່ອງ";
+                if (versionText) {
+                    versionText.textContent = "Local Storage";
+                    versionText.className = "font-bold text-amber-600";
+                }
             }
         }
 
         function togglePasswordVisibility() {
             const passInput = document.getElementById('loginPassword');
             const eyeIcon = document.getElementById('togglePasswordIcon');
+            if (!passInput || !eyeIcon) return;
             if (passInput.type === 'password') {
                 passInput.type = 'text';
                 eyeIcon.className = 'ph ph-eye-slash text-base text-teal-700';
@@ -1904,7 +1855,7 @@
                     return;
                 }
                 if (requiredFacultyId === 'admin') {
-                    showToast('ຂໍອະໄພ! ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດແກ້ໄຂສ່ວນນີ້ໄດ້', true);
+                    showToast('ສະເພາະ Admin ເທົ່ານັ້ນທີ່ສາມາດແກ້ໄຂສ່ວນນີ້ໄດ້', true);
                     return;
                 }
                 if (requiredFacultyId && currentUser.facultyId !== requiredFacultyId) {
@@ -1920,23 +1871,32 @@
         }
 
         function openLoginModal() {
-            document.getElementById('loginForm').reset();
-            document.getElementById('loginErrorMsg').classList.add('hidden');
+            const loginForm = document.getElementById('loginForm');
+            const errMsg = document.getElementById('loginErrorMsg');
             const passInput = document.getElementById('loginPassword');
             const eyeIcon = document.getElementById('togglePasswordIcon');
+            const modal = document.getElementById('loginModal');
+
+            if (loginForm) loginForm.reset();
+            if (errMsg) errMsg.classList.add('hidden');
             if (passInput) passInput.type = 'password';
             if (eyeIcon) eyeIcon.className = 'ph ph-eye text-base';
-
-            const modal = document.getElementById('loginModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            setTimeout(() => document.getElementById('loginUsername').focus(), 100);
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
+            setTimeout(() => {
+                const uInp = document.getElementById('loginUsername');
+                if (uInp) uInp.focus();
+            }, 80);
         }
 
         function closeLoginModal() {
             const modal = document.getElementById('loginModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
 
         function handleAuthHeaderAction() {
@@ -1945,12 +1905,10 @@
                 pendingAuthAction = null;
                 pendingRequiredFacultyId = null;
                 updateAuthUI();
-                if (!document.getElementById('orgChartView').classList.contains('hidden')) {
-                    renderOrgChart();
-                }
-                if (!document.getElementById('newsView').classList.contains('hidden')) {
-                    renderNewsFeed();
-                }
+                const orgView = document.getElementById('orgChartView');
+                const newsView = document.getElementById('newsView');
+                if (orgView && !orgView.classList.contains('hidden')) renderOrgChart();
+                if (newsView && !newsView.classList.contains('hidden')) renderNewsFeed();
                 showToast('ອອກຈາກລະບົບແລ້ວ (ໂໝດເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ)');
             } else {
                 pendingAuthAction = null;
@@ -1965,33 +1923,41 @@
             const lockIcons = document.querySelectorAll('.lock-indicator');
 
             if (currentUser) {
-                badge.innerHTML = `
-                    <i class="ph-fill ph-lock-simple-open text-emerald-400"></i>
-                    <span class="text-emerald-200 truncate max-w-[140px]"><strong>${currentUser.label}</strong></span>
-                `;
-                headerBtn.innerHTML = `
-                    <i class="ph-bold ph-sign-out text-rose-300"></i>
-                    <span class="text-rose-300 hover:text-rose-200">ອອກ</span>
-                `;
+                if (badge) {
+                    badge.innerHTML = `
+                        <i class="ph-fill ph-lock-simple-open text-emerald-400"></i>
+                        <span class="text-emerald-200 truncate max-w-[150px]"><strong>${escapeHTML(currentUser.label)}</strong></span>
+                    `;
+                }
+                if (headerBtn) {
+                    headerBtn.innerHTML = `
+                        <i class="ph-bold ph-sign-out text-rose-300"></i>
+                        <span class="text-rose-300 hover:text-rose-200">ອອກ</span>
+                    `;
+                }
                 lockIcons.forEach(icon => {
                     icon.className = 'ph-bold ph-pencil-simple-line lock-indicator text-emerald-300';
                 });
             } else {
-                badge.innerHTML = `
-                    <i class="ph-fill ph-lock-key text-amber-400"></i>
-                    <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນ</strong></span>
-                `;
-                headerBtn.innerHTML = `
-                    <i class="ph-bold ph-sign-in"></i>
-                    <span>ເຂົ້າສູ່ລະບົບ</span>
-                `;
+                if (badge) {
+                    badge.innerHTML = `
+                        <i class="ph-fill ph-lock-key text-amber-400"></i>
+                        <span>ສະຖານະ: <strong>ເບິ່ງຂໍ້ມູນເທົ່ານັ້ນ</strong></span>
+                    `;
+                }
+                if (headerBtn) {
+                    headerBtn.innerHTML = `
+                        <i class="ph-bold ph-sign-in"></i>
+                        <span>ເຂົ້າສູ່ລະບົບ</span>
+                    `;
+                }
                 lockIcons.forEach(icon => {
                     icon.className = 'ph-bold ph-lock-simple lock-indicator text-amber-300';
                 });
             }
         }
 
-        const formatNum = (num) => Number(num).toLocaleString('en-US');
+        const formatNum = (num) => Number(num || 0).toLocaleString('en-US');
 
         function getDegreeTotals(deg, yearFilter = 'all') {
             const normalized = normalizeDegreeEntry(deg);
@@ -2009,7 +1975,8 @@
         function getFacultyTotals(faculty, yearFilter = 'all') {
             let female = 0;
             let male = 0;
-            faculty.degrees.forEach(d => {
+            const degrees = (faculty && Array.isArray(faculty.degrees)) ? faculty.degrees : [];
+            degrees.forEach(d => {
                 const dStats = getDegreeTotals(d, yearFilter);
                 female += dStats.female;
                 male += dStats.male;
@@ -2021,13 +1988,13 @@
             let totalFemale = 0;
             let totalMale = 0;
             let totalPrograms = 0;
-            const yearObj = stateByCategory[catKey].appData[currentYear];
-            const faculties = yearObj ? yearObj.faculties : [];
+            const yearObj = getCurrentYearBlock(catKey);
+            const faculties = (yearObj && Array.isArray(yearObj.faculties)) ? yearObj.faculties : [];
             faculties.forEach(f => {
                 const stats = getFacultyTotals(f);
                 totalFemale += stats.female;
                 totalMale += stats.male;
-                totalPrograms += f.degrees.length;
+                totalPrograms += Array.isArray(f.degrees) ? f.degrees.length : 0;
             });
             return {
                 female: totalFemale,
@@ -2035,6 +2002,11 @@
                 total: totalFemale + totalMale,
                 programs: totalPrograms
             };
+        }
+
+        function setText(id, val) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = val;
         }
 
         function renderPortalView() {
@@ -2045,17 +2017,17 @@
             const grandFemale = undergradTotals.female + postgradTotals.female;
             const grandMale = undergradTotals.male + postgradTotals.male;
 
-            document.getElementById('headerSubTitle').textContent = 'ລະບົບຖານຂໍ້ມູນນັກສຶກສາທົ່ວມະຫາວິທະຍາໄລ';
-            document.getElementById('portalYearLabel').textContent = `ສົກຮຽນ ${currentYear}`;
-            document.getElementById('portalGrandTotal').textContent = formatNum(grandTotal);
-            document.getElementById('portalGrandFemale').textContent = formatNum(grandFemale);
-            document.getElementById('portalGrandMale').textContent = formatNum(grandMale);
+            setText('headerSubTitle', 'ລະບົບຖານຂໍ້ມູນນັກສຶກສາທົ່ວມະຫາວິທະຍາໄລ');
+            setText('portalYearLabel', `ສົກຮຽນ ${currentYear}`);
+            setText('portalGrandTotal', formatNum(grandTotal));
+            setText('portalGrandFemale', formatNum(grandFemale));
+            setText('portalGrandMale', formatNum(grandMale));
 
-            document.getElementById('portalUndergradSubtitle').textContent = `ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ • 6 ຄະນະ (${undergradTotals.programs} ສາຂາ)`;
-            document.getElementById('portalPostgradSubtitle').textContent = `ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ • 6 ຄະນະ (${postgradTotals.programs} ສາຂາ)`;
+            setText('portalUndergradSubtitle', `ພະແນກ ການສຶກສາກ່ອນປະລິນຍາຕີ • 6 ຄະນະ (${undergradTotals.programs} ສາຂາ)`);
+            setText('portalPostgradSubtitle', `ພະແນກ ການສຶກສາຫຼັງປະລິນຍາຕີ • 6 ຄະນະ (${postgradTotals.programs} ສາຂາ)`);
 
-            document.getElementById('portalUndergradCount').textContent = formatNum(undergradTotals.total);
-            document.getElementById('portalPostgradCount').textContent = formatNum(postgradTotals.total);
+            setText('portalUndergradCount', formatNum(undergradTotals.total));
+            setText('portalPostgradCount', formatNum(postgradTotals.total));
         }
 
         function navigateToPortal() {
@@ -2072,10 +2044,11 @@
         }
 
         function selectProgramCategory(categoryKey) {
+            if (!stateByCategory[categoryKey]) return;
             activeCategory = categoryKey;
             activeFacultyId = null;
             const store = getStore();
-            document.getElementById('headerSubTitle').textContent = store.deptName;
+            setText('headerSubTitle', store.deptName);
             renderHomeView();
             switchView('homeView');
         }
@@ -2086,27 +2059,31 @@
             const femalePct = grand.total > 0 ? ((grand.female / grand.total) * 100).toFixed(1) : 0;
             const malePct = grand.total > 0 ? ((grand.male / grand.total) * 100).toFixed(1) : 0;
 
-            document.getElementById('currentCategoryPill').textContent = store.shortTitle;
-            document.getElementById('heroYearLabel').textContent = `ສົກຮຽນ ${currentYear}`;
-            document.getElementById('heroSubtitleDesc').textContent = `${store.title} (6 ຄະນະ • ${grand.programs} ສາຂາ)`;
-            document.getElementById('heroTotalCount').textContent = formatNum(grand.total);
-            document.getElementById('heroFemaleCount').textContent = formatNum(grand.female);
-            document.getElementById('heroMaleCount').textContent = formatNum(grand.male);
-            document.getElementById('heroFemalePct').textContent = `(${femalePct}%)`;
-            document.getElementById('heroMalePct').textContent = `(${malePct}%)`;
-            document.getElementById('heroFemaleBar').style.width = `${femalePct}%`;
-            document.getElementById('heroMaleBar').style.width = `${malePct}%`;
+            setText('currentCategoryPill', store.shortTitle);
+            setText('heroYearLabel', `ສົກຮຽນ ${currentYear}`);
+            setText('heroSubtitleDesc', `${store.title} (6 ຄະນະ • ${grand.programs} ສາຂາ)`);
+            setText('heroTotalCount', formatNum(grand.total));
+            setText('heroFemaleCount', formatNum(grand.female));
+            setText('heroMaleCount', formatNum(grand.male));
+            setText('heroFemalePct', `(${femalePct}%)`);
+            setText('heroMalePct', `(${malePct}%)`);
+
+            const fBar = document.getElementById('heroFemaleBar');
+            const mBar = document.getElementById('heroMaleBar');
+            if (fBar) fBar.style.width = `${femalePct}%`;
+            if (mBar) mBar.style.width = `${malePct}%`;
 
             const heroSection = document.getElementById('heroCardSection');
-            if (activeCategory === 'undergrad') {
-                heroSection.className = "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-sky-900 to-blue-700 text-white p-5 shadow-lg shadow-sky-950/20 border border-sky-700/50";
-            } else {
-                heroSection.className = "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-teal-900 to-teal-700 text-white p-5 shadow-lg shadow-teal-950/20 border border-teal-700/50";
+            if (heroSection) {
+                heroSection.className = activeCategory === 'undergrad'
+                    ? "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-sky-900 to-blue-700 text-white p-5 shadow-lg shadow-sky-950/20 border border-sky-700/50"
+                    : "relative overflow-hidden rounded-3xl bg-gradient-to-br from-navy-900 via-teal-900 to-teal-700 text-white p-5 shadow-lg shadow-teal-950/20 border border-teal-700/50";
             }
 
             const gridContainer = document.getElementById('gridMenuContainer');
-            const faculties = store.appData[currentYear].faculties;
+            if (!gridContainer) return;
 
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
             const accentMap = {
                 teal: 'bg-teal-50 text-teal-700 border-teal-100 group-hover:bg-teal-600 group-hover:text-white',
                 sky: 'bg-sky-50 text-sky-700 border-sky-100 group-hover:bg-sky-600 group-hover:text-white',
@@ -2119,16 +2096,16 @@
             const facultyButtonsHTML = faculties.map(f => {
                 const stats = getFacultyTotals(f);
                 const iconStyle = accentMap[f.accent] || accentMap.teal;
-
                 return `
-                    <button 
-                        onclick="openFacultyDetail('${f.id}')" 
+                    <button
+                        type="button"
+                        onclick="openFacultyDetail('${escapeHTML(f.id)}')"
                         class="group bg-white hover:bg-teal-50/40 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
                     >
                         <div class="w-10 h-10 rounded-xl border flex items-center justify-center transition-colors ${iconStyle}">
-                            <i class="ph-fill ${f.icon} text-xl"></i>
+                            <i class="ph-fill ${escapeHTML(f.icon)} text-xl"></i>
                         </div>
-                        <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2 line-clamp-2">${f.shortName}</span>
+                        <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2 line-clamp-2">${escapeHTML(f.shortName)}</span>
                         <span class="mt-1.5 inline-block text-xs font-extrabold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-full">
                             ${formatNum(stats.total)} ຄົນ
                         </span>
@@ -2137,8 +2114,9 @@
             }).join('');
 
             const utilityButtonsHTML = `
-                <button 
-                    onclick="openNewsView()" 
+                <button
+                    type="button"
+                    onclick="openNewsView()"
                     class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
                 >
                     <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
@@ -2150,8 +2128,9 @@
                     </span>
                 </button>
 
-                <button 
-                    onclick="openOrgChartView()" 
+                <button
+                    type="button"
+                    onclick="openOrgChartView()"
                     class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
                 >
                     <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
@@ -2163,8 +2142,9 @@
                     </span>
                 </button>
 
-                <button 
-                    onclick="switchView('versionView')" 
+                <button
+                    type="button"
+                    onclick="switchView('versionView')"
                     class="group bg-gradient-to-b from-white to-slate-50 hover:to-teal-50/50 active:scale-95 rounded-2xl p-3 shadow-xs border border-slate-200/90 hover:border-teal-400 flex flex-col items-center justify-between text-center transition-all cursor-pointer min-h-[118px]"
                 >
                     <div class="w-10 h-10 rounded-xl bg-navy-900 text-emerald-300 flex items-center justify-center shadow-2xs group-hover:bg-teal-700 group-hover:text-white transition-colors">
@@ -2172,7 +2152,7 @@
                     </div>
                     <span class="text-[11px] sm:text-xs font-bold text-navy-900 leading-tight mt-2">Version ລະບົບ</span>
                     <span class="mt-1.5 inline-block text-[10px] font-bold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
-                        v2.4.1
+                        v2.4.2
                     </span>
                 </button>
             `;
@@ -2184,6 +2164,7 @@
             const views = ['portalView', 'homeView', 'facultyDetailView', 'studentProfileView', 'newsView', 'orgChartView', 'versionView'];
             views.forEach(id => {
                 const el = document.getElementById(id);
+                if (!el) return;
                 if (id === viewId) {
                     el.classList.remove('hidden');
                 } else {
@@ -2198,14 +2179,15 @@
             if (!stu) return;
 
             const store = getStore();
-            const faculty = store.appData[currentYear].faculties.find(f => f.id === activeFacultyId);
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === activeFacultyId);
             const facIdForCode = faculty ? faculty.id : 'med';
             const displayCode = formatStudentFullCode(stu.code, facIdForCode);
 
-            document.getElementById('stuProfileFacultyBadge').textContent = faculty ? faculty.shortName : store.shortTitle;
-            document.getElementById('stuProfileProgramBadge').textContent = `${stu.level} • ${stu.program}`;
-            document.getElementById('stuProfileHeroName').textContent = stu.name;
-            document.getElementById('stuProfileHeroSub').textContent = `ລະຫັດ: ${displayCode} • ${stu.yearText} (${stu.genderLabel})`;
+            setText('stuProfileFacultyBadge', faculty ? faculty.shortName : store.shortTitle);
+            setText('stuProfileProgramBadge', `${stu.level} • ${stu.program}`);
+            setText('stuProfileHeroName', stu.name);
+            setText('stuProfileHeroSub', `ລະຫັດ: ${displayCode} • ${stu.yearText} (${stu.genderLabel})`);
 
             const bioRows = [
                 { label: "ລະຫັດນັກສຶກສາ", value: displayCode, highlight: true },
@@ -2223,19 +2205,21 @@
             ];
 
             const fieldsContainer = document.getElementById('studentProfileFieldsList');
-            fieldsContainer.innerHTML = bioRows.map((row, idx) => `
-                <div class="px-4 py-3 flex items-start justify-between gap-3 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}">
-                    <div class="flex items-start gap-2 min-w-0 w-[44%] shrink-0">
-                        <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-bold shrink-0 mt-0.5">${idx + 1}</span>
-                        <span class="text-slate-600 font-medium leading-snug">${escapeHTML(row.label)}</span>
+            if (fieldsContainer) {
+                fieldsContainer.innerHTML = bioRows.map((row, idx) => `
+                    <div class="px-4 py-3 flex items-start justify-between gap-3 ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'}">
+                        <div class="flex items-start gap-2 min-w-0 w-[44%] shrink-0">
+                            <span class="inline-flex items-center justify-center w-5 h-5 rounded-md bg-teal-50 text-teal-800 border border-teal-200 text-[10px] font-bold shrink-0 mt-0.5">${idx + 1}</span>
+                            <span class="text-slate-600 font-medium leading-snug">${escapeHTML(row.label)}</span>
+                        </div>
+                        <div class="text-right flex-1 min-w-0">
+                            <span class="${row.highlight ? 'font-extrabold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md inline-block' : (row.bold ? 'font-extrabold text-navy-900' : 'font-semibold text-slate-800')} break-words leading-snug">
+                                ${escapeHTML(row.value)}
+                            </span>
+                        </div>
                     </div>
-                    <div class="text-right flex-1 min-w-0">
-                        <span class="${row.highlight ? 'font-extrabold text-blue-900 bg-blue-50 border border-blue-200 px-2 py-0.5 rounded-md inline-block' : (row.bold ? 'font-extrabold text-navy-900' : 'font-semibold text-slate-800')} break-words leading-snug">
-                            ${escapeHTML(row.value)}
-                        </span>
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
 
             switchView('studentProfileView');
         }
@@ -2252,45 +2236,51 @@
             if (resetFilter) activeStudyYearFilter = 'all';
             activeFacultyId = facultyId;
             const store = getStore();
-            const faculty = store.appData[currentYear].faculties.find(f => f.id === facultyId);
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
             if (!faculty) return;
 
-            faculty.degrees = faculty.degrees.map(normalizeDegreeEntry);
+            faculty.degrees = (faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id));
 
             const allStats = getFacultyTotals(faculty, 'all');
             const filteredStats = getFacultyTotals(faculty, activeStudyYearFilter);
 
-            document.getElementById('detailDeptBadge').textContent = store.deptName;
-            document.getElementById('detailFacultyIcon').className = `ph-fill ${faculty.icon} text-3xl text-emerald-300`;
-            document.getElementById('detailFacultyName').textContent = faculty.fullName;
-            document.getElementById('detailFacultyEnName').textContent = `${faculty.enName} • ${faculty.degrees.length} ສາຂາ`;
-            document.getElementById('detailTableHeaderTitle').textContent = activeStudyYearFilter === 'all'
-                ? `ສະຖິຕິແຍກຕາມຫຼັກສູດ, ສາຂາ ແລະ ລາຍຊື່ນັກສຶກສາ`
-                : `ສະຖິຕິ & ລາຍຊື່ນັກສຶກສາ (ສະເພາະ ປີທີ ${activeStudyYearFilter})`;
+            setText('detailDeptBadge', store.deptName);
+            const iconEl = document.getElementById('detailFacultyIcon');
+            if (iconEl) iconEl.className = `ph-fill ${faculty.icon} text-3xl text-emerald-300`;
+            setText('detailFacultyName', faculty.fullName);
+            setText('detailFacultyEnName', `${faculty.enName} • ${faculty.degrees.length} ສາຂາ`);
+            setText('detailTableHeaderTitle', activeStudyYearFilter === 'all'
+                ? 'ສະຖິຕິແຍກຕາມຫຼັກສູດ, ສາຂາ ແລະ ລາຍຊື່ນັກສຶກສາ'
+                : `ສະຖິຕິ & ລາຍຊື່ນັກສຶກສາ (ສະເພາະ ປີທີ ${activeStudyYearFilter})`);
 
-            document.getElementById('detailTotalNum').textContent = formatNum(filteredStats.total);
-            document.getElementById('detailFemaleNum').textContent = formatNum(filteredStats.female);
-            document.getElementById('detailMaleNum').textContent = formatNum(filteredStats.male);
+            setText('detailTotalNum', formatNum(filteredStats.total));
+            setText('detailFemaleNum', formatNum(filteredStats.female));
+            setText('detailMaleNum', formatNum(filteredStats.male));
 
             const maxYearsInFaculty = Math.max(2, ...faculty.degrees.map(d => getMaxStudyYears(d.level, d.program)));
             const filterPillsEl = document.getElementById('studyYearFilterPills');
-            let pillsHTML = `
-                <button type="button" onclick="setStudyYearFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer shrink-0 ${activeStudyYearFilter === 'all' ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                    ທຸກປີ (${formatNum(allStats.total)})
-                </button>
-            `;
-            for (let y = 1; y <= maxYearsInFaculty; y++) {
-                const isSelected = String(activeStudyYearFilter) === String(y);
-                pillsHTML += `
-                    <button type="button" onclick="setStudyYearFilter('${y}')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer shrink-0 ${isSelected ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                        ປີ ${y}
+            if (filterPillsEl) {
+                let pillsHTML = `
+                    <button type="button" onclick="setStudyYearFilter('all')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer shrink-0 ${activeStudyYearFilter === 'all' ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                        ທຸກປີ (${formatNum(allStats.total)})
                     </button>
                 `;
+                for (let y = 1; y <= maxYearsInFaculty; y++) {
+                    const isSelected = String(activeStudyYearFilter) === String(y);
+                    pillsHTML += `
+                        <button type="button" onclick="setStudyYearFilter('${y}')" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition-colors cursor-pointer shrink-0 ${isSelected ? 'bg-teal-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                            ປີ ${y}
+                        </button>
+                    `;
+                }
+                filterPillsEl.innerHTML = pillsHTML;
             }
-            filterPillsEl.innerHTML = pillsHTML;
 
-            document.getElementById('shiftYearFacultyBtn').onclick = () => requireAuth(() => openShiftYearModal(faculty.id), faculty.id);
-            document.getElementById('editCurrentFacultyBtn').onclick = () => requireAuth(() => openQuickEditModal(faculty.id), faculty.id);
+            const shiftBtn = document.getElementById('shiftYearFacultyBtn');
+            const editFacBtn = document.getElementById('editCurrentFacultyBtn');
+            if (shiftBtn) shiftBtn.onclick = () => requireAuth(() => openShiftYearModal(faculty.id), faculty.id);
+            if (editFacBtn) editFacBtn.onclick = () => requireAuth(() => openQuickEditModal(faculty.id), faculty.id);
 
             const tbody = document.getElementById('degreeTableBody');
             currentDisplayedStudentsMap = {};
@@ -2317,7 +2307,7 @@
                             <td class="py-2.5 pl-4 pr-2 font-extrabold text-xs text-white">
                                 <span class="inline-flex items-center gap-1.5">
                                     <i class="ph-fill ph-graduation-cap text-sky-300"></i>
-                                    <span>ຫຼັກສູດ ${currentGroupLevel} (${maxLevelYears} ປີ)</span>
+                                    <span>ຫຼັກສູດ ${escapeHTML(currentGroupLevel)} (${maxLevelYears} ປີ)</span>
                                 </span>
                             </td>
                             <td class="py-2.5 px-2 text-center text-[11px] font-bold text-rose-300">${formatNum(subF)}</td>
@@ -2378,17 +2368,19 @@
                 }
             });
 
-            tbody.innerHTML = rowsHTML;
+            if (tbody) tbody.innerHTML = rowsHTML;
 
             const tfoot = document.getElementById('degreeTableFoot');
-            tfoot.innerHTML = `
-                <tr>
-                    <td class="py-3 pl-4 pr-2 text-teal-900">ລວມທັງໝົດ (${faculty.degrees.length} ສາຂາ)</td>
-                    <td class="py-3 px-2 text-center text-rose-700">${formatNum(filteredStats.female)}</td>
-                    <td class="py-3 px-2 text-center text-teal-800">${formatNum(filteredStats.male)}</td>
-                    <td class="py-3 pl-2 pr-4 text-right text-base font-extrabold text-teal-900">${formatNum(filteredStats.total)} ຄົນ</td>
-                </tr>
-            `;
+            if (tfoot) {
+                tfoot.innerHTML = `
+                    <tr>
+                        <td class="py-3 pl-4 pr-2 text-teal-900">ລວມທັງໝົດ (${faculty.degrees.length} ສາຂາ)</td>
+                        <td class="py-3 px-2 text-center text-rose-700">${formatNum(filteredStats.female)}</td>
+                        <td class="py-3 px-2 text-center text-teal-800">${formatNum(filteredStats.male)}</td>
+                        <td class="py-3 pl-2 pr-4 text-right text-base font-extrabold text-teal-900">${formatNum(filteredStats.total)} ຄົນ</td>
+                    </tr>
+                `;
+            }
 
             switchView('facultyDetailView');
         }
@@ -2401,16 +2393,17 @@
         }
 
         function openNewsView() {
-            document.getElementById('newsDeptSubtitle').textContent = `${getStore().deptName} ມວສ`;
+            setText('newsDeptSubtitle', `${getStore().deptName} ມວສ`);
             renderNewsFeed();
             switchView('newsView');
         }
 
         function renderNewsFeed() {
             const container = document.getElementById('newsFeedContainer');
-            const currentNews = getStore().newsData;
+            if (!container) return;
+            const currentNews = getStore().newsData || [];
 
-            if (!currentNews || currentNews.length === 0) {
+            if (currentNews.length === 0) {
                 container.innerHTML = `
                     <div class="bg-white rounded-2xl p-8 text-center border border-slate-200/80 space-y-2">
                         <div class="w-12 h-12 mx-auto rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center">
@@ -2438,12 +2431,12 @@
                     <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">${escapeHTML(item.content)}</p>
 
                     <div class="pt-2 border-t border-slate-100 flex items-center justify-end gap-2">
-                        <button type="button" onclick="requireAuth(() => openNewsFormModal(${item.id}), 'admin')" 
+                        <button type="button" onclick="requireAuth(() => openNewsFormModal(${Number(item.id)}), 'admin')"
                             class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 transition-colors cursor-pointer">
                             <i class="ph-bold ph-pencil-simple"></i>
                             <span>ແກ້ໄຂ</span>
                         </button>
-                        <button type="button" onclick="requireAuth(() => openDeleteNewsConfirmModal(${item.id}), 'admin')" 
+                        <button type="button" onclick="requireAuth(() => openDeleteNewsConfirmModal(${Number(item.id)}), 'admin')"
                             class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors cursor-pointer">
                             <i class="ph-bold ph-trash"></i>
                             <span>ລຶບ</span>
@@ -2456,16 +2449,14 @@
         function openNewsFormModal(newsId = null) {
             const store = getStore();
             const form = document.getElementById('newsForm');
-            form.reset();
+            if (form) form.reset();
 
             const idInput = document.getElementById('editingNewsIdInput');
-            const titleEl = document.getElementById('newsFormModalTitle');
-            const subtitleEl = document.getElementById('newsModalSubtitle');
             const submitBtn = document.getElementById('newsFormSubmitBtn');
             const iconEl = document.getElementById('newsFormModalIcon');
             const categorySelect = document.getElementById('newsCategoryInput');
 
-            subtitleEl.textContent = store.deptName;
+            setText('newsModalSubtitle', store.deptName);
 
             if (newsId !== null) {
                 const existingItem = store.newsData.find(n => Number(n.id) === Number(newsId));
@@ -2473,37 +2464,45 @@
                     showToast('ບໍ່ພົບຂໍ້ມູນຂ່າວສານທີ່ຕ້ອງການແກ້ໄຂ', true);
                     return;
                 }
-                idInput.value = String(existingItem.id);
-                titleEl.textContent = 'ແກ້ໄຂຂ່າວສານ / ແຈ້ງການ';
-                iconEl.className = 'ph-bold ph-pencil-simple text-lg text-amber-300';
-                submitBtn.textContent = 'ບັນທຶກການແກ້ໄຂ';
+                if (idInput) idInput.value = String(existingItem.id);
+                setText('newsFormModalTitle', 'ແກ້ໄຂຂ່າວສານ / ແຈ້ງການ');
+                if (iconEl) iconEl.className = 'ph-bold ph-pencil-simple text-lg text-amber-300';
+                if (submitBtn) submitBtn.textContent = 'ບັນທຶກການແກ້ໄຂ';
 
-                const hasOption = Array.from(categorySelect.options).some(opt => opt.value === existingItem.category);
-                if (!hasOption && existingItem.category) {
-                    const tempOpt = document.createElement('option');
-                    tempOpt.value = existingItem.category;
-                    tempOpt.textContent = existingItem.category;
-                    categorySelect.appendChild(tempOpt);
+                if (categorySelect) {
+                    const hasOption = Array.from(categorySelect.options).some(opt => opt.value === existingItem.category);
+                    if (!hasOption && existingItem.category) {
+                        const tempOpt = document.createElement('option');
+                        tempOpt.value = existingItem.category;
+                        tempOpt.textContent = existingItem.category;
+                        categorySelect.appendChild(tempOpt);
+                    }
+                    categorySelect.value = existingItem.category;
                 }
-                categorySelect.value = existingItem.category;
-                document.getElementById('newsTitleInput').value = existingItem.title;
-                document.getElementById('newsContentInput').value = existingItem.content;
+                const titleInp = document.getElementById('newsTitleInput');
+                const contentInp = document.getElementById('newsContentInput');
+                if (titleInp) titleInp.value = existingItem.title;
+                if (contentInp) contentInp.value = existingItem.content;
             } else {
-                idInput.value = '';
-                titleEl.textContent = 'ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່';
-                iconEl.className = 'ph-bold ph-newspaper text-lg text-emerald-300';
-                submitBtn.textContent = 'ບັນທຶກແຈ້ງການ';
+                if (idInput) idInput.value = '';
+                setText('newsFormModalTitle', 'ເພີ່ມຂ່າວສານ / ແຈ້ງການໃໝ່');
+                if (iconEl) iconEl.className = 'ph-bold ph-newspaper text-lg text-emerald-300';
+                if (submitBtn) submitBtn.textContent = 'ບັນທຶກແຈ້ງການ';
             }
 
             const modal = document.getElementById('newsFormModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         function closeNewsFormModal() {
             const modal = document.getElementById('newsFormModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
 
         function openDeleteNewsConfirmModal(newsId) {
@@ -2514,18 +2513,22 @@
                 return;
             }
             pendingDeleteNewsId = targetItem.id;
-            document.getElementById('deleteNewsTargetTitle').textContent = targetItem.title;
+            setText('deleteNewsTargetTitle', targetItem.title);
 
             const modal = document.getElementById('deleteNewsConfirmModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         function closeDeleteNewsConfirmModal() {
             pendingDeleteNewsId = null;
             const modal = document.getElementById('deleteNewsConfirmModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
 
         async function confirmDeleteNews() {
@@ -2553,14 +2556,15 @@
         }
 
         function openOrgChartView() {
-            document.getElementById('orgDeptSubtitle').textContent = `${getStore().deptName} ມວສ`;
+            setText('orgDeptSubtitle', `${getStore().deptName} ມວສ`);
             renderOrgChart();
             switchView('orgChartView');
         }
 
         function renderOrgChart() {
             const container = document.getElementById('orgChartContainer');
-            const currentOrg = getStore().orgData;
+            if (!container) return;
+            const currentOrg = getStore().orgData || [];
             const head = currentOrg.find(p => p.id === 'head');
             const deputy = currentOrg.find(p => p.id === 'deputy');
             const officers = currentOrg.filter(p => p.tier === 3);
@@ -2631,56 +2635,69 @@
 
         function openOrgEditModal() {
             const store = getStore();
-            document.getElementById('orgModalSubtitle').textContent = store.deptName;
+            setText('orgModalSubtitle', store.deptName);
             const container = document.getElementById('orgInputsContainer');
-            container.innerHTML = store.orgData.map((person, idx) => `
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-extrabold text-teal-800">${escapeHTML(person.roleLabel)}</span>
+            if (container) {
+                container.innerHTML = store.orgData.map((person, idx) => `
+                    <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-extrabold text-teal-800">${escapeHTML(person.roleLabel)}</span>
+                        </div>
+                        <div>
+                            <input type="text" data-org-idx="${idx}" data-field="name" value="${escapeHTML(person.name)}"
+                                placeholder="ຊື່ ແລະ ນາມສະກຸນ (ເຊັ່ນ: ດຣ. ນາງ ...)"
+                                class="org-field-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" data-org-idx="${idx}" data-field="duty" value="${escapeHTML(person.duty)}"
+                                placeholder="ໜ້າທີ່ຮັບຜິດຊອບ"
+                                class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                            <input type="text" data-org-idx="${idx}" data-field="phone" value="${escapeHTML(person.phone)}"
+                                placeholder="ເບີໂທຕິດຕໍ່ (020 ...)"
+                                class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
+                        </div>
                     </div>
-                    <div>
-                        <input type="text" data-org-idx="${idx}" data-field="name" value="${escapeHTML(person.name)}" 
-                            placeholder="ຊື່ ແລະ ນາມສະກຸນ (ເຊັ່ນ: ດຣ. ນາງ ...)" 
-                            class="org-field-input w-full px-3 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-600">
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <input type="text" data-org-idx="${idx}" data-field="duty" value="${escapeHTML(person.duty)}" 
-                            placeholder="ໜ້າທີ່ຮັບຜິດຊອບ" 
-                            class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
-                        <input type="text" data-org-idx="${idx}" data-field="phone" value="${escapeHTML(person.phone)}" 
-                            placeholder="ເບີໂທຕິດຕໍ່ (020 ...)" 
-                            class="org-field-input w-full px-3 py-1.5 bg-white border border-slate-200 rounded-xl text-[11px] text-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-600">
-                    </div>
-                </div>
-            `).join('');
+                `).join('');
+            }
 
             const modal = document.getElementById('orgEditModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         function closeOrgEditModal() {
             const modal = document.getElementById('orgEditModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
 
-        const editModal = document.getElementById('editModal');
-        const modalFacultySelect = document.getElementById('modalFacultySelect');
-        const modalDegreeInputsContainer = document.getElementById('modalDegreeInputsContainer');
+        function getEditModalEls() {
+            return {
+                editModal: document.getElementById('editModal'),
+                modalFacultySelect: document.getElementById('modalFacultySelect'),
+                modalDegreeInputsContainer: document.getElementById('modalDegreeInputsContainer')
+            };
+        }
 
         function openQuickEditModal(preselectFacultyId = null) {
             if (!currentUser) return;
+            const { editModal, modalFacultySelect } = getEditModalEls();
+            if (!editModal || !modalFacultySelect) return;
+
             const store = getStore();
-            document.getElementById('editModalCategoryLabel').textContent = `${store.title} (${currentUser.label})`;
-            let faculties = store.appData[currentYear].faculties;
+            setText('editModalCategoryLabel', `${store.title} (${currentUser.label})`);
+            let faculties = getCurrentYearBlock(activeCategory).faculties || [];
 
             if (currentUser.role === 'faculty') {
                 faculties = faculties.filter(f => f.id === currentUser.facultyId);
             }
 
-            modalFacultySelect.innerHTML = faculties.map(f => 
-                `<option value="${f.id}">${f.shortName}</option>`
+            modalFacultySelect.innerHTML = faculties.map(f =>
+                `<option value="${escapeHTML(f.id)}">${escapeHTML(f.shortName)}</option>`
             ).join('');
 
             if (currentUser.role === 'faculty') {
@@ -2697,11 +2714,13 @@
             }
 
             const adminConfigBox = document.getElementById('adminProgramYearConfigBox');
-            if (currentUser.role === 'admin') {
-                adminConfigBox.classList.remove('hidden');
-                renderAdminYearLimitInputs();
-            } else {
-                adminConfigBox.classList.add('hidden');
+            if (adminConfigBox) {
+                if (currentUser.role === 'admin') {
+                    adminConfigBox.classList.remove('hidden');
+                    renderAdminYearLimitInputs();
+                } else {
+                    adminConfigBox.classList.add('hidden');
+                }
             }
 
             loadFacultyDegreesIntoTemp();
@@ -2712,19 +2731,21 @@
 
         function renderAdminYearLimitInputs() {
             const container = document.getElementById('adminYearLimitInputs');
+            if (!container) return;
             const keys = Object.keys(PROGRAM_YEAR_LIMITS);
             container.innerHTML = keys.map(key => {
                 const labelText = PROGRAM_YEAR_DISPLAY_LABELS[key] || key;
                 return `
                 <div class="bg-white border border-amber-200 rounded-lg px-2 py-1.5 flex items-center justify-between gap-1.5">
-                    <span class="text-[10px] font-bold text-slate-700 truncate" title="${labelText}">${labelText}</span>
+                    <span class="text-[10px] font-bold text-slate-700 truncate" title="${escapeHTML(labelText)}">${escapeHTML(labelText)}</span>
                     <div class="flex items-center gap-1 shrink-0">
-                        <input type="number" min="1" max="15" data-limit-key="${key}" value="${PROGRAM_YEAR_LIMITS[key]}" 
+                        <input type="number" min="1" max="15" data-limit-key="${escapeHTML(key)}" value="${Number(PROGRAM_YEAR_LIMITS[key]) || 2}"
                             class="admin-year-limit-input w-11 px-1.5 py-0.5 bg-amber-50/60 border border-amber-300 rounded text-xs font-extrabold text-center text-navy-900 focus:outline-none focus:ring-1 focus:ring-amber-600">
                         <span class="text-[10px] text-slate-500">ປີ</span>
                     </div>
                 </div>
-            `}).join('');
+            `;
+            }).join('');
         }
 
         function saveAdminYearLimits() {
@@ -2751,22 +2772,27 @@
 
         function openShiftYearModal(facultyId) {
             const store = getStore();
-            const faculty = store.appData[currentYear].faculties.find(f => f.id === facultyId);
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === facultyId);
             if (!faculty) return;
 
-            document.getElementById('shiftYearFacultyLabel').textContent = `${faculty.shortName} • ${store.title}`;
-            shiftTempDegrees = JSON.parse(JSON.stringify(faculty.degrees.map(normalizeDegreeEntry)));
+            setText('shiftYearFacultyLabel', `${faculty.shortName} • ${store.title}`);
+            shiftTempDegrees = JSON.parse(JSON.stringify((faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id))));
             renderShiftYearRows();
 
             const modal = document.getElementById('shiftYearModal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
+            if (modal) {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            }
         }
 
         function closeShiftYearModal() {
             const modal = document.getElementById('shiftYearModal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
+            if (modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
         }
 
         function updateSingleDegreeYear(degIndex, newYearStr) {
@@ -2788,7 +2814,6 @@
             shiftTempDegrees.forEach(deg => {
                 const maxY = getMaxStudyYears(deg.level, deg.program);
                 if (Array.isArray(deg.students)) {
-                    // ນັກສຶກສາທີ່ຮຽນຈົບປີສຸດທ້າຍແລ້ວຈະອອກຈາກລະບົບ, ສ່ວນປີອື່ນເລື່ອນຂຶ້ນ +1 ປີ
                     deg.students = deg.students
                         .map(stu => ({ ...stu, year: Number(stu.year) + 1 }))
                         .filter(stu => stu.year <= maxY);
@@ -2815,6 +2840,7 @@
 
         function renderShiftYearRows() {
             const container = document.getElementById('shiftYearRowsContainer');
+            if (!container) return;
             container.innerHTML = shiftTempDegrees.map((deg, idx) => {
                 const maxY = getMaxStudyYears(deg.level, deg.program);
                 const normDeg = normalizeDegreeEntry(deg);
@@ -2829,8 +2855,8 @@
                 return `
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex items-center justify-between gap-2">
                         <div class="min-w-0 flex-1">
-                            <span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">${deg.level} (${maxY} ປີ)</span>
-                            <p class="text-xs font-bold text-navy-900 truncate mt-0.5">${deg.program}</p>
+                            <span class="text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md">${escapeHTML(deg.level)} (${maxY} ປີ)</span>
+                            <p class="text-xs font-bold text-navy-900 truncate mt-0.5">${escapeHTML(deg.program)}</p>
                             <p class="text-[11px] text-slate-500">ລວມ: <strong>${formatNum(totalPeople)}</strong> ຄົນ (ຕາມລາຍຊື່)</p>
                         </div>
                         <select onchange="updateSingleDegreeYear(${idx}, this.value)" class="px-2.5 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-amber-500 shrink-0 cursor-pointer">
@@ -2842,19 +2868,25 @@
         }
 
         function closeEditModal() {
-            editModal.classList.add('hidden');
-            editModal.classList.remove('flex');
+            const { editModal } = getEditModalEls();
+            if (editModal) {
+                editModal.classList.add('hidden');
+                editModal.classList.remove('flex');
+            }
         }
 
         function loadFacultyDegreesIntoTemp() {
-            const faculty = getStore().appData[currentYear].faculties.find(f => f.id === modalFacultySelect.value);
+            const { modalFacultySelect } = getEditModalEls();
+            const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+            const faculty = faculties.find(f => f.id === (modalFacultySelect && modalFacultySelect.value));
             modalTempDegrees = faculty
-                ? JSON.parse(JSON.stringify(faculty.degrees.map(d => normalizeDegreeEntry(d, faculty.id))))
+                ? JSON.parse(JSON.stringify((faculty.degrees || []).map(d => normalizeDegreeEntry(d, faculty.id))))
                 : [];
         }
 
         function syncInputsToTemp() {
-            const activeFacId = modalFacultySelect.value || activeFacultyId || 'med';
+            const { modalFacultySelect } = getEditModalEls();
+            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
             document.querySelectorAll('.modal-deg-item').forEach((row, idx) => {
                 if (!modalTempDegrees[idx]) return;
                 const levelInp = row.querySelector('.modal-level-input');
@@ -2898,14 +2930,16 @@
         }
 
         function handleDegreeLevelOrNameChange(index) {
-            const activeFacId = modalFacultySelect.value || activeFacultyId || 'med';
+            const { modalFacultySelect } = getEditModalEls();
+            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
             syncInputsToTemp();
             modalTempDegrees[index] = normalizeDegreeEntry(modalTempDegrees[index], activeFacId);
             renderModalDegreeInputs();
         }
 
         function addStudentToProgram(degIndex) {
-            const activeFacId = modalFacultySelect.value || activeFacultyId || 'med';
+            const { modalFacultySelect } = getEditModalEls();
+            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
             syncInputsToTemp();
             const deg = modalTempDegrees[degIndex];
             if (!deg) return;
@@ -2927,7 +2961,8 @@
         }
 
         function addNewProgramRow() {
-            const activeFacId = modalFacultySelect.value || activeFacultyId || 'med';
+            const { modalFacultySelect } = getEditModalEls();
+            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
             syncInputsToTemp();
             const defaultLevel = activeCategory === 'undergrad' ? 'ປະລິນຍາຕີ' : 'ປະລິນຍາໂທ';
             const newItem = normalizeDegreeEntry({
@@ -2938,6 +2973,8 @@
             modalTempDegrees.push(newItem);
             renderModalDegreeInputs();
             setTimeout(() => {
+                const { modalDegreeInputsContainer } = getEditModalEls();
+                if (!modalDegreeInputsContainer) return;
                 modalDegreeInputsContainer.scrollTop = modalDegreeInputsContainer.scrollHeight;
                 const inputs = modalDegreeInputsContainer.querySelectorAll('.modal-prog-input');
                 if (inputs.length > 0) inputs[inputs.length - 1].focus();
@@ -2968,7 +3005,10 @@
         }
 
         function renderModalDegreeInputs() {
-            const activeFacId = modalFacultySelect.value || activeFacultyId || 'med';
+            const { modalFacultySelect, modalDegreeInputsContainer } = getEditModalEls();
+            if (!modalDegreeInputsContainer) return;
+
+            const activeFacId = (modalFacultySelect && modalFacultySelect.value) || activeFacultyId || 'med';
             const fixedPrefix = getStudentCodeFixedPrefix(activeFacId);
             const maxSuffixLen = getStudentCodeSuffixMaxLen(activeFacId);
 
@@ -3000,7 +3040,7 @@
                             <div class="modal-student-row bg-white border border-slate-200/90 rounded-xl p-2 space-y-1.5">
                                 <div class="flex items-center gap-1.5">
                                     <span class="text-[11px] font-bold text-slate-500 w-4 shrink-0">${stuIdx + 1}.</span>
-                                    <input type="text" value="${escapeHTML(stu.name)}" placeholder="ຊື່ ແລະ ນາມສະກຸນ" 
+                                    <input type="text" value="${escapeHTML(stu.name)}" placeholder="ຊື່ ແລະ ນາມສະກຸນ"
                                         class="stu-name-input flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-semibold text-navy-900 focus:outline-none focus:ring-1 focus:ring-teal-500">
                                     <button type="button" onclick="removeStudentFromProgram(${index}, ${stuIdx})" title="ລຶບລາຍຊື່ນີ້" class="text-rose-500 hover:bg-rose-50 p-1 rounded-lg transition-colors cursor-pointer shrink-0">
                                         <i class="ph-bold ph-x text-xs"></i>
@@ -3011,9 +3051,9 @@
                                         <span title="3 ໂຕທຳອິດ (104) ປ່ຽນບໍ່ໄດ້ + ເລກຄະນະ (${getFacultyDigitCode(activeFacId)})" class="px-2 py-1 bg-slate-200/90 text-navy-900 border border-slate-300 rounded-lg text-[11px] font-extrabold select-none shrink-0">
                                             ${escapeHTML(fixedPrefix)}
                                         </span>
-                                        <input type="text" inputmode="numeric" maxlength="${maxSuffixLen}" value="${escapeHTML(suffixVal)}" 
-                                            oninput="handleStudentSuffixInput(this, '${activeFacId}')"
-                                            placeholder="ປ້ອນຕົວເລກຕໍ່ (${maxSuffixLen} ໂຕ)" 
+                                        <input type="text" inputmode="numeric" maxlength="${maxSuffixLen}" value="${escapeHTML(suffixVal)}"
+                                            oninput="handleStudentSuffixInput(this, '${escapeHTML(activeFacId)}')"
+                                            placeholder="ປ້ອນຕົວເລກຕໍ່ (${maxSuffixLen} ໂຕ)"
                                             class="stu-code-suffix-input flex-1 min-w-0 px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[11px] font-bold text-navy-900 focus:outline-none focus:ring-1 focus:ring-teal-500">
                                         <span class="stu-full-code-preview text-[10px] font-bold text-teal-800 bg-teal-50 border border-teal-200 px-1.5 py-0.5 rounded shrink-0">
                                             ${escapeHTML(fullCodeVal)}
@@ -3039,7 +3079,7 @@
                         <div class="flex items-center gap-1.5 flex-1">
                             <span class="text-xs font-extrabold text-teal-800">${index + 1}.</span>
                             <select onchange="handleDegreeLevelOrNameChange(${index})" class="modal-level-input px-2 py-1 bg-teal-50 border border-teal-200 rounded-lg text-[11px] font-bold text-teal-800 focus:outline-none focus:ring-2 focus:ring-teal-500">
-                                ${optionsList.map(opt => `<option value="${opt}" ${opt === normDeg.level ? 'selected' : ''}>${opt}</option>`).join('')}
+                                ${optionsList.map(opt => `<option value="${escapeHTML(opt)}" ${opt === normDeg.level ? 'selected' : ''}>${escapeHTML(opt)}</option>`).join('')}
                             </select>
                             <span class="text-[10px] font-bold text-sky-700 bg-sky-50 border border-sky-200 px-2 py-0.5 rounded-md">${maxY} ປີ</span>
                         </div>
@@ -3049,11 +3089,10 @@
                     </div>
 
                     <div>
-                        <input type="text" onchange="handleDegreeLevelOrNameChange(${index})" value="${escapeHTML(normDeg.program)}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ທັນຕະແພດສາດ)" 
+                        <input type="text" onchange="handleDegreeLevelOrNameChange(${index})" value="${escapeHTML(normDeg.program)}" placeholder="ຊື່ສາຂາວິຊາ (ເຊັ່ນ: ສາຂາ ທັນຕະແພດສາດ)"
                             class="modal-prog-input w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs font-bold text-navy-900 focus:outline-none focus:ring-2 focus:ring-teal-500">
                     </div>
 
-                    <!-- ສະຫຼຸບຕົວເລກທີ່ຄິດໄລ່ຈາກລາຍຊື່ນັກສຶກສາໃນສາຂານີ້ -->
                     <div class="flex items-center justify-between bg-emerald-50 border border-emerald-200 rounded-xl px-2.5 py-1.5 text-[11px]">
                         <span class="font-bold text-emerald-900">ສະຖິຕິຕາມລາຍຊື່:</span>
                         <div class="flex items-center gap-2 font-extrabold">
@@ -3063,7 +3102,6 @@
                         </div>
                     </div>
 
-                    <!-- ລາຍຊື່ນັກສຶກສາໃນສາຂານີ້ -->
                     <div class="space-y-1.5">
                         ${studentsRowsHTML}
                         <button type="button" onclick="addStudentToProgram(${index})" class="w-full py-1.5 px-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 font-bold text-[11px] flex items-center justify-center gap-1 transition-colors cursor-pointer">
@@ -3093,7 +3131,7 @@
 
         function updateModalTotalPreview() {
             const sum = document.querySelectorAll('.modal-student-row').length;
-            document.getElementById('modalFacultyTotalPreview').textContent = `${formatNum(sum)} ຄົນ`;
+            setText('modalFacultyTotalPreview', `${formatNum(sum)} ຄົນ`);
         }
 
         function resetAllData() {
@@ -3117,230 +3155,264 @@
             showToast('ຄືນຄ່າຂໍ້ມູນເລີ່ມຕົ້ນທັງໝົດແລ້ວ');
         }
 
+        let toastTimer = null;
         function showToast(msg, isError = false) {
             const banner = document.getElementById('toastBanner');
+            const msgEl = document.getElementById('toastMessage');
+            if (!banner || !msgEl) return;
             const icon = banner.querySelector('i');
-            document.getElementById('toastMessage').textContent = msg;
+            msgEl.textContent = msg;
             if (isError) {
                 banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-rose-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-rose-400/30 whitespace-nowrap";
-                icon.className = "ph-fill ph-warning-circle text-rose-300 text-base";
+                if (icon) icon.className = "ph-fill ph-warning-circle text-rose-300 text-base";
             } else {
                 banner.className = "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy-900/95 text-white px-4 py-2.5 rounded-full shadow-xl text-xs font-medium flex items-center gap-2 border border-white/10 whitespace-nowrap";
-                icon.className = "ph-fill ph-check-circle text-emerald-400 text-base";
+                if (icon) icon.className = "ph-fill ph-check-circle text-emerald-400 text-base";
             }
             banner.classList.remove('hidden');
-            setTimeout(() => banner.classList.add('hidden'), 3200);
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                banner.classList.add('hidden');
+            }, 3200);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            const savedDate = localStorage.getItem(STORAGE_KEYS.LAST_UPDATED);
+            const savedDate = safeGetStorage(STORAGE_KEYS.LAST_UPDATED);
             if (savedDate) {
-                document.getElementById('lastUpdatedTimestamp').textContent = savedDate;
+                setText('lastUpdatedTimestamp', savedDate);
             }
 
             updateAuthUI();
             renderPortalView();
 
-            document.getElementById('academicYearSelect').addEventListener('change', (e) => {
-                currentYear = e.target.value;
-                renderPortalView();
-                renderHomeView();
-                if (activeFacultyId) {
-                    openFacultyDetail(activeFacultyId);
-                }
-                showToast(`ປ່ຽນເປັນ ${e.target.options[e.target.selectedIndex].text}`);
-            });
-
-            modalFacultySelect.addEventListener('change', () => {
-                loadFacultyDegreesIntoTemp();
-                renderModalDegreeInputs();
-            });
-
-            editModal.addEventListener('click', (e) => {
-                if (e.target === editModal) closeEditModal();
-            });
-            document.getElementById('shiftYearModal').addEventListener('click', (e) => {
-                if (e.target.id === 'shiftYearModal') closeShiftYearModal();
-            });
-            document.getElementById('orgEditModal').addEventListener('click', (e) => {
-                if (e.target.id === 'orgEditModal') closeOrgEditModal();
-            });
-            document.getElementById('newsFormModal').addEventListener('click', (e) => {
-                if (e.target.id === 'newsFormModal') closeNewsFormModal();
-            });
-            document.getElementById('deleteNewsConfirmModal').addEventListener('click', (e) => {
-                if (e.target.id === 'deleteNewsConfirmModal') closeDeleteNewsConfirmModal();
-            });
-            document.getElementById('loginModal').addEventListener('click', (e) => {
-                if (e.target.id === 'loginModal') closeLoginModal();
-            });
-
-            document.getElementById('loginForm').addEventListener('submit', (e) => {
-                e.preventDefault();
-                const user = document.getElementById('loginUsername').value.trim().toLowerCase();
-                const pass = document.getElementById('loginPassword').value;
-                const account = USER_ACCOUNTS[user];
-
-                if (account && account.password === pass) {
-                    currentUser = { username: user, ...account };
-                    updateAuthUI();
-                    closeLoginModal();
-                    if (!document.getElementById('orgChartView').classList.contains('hidden')) {
-                        renderOrgChart();
+            const yearSelect = document.getElementById('academicYearSelect');
+            if (yearSelect) {
+                yearSelect.addEventListener('change', (e) => {
+                    currentYear = e.target.value;
+                    renderPortalView();
+                    renderHomeView();
+                    if (activeFacultyId) {
+                        openFacultyDetail(activeFacultyId);
                     }
-                    if (!document.getElementById('newsView').classList.contains('hidden')) {
-                        renderNewsFeed();
-                    }
-                    showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
-
-                    if (typeof pendingAuthAction === 'function') {
-                        const action = pendingAuthAction;
-                        const reqFac = pendingRequiredFacultyId;
-                        pendingAuthAction = null;
-                        pendingRequiredFacultyId = null;
-
-                        if (currentUser.role === 'admin') {
-                            action();
-                        } else if (reqFac === 'admin') {
-                            showToast('ບັນຊີຂອງທ່ານບໍ່ມີສິດແກ້ໄຂສ່ວນນີ້ (ສະເພາະ Admin)', true);
-                        } else if (reqFac && currentUser.facultyId !== reqFac) {
-                            showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
-                        } else {
-                            action();
-                        }
-                    }
-                } else {
-                    document.getElementById('loginErrorMsg').classList.remove('hidden');
-                }
-            });
-
-            document.getElementById('editFacultyForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!currentUser) return;
-                const targetFacId = modalFacultySelect.value;
-
-                if (currentUser.role === 'faculty' && currentUser.facultyId !== targetFacId) {
-                    showToast('ທ່ານບໍ່ມີສິດບັນທຶກຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
-                    return;
-                }
-
-                syncInputsToTemp();
-                const store = getStore();
-                const faculty = store.appData[currentYear].faculties.find(f => f.id === targetFacId);
-                if (!faculty) return;
-
-                faculty.degrees = JSON.parse(JSON.stringify(modalTempDegrees.map(normalizeDegreeEntry)));
-
-                saveToStorage(store.statsKey, store.appData);
-                updateLastModifiedDate();
-                renderPortalView();
-                renderHomeView();
-                if (activeFacultyId === faculty.id) {
-                    openFacultyDetail(faculty.id, false);
-                }
-                closeEditModal();
-
-                if (typeof window.pushDataToCloudGlobal === 'function') {
-                    await window.pushDataToCloudGlobal();
-                } else {
-                    showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ (Local)!`);
-                }
-            });
-
-            document.getElementById('shiftYearForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!currentUser || !activeFacultyId) return;
-                if (currentUser.role === 'faculty' && currentUser.facultyId !== activeFacultyId) {
-                    showToast('ທ່ານບໍ່ມີສິດປ່ຽນປີຮຽນຂອງຄະນະອື່ນ!', true);
-                    return;
-                }
-
-                const store = getStore();
-                const faculty = store.appData[currentYear].faculties.find(f => f.id === activeFacultyId);
-                if (!faculty) return;
-
-                faculty.degrees = JSON.parse(JSON.stringify(shiftTempDegrees.map(normalizeDegreeEntry)));
-                saveToStorage(store.statsKey, store.appData);
-                updateLastModifiedDate();
-                renderPortalView();
-                renderHomeView();
-                openFacultyDetail(faculty.id, false);
-                closeShiftYearModal();
-
-                if (typeof window.pushDataToCloudGlobal === 'function') {
-                    await window.pushDataToCloudGlobal();
-                } else {
-                    showToast(`ບັນທຶກການປ່ຽນປີຮຽນຂອງ ${faculty.shortName} ສຳເລັດ!`);
-                }
-            });
-
-            document.getElementById('orgEditForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!currentUser || currentUser.role !== 'admin') return;
-                const store = getStore();
-                document.querySelectorAll('.org-field-input').forEach(inp => {
-                    const idx = parseInt(inp.dataset.orgIdx, 10);
-                    const field = inp.dataset.field;
-                    store.orgData[idx][field] = inp.value.trim();
+                    showToast(`ປ່ຽນເປັນ ${e.target.options[e.target.selectedIndex].text}`);
                 });
+            }
 
-                saveToStorage(store.orgKey, store.orgData);
-                updateLastModifiedDate();
-                renderOrgChart();
-                closeOrgEditModal();
+            const { editModal, modalFacultySelect } = getEditModalEls();
+            if (modalFacultySelect) {
+                modalFacultySelect.addEventListener('change', () => {
+                    loadFacultyDegreesIntoTemp();
+                    renderModalDegreeInputs();
+                });
+            }
 
-                if (typeof window.pushDataToCloudGlobal === 'function') {
-                    await window.pushDataToCloudGlobal();
-                } else {
-                    showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
-                }
-            });
+            if (editModal) {
+                editModal.addEventListener('click', (e) => {
+                    if (e.target === editModal) closeEditModal();
+                });
+            }
 
-            // ບັນທຶກການເພີ່ມ ຫຼື ແກ້ໄຂຂໍ້ມູນຂ່າວສານ
-            document.getElementById('newsForm').addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if (!currentUser || currentUser.role !== 'admin') return;
-                const store = getStore();
-                const editingId = document.getElementById('editingNewsIdInput').value.trim();
-                const category = document.getElementById('newsCategoryInput').value;
-                const title = document.getElementById('newsTitleInput').value.trim();
-                const content = document.getElementById('newsContentInput').value.trim();
-
-                if (!title || !content) return;
-
-                if (editingId !== '') {
-                    const targetIndex = store.newsData.findIndex(n => Number(n.id) === Number(editingId));
-                    if (targetIndex !== -1) {
-                        store.newsData[targetIndex] = {
-                            ...store.newsData[targetIndex],
-                            category,
-                            title,
-                            content,
-                            date: `${getCurrentLaoDate()} (ແກ້ໄຂ)`
-                        };
-                    }
-                } else {
-                    store.newsData.unshift({
-                        id: Date.now(),
-                        category,
-                        date: getCurrentLaoDate(),
-                        title,
-                        content
+            const backdropMap = [
+                { id: 'shiftYearModal', closeFn: closeShiftYearModal },
+                { id: 'orgEditModal', closeFn: closeOrgEditModal },
+                { id: 'newsFormModal', closeFn: closeNewsFormModal },
+                { id: 'deleteNewsConfirmModal', closeFn: closeDeleteNewsConfirmModal },
+                { id: 'loginModal', closeFn: closeLoginModal }
+            ];
+            backdropMap.forEach(({ id, closeFn }) => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.addEventListener('click', (e) => {
+                        if (e.target === el) closeFn();
                     });
                 }
-
-                saveToStorage(store.newsKey, store.newsData);
-                updateLastModifiedDate();
-                renderNewsFeed();
-                renderHomeView();
-                closeNewsFormModal();
-
-                if (typeof window.pushDataToCloudGlobal === 'function') {
-                    await window.pushDataToCloudGlobal();
-                } else {
-                    showToast(editingId !== '' ? 'ແກ້ໄຂຂໍ້ມູນຂ່າວສານສຳເລັດ!' : 'ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
-                }
             });
+
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const userInp = document.getElementById('loginUsername');
+                    const passInp = document.getElementById('loginPassword');
+                    const errEl = document.getElementById('loginErrorMsg');
+                    const user = (userInp ? userInp.value : '').trim().toLowerCase();
+                    const pass = passInp ? passInp.value : '';
+                    const account = USER_ACCOUNTS[user];
+
+                    if (account && account.password === pass) {
+                        currentUser = { username: user, ...account };
+                        updateAuthUI();
+                        closeLoginModal();
+                        const orgView = document.getElementById('orgChartView');
+                        const newsView = document.getElementById('newsView');
+                        if (orgView && !orgView.classList.contains('hidden')) renderOrgChart();
+                        if (newsView && !newsView.classList.contains('hidden')) renderNewsFeed();
+                        showToast(`ຍິນດີຕ້ອນຮັບ: ${currentUser.label}`);
+
+                        if (typeof pendingAuthAction === 'function') {
+                            const action = pendingAuthAction;
+                            const reqFac = pendingRequiredFacultyId;
+                            pendingAuthAction = null;
+                            pendingRequiredFacultyId = null;
+
+                            if (currentUser.role === 'admin') {
+                                action();
+                            } else if (reqFac === 'admin') {
+                                showToast('ບັນຊີຂອງທ່ານບໍ່ມີສິດແກ້ໄຂສ່ວນນີ້ (ສະເພາະ Admin)', true);
+                            } else if (reqFac && currentUser.facultyId !== reqFac) {
+                                showToast(`ທ່ານມີສິດແກ້ໄຂສະເພາະ "${currentUser.label}" ເທົ່ານັ້ນ!`, true);
+                            } else {
+                                action();
+                            }
+                        }
+                    } else if (errEl) {
+                        errEl.classList.remove('hidden');
+                    }
+                });
+            }
+
+            const editFacultyForm = document.getElementById('editFacultyForm');
+            if (editFacultyForm) {
+                editFacultyForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser || !modalFacultySelect) return;
+                    const targetFacId = modalFacultySelect.value;
+
+                    if (currentUser.role === 'faculty' && currentUser.facultyId !== targetFacId) {
+                        showToast('ທ່ານບໍ່ມີສິດບັນທຶກຂໍ້ມູນຂອງຄະນະອື່ນ!', true);
+                        return;
+                    }
+
+                    syncInputsToTemp();
+                    const store = getStore();
+                    const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+                    const faculty = faculties.find(f => f.id === targetFacId);
+                    if (!faculty) return;
+
+                    faculty.degrees = JSON.parse(JSON.stringify(modalTempDegrees.map(d => normalizeDegreeEntry(d, faculty.id))));
+
+                    saveToStorage(store.statsKey, store.appData);
+                    updateLastModifiedDate();
+                    renderPortalView();
+                    renderHomeView();
+                    if (activeFacultyId === faculty.id) {
+                        openFacultyDetail(faculty.id, false);
+                    }
+                    closeEditModal();
+
+                    if (typeof window.pushDataToCloudGlobal === 'function') {
+                        await window.pushDataToCloudGlobal();
+                    } else {
+                        showToast(`ບັນທຶກຂໍ້ມູນ ${faculty.shortName} ສຳເລັດ!`);
+                    }
+                });
+            }
+
+            const shiftYearForm = document.getElementById('shiftYearForm');
+            if (shiftYearForm) {
+                shiftYearForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser || !activeFacultyId) return;
+                    if (currentUser.role === 'faculty' && currentUser.facultyId !== activeFacultyId) {
+                        showToast('ທ່ານບໍ່ມີສິດປ່ຽນປີຮຽນຂອງຄະນະອື່ນ!', true);
+                        return;
+                    }
+
+                    const store = getStore();
+                    const faculties = getCurrentYearBlock(activeCategory).faculties || [];
+                    const faculty = faculties.find(f => f.id === activeFacultyId);
+                    if (!faculty) return;
+
+                    faculty.degrees = JSON.parse(JSON.stringify(shiftTempDegrees.map(d => normalizeDegreeEntry(d, faculty.id))));
+                    saveToStorage(store.statsKey, store.appData);
+                    updateLastModifiedDate();
+                    renderPortalView();
+                    renderHomeView();
+                    openFacultyDetail(faculty.id, false);
+                    closeShiftYearModal();
+
+                    if (typeof window.pushDataToCloudGlobal === 'function') {
+                        await window.pushDataToCloudGlobal();
+                    } else {
+                        showToast(`ບັນທຶກການປ່ຽນປີຮຽນຂອງ ${faculty.shortName} ສຳເລັດ!`);
+                    }
+                });
+            }
+
+            const orgEditForm = document.getElementById('orgEditForm');
+            if (orgEditForm) {
+                orgEditForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser || currentUser.role !== 'admin') return;
+                    const store = getStore();
+                    document.querySelectorAll('.org-field-input').forEach(inp => {
+                        const idx = parseInt(inp.dataset.orgIdx, 10);
+                        const field = inp.dataset.field;
+                        if (store.orgData[idx] && field) {
+                            store.orgData[idx][field] = inp.value.trim();
+                        }
+                    });
+
+                    saveToStorage(store.orgKey, store.orgData);
+                    updateLastModifiedDate();
+                    renderOrgChart();
+                    closeOrgEditModal();
+
+                    if (typeof window.pushDataToCloudGlobal === 'function') {
+                        await window.pushDataToCloudGlobal();
+                    } else {
+                        showToast('ບັນທຶກລາຍຊື່ໂຄງຮ່າງການຈັດຕັ້ງສຳເລັດ!');
+                    }
+                });
+            }
+
+            const newsForm = document.getElementById('newsForm');
+            if (newsForm) {
+                newsForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!currentUser || currentUser.role !== 'admin') return;
+                    const store = getStore();
+                    const editingId = (document.getElementById('editingNewsIdInput')?.value || '').trim();
+                    const category = document.getElementById('newsCategoryInput')?.value || 'ແຈ້ງການທົ່ວໄປ';
+                    const title = (document.getElementById('newsTitleInput')?.value || '').trim();
+                    const content = (document.getElementById('newsContentInput')?.value || '').trim();
+
+                    if (!title || !content) return;
+
+                    if (editingId !== '') {
+                        const targetIndex = store.newsData.findIndex(n => Number(n.id) === Number(editingId));
+                        if (targetIndex !== -1) {
+                            store.newsData[targetIndex] = {
+                                ...store.newsData[targetIndex],
+                                category,
+                                title,
+                                content,
+                                date: `${getCurrentLaoDate()} (ແກ້ໄຂ)`
+                            };
+                        }
+                    } else {
+                        store.newsData.unshift({
+                            id: Date.now(),
+                            category,
+                            date: getCurrentLaoDate(),
+                            title,
+                            content
+                        });
+                    }
+
+                    saveToStorage(store.newsKey, store.newsData);
+                    updateLastModifiedDate();
+                    renderNewsFeed();
+                    renderHomeView();
+                    closeNewsFormModal();
+
+                    if (typeof window.pushDataToCloudGlobal === 'function') {
+                        await window.pushDataToCloudGlobal();
+                    } else {
+                        showToast(editingId !== '' ? 'ແກ້ໄຂຂໍ້ມູນຂ່າວສານສຳເລັດ!' : 'ເພີ່ມຂ່າວສານໃໝ່ສຳເລັດ!');
+                    }
+                });
+            }
         });
     </script>
 
@@ -3382,7 +3454,6 @@
 
             if (!configToUse) {
                 updateCloudStatusUI('local');
-                console.warn("⚠️ ຍັງບໍ່ໄດ້ໃສ່ Firebase Config! ຂໍ້ມູນຈະບັນທຶກສະເພາະໃນເຄື່ອງນີ້ເທົ່ານັ້ນ.");
                 return;
             }
 
@@ -3406,7 +3477,7 @@
                     const stateRef = window.stateByCategory;
                     if (!stateRef) return;
                     if (snapshot.exists()) {
-                        const cloudData = snapshot.data();
+                        const cloudData = snapshot.data() || {};
                         if (cloudData.postgrad) {
                             stateRef.postgrad.appData = normalizeDatabaseStudyYears(cloudData.postgrad.appData || stateRef.postgrad.appData);
                             stateRef.postgrad.orgData = cloudData.postgrad.orgData || stateRef.postgrad.orgData;
@@ -3434,29 +3505,29 @@
                         }
                         if (cloudData.lastUpdated) {
                             saveToStorage(STORAGE_KEYS.LAST_UPDATED, cloudData.lastUpdated);
-                            const tsEl = document.getElementById('lastUpdatedTimestamp');
-                            if (tsEl) tsEl.textContent = cloudData.lastUpdated;
+                            setText('lastUpdatedTimestamp', cloudData.lastUpdated);
                         }
 
                         renderPortalView();
-                        if (!document.getElementById('homeView').classList.contains('hidden')) renderHomeView();
-                        if (!document.getElementById('facultyDetailView').classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId, false);
-                        if (!document.getElementById('orgChartView').classList.contains('hidden')) renderOrgChart();
-                        if (!document.getElementById('newsView').classList.contains('hidden')) renderNewsFeed();
+                        const homeViewEl = document.getElementById('homeView');
+                        const facultyDetailViewEl = document.getElementById('facultyDetailView');
+                        const orgChartViewEl = document.getElementById('orgChartView');
+                        const newsViewEl = document.getElementById('newsView');
+
+                        if (homeViewEl && !homeViewEl.classList.contains('hidden')) renderHomeView();
+                        if (facultyDetailViewEl && !facultyDetailViewEl.classList.contains('hidden') && activeFacultyId) openFacultyDetail(activeFacultyId, false);
+                        if (orgChartViewEl && !orgChartViewEl.classList.contains('hidden')) renderOrgChart();
+                        if (newsViewEl && !newsViewEl.classList.contains('hidden')) renderNewsFeed();
                     } else {
                         pushDataToCloud(true);
                     }
                 }, (error) => {
                     isCloudReady = false;
-                    updateCloudStatusUI('error', `Firestore Error: ${error.code}`);
-                    console.error("Firestore read error:", error);
-                    showToast(`ບໍ່ສາມາດດຶງຂໍ້ມູນ Cloud ໄດ້ (${error.code})`, true);
+                    updateCloudStatusUI('error', error && error.code ? `Error: ${error.code}` : 'Local Mode');
                 });
             } catch (err) {
                 isCloudReady = false;
-                updateCloudStatusUI('error', err.message);
-                console.error("Cloud Init Error:", err);
-                showToast(`ເຊື່ອມຕໍ່ Firebase ບໍ່ສຳເລັດ: ${err.code || err.message}`, true);
+                updateCloudStatusUI('error', err && err.message ? err.message : 'Local Mode');
             }
         }
 
@@ -3464,7 +3535,7 @@
             const stateRef = window.stateByCategory;
             if (!isCloudReady || !docRef || !stateRef) {
                 if (!silent) {
-                    showToast('ບັນທຶກສະເພາະໃນເຄື່ອງ (ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Cloud)', true);
+                    showToast('ບັນທຶກຂໍ້ມູນໃນເຄື່ອງສຳເລັດແລ້ວ!');
                 }
                 return;
             }
@@ -3486,18 +3557,23 @@
                 });
                 updateCloudStatusUI('connected');
                 if (!silent) {
-                    showToast('✅ ບັນທຶກຂຶ້ນ Cloud ສຳເລັດ! ທຸກຄົນເຫັນຂໍ້ມູນໃໝ່ແລ້ວ');
+                    showToast('ບັນທຶກຂຶ້ນ Cloud ສຳເລັດ!');
                 }
             } catch (err) {
-                updateCloudStatusUI('error', `Write Error: ${err.code || err.message}`);
-                console.error("Cloud push error:", err);
-                showToast(`❌ ສົ່ງຂໍ້ມູນຂຶ້ນ Cloud ບໍ່ສຳເລັດ (${err.code || err.message}) - ກວດສອບ Firestore Rules`, true);
+                updateCloudStatusUI('error', err && err.code ? `Error: ${err.code}` : 'Local Mode');
+                if (!silent) {
+                    showToast('ບັນທຶກໃນເຄື່ອງສຳເລັດ (Cloud ບໍ່ສາມາດເຊື່ອມຕໍ່ໄດ້)', true);
+                }
             }
         }
 
         window.pushDataToCloudGlobal = pushDataToCloud;
 
-        initCloudSync();
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initCloudSync);
+        } else {
+            initCloudSync();
+        }
     </script>
 </body>
 </html>
