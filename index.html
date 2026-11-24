@@ -4683,130 +4683,102 @@
          FIREBASE REAL-TIME CLOUD SYNC MODULE (Auto-loaded safely)
          ===================================================================== -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, doc, onSnapshot, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDemoReplaceWithYourRealFirebaseApiKey",
-            authDomain: "uhs-student-stats.firebaseapp.com",
-            projectId: "uhs-student-stats",
-            storageBucket: "uhs-student-stats.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef1234567890"
-        };
+  // ການຕັ້ງຄ່າ Firebase ຂອງເຈົ້າ (ຈາກຮູບທີ່ສົ່ງມາ)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBiV8iZHaH7PaizbbRp5u0txT73R7AsXho",
+    authDomain: "databox-190f8.firebaseapp.com",
+    projectId: "databox-190f8",
+    storageBucket: "databox-190f8.firebasestorage.app",
+    messagingSenderId: "950008480387",
+    appId: "1:950008480387:web:7b400e3284cd3865a411b6"
+  };
 
-        const isConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("DemoReplace");
+  // ເລີ່ມການເຊື່ອມຕໍ່
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-        if (!isConfigured) {
-            if (typeof window.updateCloudStatusUI === 'function') {
-                window.updateCloudStatusUI('local', 'ຍັງບໍ່ໄດ້ຕັ້ງຄ່າ Firebase Config (ໃຊ້ Local Storage ປົກກະຕິ)');
-            }
-        } else {
-            try {
-                const app = initializeApp(firebaseConfig);
-                const db = getFirestore(app);
-                const stateDocRef = doc(db, "uhs_database", "main_state_v1");
+  // ສົ່ງຕົວປ່ຽນອອກໄປທາງ Global (window) ເພື່ອໃຫ້ JavaScript ຫຼັກສາມາດເອີ້ນໃຊ້ໄດ້
+  window.firebaseDB = db;
+  window.firebaseDoc = doc;
+  window.firebaseGetDoc = getDoc;
+  window.firebaseSetDoc = setDoc;
 
-                let isApplyingRemote = false;
+  console.log("Firebase Firestore Connected!");
 
-                window.pushDataToCloudGlobal = async function () {
-                    if (isApplyingRemote) return;
-                    try {
-                        if (typeof window.updateCloudStatusUI === 'function') {
-                            window.updateCloudStatusUI('syncing');
-                        }
-                        const payload = {
-                            postgradStats: window.stateByCategory.postgrad.appData,
-                            postgradOrg: window.stateByCategory.postgrad.orgData,
-                            postgradNews: window.stateByCategory.postgrad.newsData,
-                            undergradStats: window.stateByCategory.undergrad.appData,
-                            undergradOrg: window.stateByCategory.undergrad.orgData,
-                            undergradNews: window.stateByCategory.undergrad.newsData,
-                            programYearLimits: window.PROGRAM_YEAR_LIMITS || {},
-                            updatedAt: new Date().toISOString()
-                        };
-                        await setDoc(stateDocRef, payload, { merge: true });
-                        if (typeof window.updateCloudStatusUI === 'function') {
-                            window.updateCloudStatusUI('connected');
-                        }
-                        if (typeof showToast === 'function') {
-                            showToast('ບັນທຶກ ແລະ ຊິ້ງຂໍ້ມູນຂຶ້ນ Cloud ສຳເລັດ!');
-                        }
-                    } catch (err) {
-                        console.error("Cloud push error:", err);
-                        if (typeof window.updateCloudStatusUI === 'function') {
-                            window.updateCloudStatusUI('error', err.message);
-                        }
-                        if (typeof showToast === 'function') {
-                            showToast('ບັນທຶກໃນເຄື່ອງສຳເລັດ (Cloud ຂັດຂ້ອງຊົ່ວຄາວ)', true);
-                        }
-                    }
-                };
+  // ຟັງຊັນສຳລັບດຶງຂໍ້ມູນຈາກ Cloud ມາໃສ່ LocalStorage
+  window.pullDataFromCloud = async function() {
+      try {
+          const docRef = doc(db, "app_data", "student_stats");
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+              const data = docSnap.data();
+              // ບັນທຶກລົງ LocalStorage ເພື່ອໃຫ້ເວັບອ່ານຄ່າໄດ້
+              if(data.undergrad) localStorage.setItem('uhs_undergrad_stats_v7_clean', data.undergrad);
+              if(data.postgrad) localStorage.setItem('uhs_postgrad_stats_v7_clean', data.postgrad);
+              if(data.yearLimits) localStorage.setItem('uhs_program_year_limits_v2_dent6y', data.yearLimits);
+              if(data.newsUndergrad) localStorage.setItem('uhs_undergrad_news_v3_separated', data.newsUndergrad);
+              if(data.newsPostgrad) localStorage.setItem('uhs_postgrad_news_v3_separated', data.newsPostgrad);
+              if(data.orgUndergrad) localStorage.setItem('uhs_undergrad_org_v1', data.orgUndergrad);
+              if(data.orgPostgrad) localStorage.setItem('uhs_postgrad_org_v2', data.orgPostgrad);
+              
+              console.log("ດຶງຂໍ້ມູນຈາກ Cloud ສຳເລັດ!");
+              // ອັບເດດສະຖານະ Badge ໃຫ້ເປັນ Cloud
+              const badge = document.getElementById('cloudSyncBadge');
+              if(badge) {
+                  badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
+                  badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span>Cloud</span>';
+              }
+              return true;
+          } else {
+              console.log("ຍັງບໍ່ມີຂໍ້ມູນໃນ Cloud");
+              return false;
+          }
+      } catch (error) {
+          console.error("Error pulling data: ", error);
+          return false;
+      }
+  }
 
-                getDoc(stateDocRef).then((snap) => {
-                    if (!snap.exists()) {
-                        window.pushDataToCloudGlobal();
-                    }
-                }).catch(() => {});
+  // ຟັງຊັນສຳລັບບັນທຶກຂໍ້ມູນຈາກ LocalStorage ຂຶ້ນ Cloud
+  window.pushDataToCloudGlobal = async function() {
+      try {
+          const data = {
+              undergrad: localStorage.getItem('uhs_undergrad_stats_v7_clean') || "",
+              postgrad: localStorage.getItem('uhs_postgrad_stats_v7_clean') || "",
+              yearLimits: localStorage.getItem('uhs_program_year_limits_v2_dent6y') || "",
+              newsUndergrad: localStorage.getItem('uhs_undergrad_news_v3_separated') || "",
+              newsPostgrad: localStorage.getItem('uhs_postgrad_news_v3_separated') || "",
+              orgUndergrad: localStorage.getItem('uhs_undergrad_org_v1') || "",
+              orgPostgrad: localStorage.getItem('uhs_postgrad_org_v2') || "",
+              lastUpdated: new Date().toISOString()
+          };
+          
+          await setDoc(doc(db, "app_data", "student_stats"), data, { merge: true });
+          console.log("ບັນທຶກຂໍ້ມູນຂຶ້ນ Cloud ສຳເລັດ!");
+          
+          // ປ່ຽນ Badge ໃຫ້ເປັນ Cloud
+          const badge = document.getElementById('cloudSyncBadge');
+          if(badge) {
+              badge.className = "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
+              badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Cloud</span>';
+          }
+          
+          // ສະແດງ Toast ຖ້າມີ
+          if (typeof showToast === 'function') {
+              showToast("ຂໍ້ມູນຖືກບັນທຶກຂຶ້ນ Cloud ແລ້ວ!");
+          }
+      } catch (error) {
+          console.error("Error pushing data: ", error);
+      }
+  }
 
-                onSnapshot(stateDocRef, (snapshot) => {
-                    if (typeof window.updateCloudStatusUI === 'function') {
-                        window.updateCloudStatusUI('connected');
-                    }
-                    if (!snapshot.exists()) return;
-                    const data = snapshot.data();
-                    if (!data) return;
-
-                    isApplyingRemote = true;
-                    try {
-                        if (data.programYearLimits && typeof data.programYearLimits === 'object') {
-                            window.PROGRAM_YEAR_LIMITS = { ...window.PROGRAM_YEAR_LIMITS, ...data.programYearLimits };
-                            saveToStorage(STORAGE_KEYS.PROGRAM_YEAR_LIMITS, window.PROGRAM_YEAR_LIMITS);
-                        }
-                        if (data.postgradStats) {
-                            window.stateByCategory.postgrad.appData = normalizeDatabaseStudyYears(data.postgradStats);
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_STATS, window.stateByCategory.postgrad.appData);
-                        }
-                        if (data.postgradOrg) {
-                            window.stateByCategory.postgrad.orgData = data.postgradOrg;
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_ORG, data.postgradOrg);
-                        }
-                        if (data.postgradNews) {
-                            window.stateByCategory.postgrad.newsData = data.postgradNews;
-                            saveToStorage(STORAGE_KEYS.POSTGRAD_NEWS, data.postgradNews);
-                        }
-                        if (data.undergradStats) {
-                            window.stateByCategory.undergrad.appData = normalizeDatabaseStudyYears(data.undergradStats);
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_STATS, window.stateByCategory.undergrad.appData);
-                        }
-                        if (data.undergradOrg) {
-                            window.stateByCategory.undergrad.orgData = data.undergradOrg;
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_ORG, data.undergradOrg);
-                        }
-                        if (data.undergradNews) {
-                            window.stateByCategory.undergrad.newsData = data.undergradNews;
-                            saveToStorage(STORAGE_KEYS.UNDERGRAD_NEWS, data.undergradNews);
-                        }
-
-                        if (typeof window.refreshAllViewsFromCloud === 'function') {
-                            window.refreshAllViewsFromCloud();
-                        }
-                    } finally {
-                        isApplyingRemote = false;
-                    }
-                }, (err) => {
-                    console.warn("Firestore snapshot warning:", err);
-                    if (typeof window.updateCloudStatusUI === 'function') {
-                        window.updateCloudStatusUI('error', err.message);
-                    }
-                });
-            } catch (initErr) {
-                console.warn("Firebase init skipped:", initErr);
-                if (typeof window.updateCloudStatusUI === 'function') {
-                    window.updateCloudStatusUI('local');
-                }
-            }
-        }
-    </script>
+  // ເມື່ອໂຫຼດໜ້າເວັບສຳເລັດ ໃຫ້ດຶງຂໍ້ມູນຈາກ Cloud ກ່ອນ
+  window.addEventListener('load', async () => {
+      await window.pullDataFromCloud();
+  });
+</script>
 </body>
 </html>
